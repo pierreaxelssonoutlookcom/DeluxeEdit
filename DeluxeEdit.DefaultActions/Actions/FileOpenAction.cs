@@ -1,5 +1,4 @@
-﻿using DeluxeEdit.Actions.Types;
-using DeluxeEdit.Actions.Types.Interfaces;
+﻿using DeluxeEdit.Interface;
 using DeluxeEdit.Shared;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace DeluxeEdit.Actions.Actions
+namespace DeluxeEdit.DefaultActions.Actions
 {
     public class FileOpenAction :  INamedAction
     {

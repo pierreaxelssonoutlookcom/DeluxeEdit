@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RK.Shared" Version="3.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DeluxeEdit.Actions.Types\DeluxeEdit.Actions.Types.csproj" />
+    <ProjectReference Include="..\DeluxeEdit.Interfface\DeluxeEdit.Interfface.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
   </ItemGroup>
 

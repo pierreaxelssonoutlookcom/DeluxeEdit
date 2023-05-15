@@ -2,11 +2,13 @@
 
 using System.Collections.Generic;
 
-namespace DeluxeEdit.Actions.Types.Interfaces
+namespace DeluxeEdit.Interface
 {
-    public interface INamedAction
+    public interface INamedActionPlugin:  INamedAction
     {
-        string Name  { get; set; }
+        
+       string Path { get; set; }
+        string Name { get; set; }
         string Titel { get; set; }  
         List<Char> ShortCutCommand { get; set; }
         string Parameter { get; set; }
