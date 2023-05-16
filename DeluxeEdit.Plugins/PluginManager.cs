@@ -6,12 +6,20 @@ namespace DeluxeEdit.Plugins
 {
     public class PluginManager
     {
+        private static Assembly loadedAsm;
+
         public static void ShowPluginManager()
         {
         }
-        public static void LoadPlugin(INamedActionPlugin item )
+        public  void LoadPlugins(PluginSource source)
         {
-            //Assembly.Load(item.Path) as INamedActionPlugin; 
+            //done:could be multiple plugisn in the same, FILE
+            loadedAsm = Assembly.LoadFile(source.Path);
+            foreach (var item in source.Items)
+            {
+                var newItem = loadedAsm.CreateInstance(item.ClassName) as INamedActionPlugin;
+                source.Items.Add(newItem);
+            }
         }
         public static void LoadPlugins()
         {
