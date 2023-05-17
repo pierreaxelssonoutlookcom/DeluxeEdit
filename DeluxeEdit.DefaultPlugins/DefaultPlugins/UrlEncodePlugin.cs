@@ -12,7 +12,7 @@ namespace DeluxeEdit.DefaultPlugins
 {
     public class UrlEncodePlugin :  INamedActionPlugin
     {
-        public char[] MyKeyCommand { get; set; }
+        public char[] MyKeyCommand { get; set; } = new char[0];
 
         public string Name { get; set; } = "UrlEncode";
         public string Titel { get; set; } = "Url Eeclode";
@@ -21,8 +21,8 @@ namespace DeluxeEdit.DefaultPlugins
         public ActionParameter Parameter { get; set; }
 
         public PresentationOptions PresentationOptions { get; set; }
-        public string Path { get; set; }
-        public string ClassName { get; set; }
+        public string Path { get; set; } = "";
+        public string ClassName { get; set; } = "";
 
         public UrlEncodePlugin()
         {
