@@ -1,8 +1,9 @@
 ﻿using DeluxeEdit.Model.Interface;
 using DeluxeEdit.Model;
 using System.Reflection;
+using System;
 
-namespace DeluxeEdit.Plugins
+namespace DeluxeEdit.Model
 {
     public class PluginManager
     {
@@ -16,15 +17,20 @@ namespace DeluxeEdit.Plugins
         {
             //done:could be multiple plugisn in the same, FILE
             loadedAsm = Assembly.LoadFile(source.Path);
-            foreach (var item in source.Items)
+            
+
+            foreach (var t in loadedAsm.GetTypes())
             {
-                var newItem = loadedAsm.CreateInstance(item.ClassName) as INamedActionPlugin;
-                if (newItem != null)  source.Items.Add(newItem);
-            }
-        }
-        public void LoadPlugins()
-        {
-        }
+        
+                var newItem= Activator.CreateInstance(t);
+                var newItemCasted=newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
+
+                if (newItemCasted != null)
+                    source.Items.Add(newItemCasted);
+            }         }
+    public void LoadPlugins()
+    {
+    }
         public  void AddPlugin()
         {
         }

@@ -1,16 +1,14 @@
 ﻿using System;
 
 using System.Collections;
-using System.Collections.Generic;
 
 namespace DeluxeEdit.Model.Interface
 {
 
     public interface INamedAction
     {
-        public char[] MyKeyCommand { get; set; }
-
-    PresentationOptions PresentationOptions { get; set; }
+       char[] MyKeyCommand { get; set; }
+        PresentationOptions PresentationOptions { get; set; }
 
         
 
