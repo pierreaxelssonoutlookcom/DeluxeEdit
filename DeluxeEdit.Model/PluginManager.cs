@@ -5,7 +5,7 @@ using System;
 
 namespace DeluxeEdit.Model
 {
-    //todo:will now instead use nuget as plugins
+    //todo:will now instead u se nuget as plugins
     public class PluginManager
     {
         private static Assembly? loadedAsm=null;

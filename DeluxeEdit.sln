@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.Model", "DeluxeE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.DefaultPlugins", "DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj", "{7A1731DE-B7A8-4B6F-BA31-9D6286499FFD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{2EE59720-9488-4A14-950A-41EFFDDEBB5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7A1731DE-B7A8-4B6F-BA31-9D6286499FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A1731DE-B7A8-4B6F-BA31-9D6286499FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A1731DE-B7A8-4B6F-BA31-9D6286499FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE59720-9488-4A14-950A-41EFFDDEBB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE59720-9488-4A14-950A-41EFFDDEBB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE59720-9488-4A14-950A-41EFFDDEBB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE59720-9488-4A14-950A-41EFFDDEBB5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

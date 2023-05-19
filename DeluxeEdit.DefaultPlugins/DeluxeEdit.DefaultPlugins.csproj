@@ -9,5 +9,5 @@
     <ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
   </ItemGroup>
-
+ 
 </Project>
