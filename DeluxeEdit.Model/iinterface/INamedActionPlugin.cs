@@ -6,8 +6,10 @@ namespace DeluxeEdit.Model.Interface
 
     public interface INamedActionPlugin:  INamedAction
     {
-        
-       string Path { get; set; }
+
+        public string HasGuiPartClassName { get; set; }
+
+        string Path { get; set; }
         string ClassName { get; set; }
 
         
