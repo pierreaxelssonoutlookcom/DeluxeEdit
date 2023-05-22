@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.DefaultPlugins",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{2EE59720-9488-4A14-950A-41EFFDDEBB5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{513F1A01-84D3-4F73-871B-5CF4F9B07B67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{513F1A01-84D3-4F73-871B-5CF4F9B07B67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultPlugins", "DefaultPlugins\DefaultPlugins.csproj", "{69CDA530-1297-4062-9FE3-DFEC141B1274}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{A65B52CF-FBB1-49A3-9632-B7845E8EE73F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{513F1A01-84D3-4F73-871B-5CF4F9B07B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{513F1A01-84D3-4F73-871B-5CF4F9B07B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{513F1A01-84D3-4F73-871B-5CF4F9B07B67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69CDA530-1297-4062-9FE3-DFEC141B1274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69CDA530-1297-4062-9FE3-DFEC141B1274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69CDA530-1297-4062-9FE3-DFEC141B1274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69CDA530-1297-4062-9FE3-DFEC141B1274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65B52CF-FBB1-49A3-9632-B7845E8EE73F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65B52CF-FBB1-49A3-9632-B7845E8EE73F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65B52CF-FBB1-49A3-9632-B7845E8EE73F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65B52CF-FBB1-49A3-9632-B7845E8EE73F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

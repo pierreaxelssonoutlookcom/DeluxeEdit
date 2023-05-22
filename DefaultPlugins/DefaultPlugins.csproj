@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <None Remove="Hex.xaml" />
+    <None Remove="MainEdit.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+  </ItemGroup>
+  <ItemGroup>   
+    <Page Include="Views\MainEdit.xaml">
+      <SubType>Designer</SubType>   
+      <Generator>MSBuld:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
+	<ProjectReference Include="..\Model\Model.csproj" />
+	<ProjectReference Include="..\Shared\Shared.csproj" />
+</ItemGroup>
+ 
+</Project>

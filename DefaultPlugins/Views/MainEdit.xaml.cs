@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DeluxeEdit.Views
+namespace DeluxeEdit
 {
     /// <summary>
-    /// Interaction logic for Hex.xaml
+    /// Interaction logic for MainEdit.xaml
     /// </summary>
-    public partial class Hex : UserControl
+    public partial class MainEdit : UserControl
     {
-        public Hex()
+        public MainEdit()
         {
             InitializeComponent();
         }

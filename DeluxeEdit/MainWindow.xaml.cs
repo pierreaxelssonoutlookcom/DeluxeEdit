@@ -10,19 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Xps;
 
-namespace DeluxeEdit.Views
+namespace DeluxeEdit
 {
     /// <summary>
-    /// Interaction logic for MainEdit.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainEdit : UserControl
+    public partial class MainWindow : Window
     {
-        public MainEdit()
+        public MainWindow()
         {
             InitializeComponent();
+            this.Content = new MainEdit();
+
         }
     }
 }
