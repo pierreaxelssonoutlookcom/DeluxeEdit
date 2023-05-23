@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 
@@ -13,12 +14,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="ViewModel\" />
-		<Folder Include="Views\" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Include="Views\MainEdit.xaml.cs">
+		<Content Include="Views\MainEdit.xaml.cs">
 			<DependentUpon>Views\MainEdit.xaml</DependentUpon>
-		</Compile>
+		</Content>
 	</ItemGroup>
 
 </Project>
