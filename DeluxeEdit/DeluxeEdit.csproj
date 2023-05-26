@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-	  <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -11,10 +12,6 @@
     <ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

@@ -14,10 +14,16 @@ namespace DeluxeEdit.DefaultPlugins
     public class FileOpenPlugin : INamedActionPlugin
     {
         //here we hookup the gui action
-        public Func<ActionParameter, string>? GuiAction() => (p) => new FileOpenGuiAction().GuiAction(p);
+        public string GuiAction(INamedActionPlugin instance)
+        {
+            var x = new FileOpenGuiAction();
+            var result= x.GuiAction(this);
+            return result;
+        }
 
+      
 
-
+        //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
 

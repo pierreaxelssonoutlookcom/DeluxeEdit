@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.DefaultPlugins",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.Model", "DeluxeEdit.Model\DeluxeEdit.Model.csproj", "{7653816A-0A0F-431E-B49D-7952C2A472EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxeEdit", "WpfApp1\DeluxeEdit.csproj", "{5C991D61-03A5-467F-9418-A5ED933D49EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{90DBAB68-82C5-434F-9662-FA039B9DAD66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{7653816A-0A0F-431E-B49D-7952C2A472EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7653816A-0A0F-431E-B49D-7952C2A472EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7653816A-0A0F-431E-B49D-7952C2A472EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C991D61-03A5-467F-9418-A5ED933D49EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C991D61-03A5-467F-9418-A5ED933D49EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C991D61-03A5-467F-9418-A5ED933D49EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C991D61-03A5-467F-9418-A5ED933D49EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

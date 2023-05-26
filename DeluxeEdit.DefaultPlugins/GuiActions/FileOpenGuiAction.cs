@@ -1,6 +1,8 @@
 ﻿using DeluxeEdit.Model;
 using System;
 using Microsoft.Win32;
+using DeluxeEdit.Model.Interface;
+
 namespace DeluxeEdit.DefaultPlugins.GuiActions
 {
     public  class FileOpenGuiAction
@@ -24,7 +26,7 @@ namespace DeluxeEdit.DefaultPlugins.GuiActions
                 string filename = dlg.FileName;
             }
         }
-        public string GuiAction(ActionParameter parameter)
+        public string GuiAction(INamedActionPlugin parameter)
         {
             return "";
         }

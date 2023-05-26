@@ -1,18 +1,13 @@
 ﻿using DeluxeEdit.Model.Interface;
 using DeluxeEdit.Model;
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.IO;
 using System.Net;
-using System.Text;
 
 namespace DeluxeEdit.DefaultPlugins
 {
     public class UrlEncodePlugin :  INamedActionPlugin
     {
-        public Func<ActionParameter, string>? GuiAction() => null;
+        public string GuiAction(INamedActionPlugin instance) { return ""; }
 
         public bool Enabled { get; set; }
 
