@@ -4,14 +4,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
+    <UseWPF>true</UseWPF
+	<Version>0.0.1</Version>>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

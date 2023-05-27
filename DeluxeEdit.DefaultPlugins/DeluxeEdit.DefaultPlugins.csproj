@@ -5,6 +5,11 @@
 		<Nullable>enable</Nullable>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<UseWPF>true</UseWPF>
+		<Version>0.0.1</Version>
+		<Title>A List o defaullt plugins fo DeluxeEdit</Title>
+		<Authors>Pierre Axelsson</Authors>
+		<Company>Pierre Axelsson</Company>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -17,7 +22,6 @@
 	<ItemGroup>
 	<ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
 	<ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
-		<ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="ViewModel\" />
