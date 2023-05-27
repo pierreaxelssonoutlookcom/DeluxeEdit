@@ -4,8 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF
-	<Version>0.0.1</Version>>
+	  <UseWPF>true</UseWPF>
+	<Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
