@@ -17,14 +17,14 @@
 	  <Compile Include="DefaultPlugins\UrlDecodePlugin.cs" />
 	  <Compile Include="DefaultPlugins\UrlEncodePlugin.cs" />
 	  <Compile Include="GuiActions\FileOpenGuiAction.cs" />
+	  <Compile Include="GuiActions\Plugins.xaml.cs" />
+	  <Compile Include="ViewModel\MainEditViewModel.cs" />
+	  <Compile Include="Views\Plugins.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 	<ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
 	<ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="ViewModel\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Views\MainEdit.xaml.cs">
