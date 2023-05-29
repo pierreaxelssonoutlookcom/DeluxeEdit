@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
@@ -27,8 +21,9 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         // The calling member's name will be used as the parameter.
 
         public void Show()
+
         {
-            OnPropertyChanged();
+            OnPropertyChanged(); 
         }
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
