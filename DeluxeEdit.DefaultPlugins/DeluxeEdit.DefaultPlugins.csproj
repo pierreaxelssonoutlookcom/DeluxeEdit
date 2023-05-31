@@ -18,6 +18,8 @@
 	  <Compile Include="DefaultPlugins\UrlEncodePlugin.cs" />
 	  <Compile Include="GuiActions\FileOpenGuiAction.cs" />
 	  <Compile Include="GuiActions\Plugins.xaml.cs" />
+	  <Compile Include="Managers\NugetPluginManager.cs" />
+	  <Compile Include="Managers\PluginManager.cs" />
 	  <Compile Include="ViewModel\MainEditViewModel.cs" />
 	  <Compile Include="Views\Plugins.xaml.cs" />
 	</ItemGroup>

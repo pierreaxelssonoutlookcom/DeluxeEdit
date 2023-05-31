@@ -17,14 +17,12 @@ namespace DeluxeEdit.Model
         {
             //note: path is temporary 
             myPluginPath = $"{new DirectoryInfo(Assembly.GetEntryAssembly().Location).FullName}\\bin";
-            futurePluginPath = $"{Environment.SpecialFolder.ApplicationData}\\DeluxeEdit\\plugins";
-
+    
         }
         private static Assembly? loadedAsm=null;
-  
+      
         public void LoadDefaultPlugins()
-        {
-
+        { 
 
         }      
         public void ShowPluginManager()
