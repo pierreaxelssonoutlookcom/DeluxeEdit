@@ -2,18 +2,20 @@
 using DeluxeEdit.Model;
 using DeluxeEdit.Model.Interface;
 using DeluxeEdit.Shared;
+using System;
 using System.IO;
 using System.Text;
+using System.Windows.Controls;
 
 namespace DeluxeEdit.DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
     {
-        //here we hookup the gui action
+        public Type Control { get; set; } = typeof(FileOpenPlugin);
         public string GuiAction(INamedActionPlugin instance)
         {
             var x = new FileOpenGuiAction();
-            var result= x.GuiAction(this);
+            var result= x.GuiAction(instance);
             return result;
         }
 

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.Model", "DeluxeE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{90DBAB68-82C5-434F-9662-FA039B9DAD66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxeEdit.Format", "DeluxeEdit.Format\DeluxeEdit.Format.csproj", "{4EADD6B8-289F-4192-BE1A-453C626B4CF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit.Format", "DeluxeEdit.Format\DeluxeEdit.Format.csproj", "{4EADD6B8-289F-4192-BE1A-453C626B4CF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

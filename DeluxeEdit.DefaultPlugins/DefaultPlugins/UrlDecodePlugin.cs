@@ -12,6 +12,8 @@ namespace DeluxeEdit.DefaultPlugins
 {
     public class UrlDecodePlugin : INamedActionPlugin
     {
+        public Type Control { get; set; } = typeof(string);
+
         public string GuiAction(INamedActionPlugin instance) { return ""; }
         public bool Enabled { get; set; }
         public char[] MyKeyCommand { get; set; } = new char[0];
