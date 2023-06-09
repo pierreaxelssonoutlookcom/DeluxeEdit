@@ -1,4 +1,5 @@
-﻿using DeluxeEdit.DefaultPlugins.Managers;
+﻿using DeluxeEdit.DefaultPlugins.GuiActions;
+using DeluxeEdit.DefaultPlugins.Managers;
 using DeluxeEdit.Model;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,16 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
     public class PluginViewModel
     {
+        private Views.Plugins pluginView;
         private NugetPluginManager manager;
 
         public PluginViewModel()
         {
-            manager=new NugetPluginManager();        
+            pluginView = new DeluxeEdit.DefaultPlugins.Views.Plugins();
         }
         public IEnumerable<PluginSourceItem> RemoteList()
-                        {
-            throw new NotImplementedException();
+        {
+            return manager.RemoteList();
         }
 
 

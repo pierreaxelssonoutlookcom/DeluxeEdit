@@ -1,4 +1,5 @@
-﻿using DeluxeEdit.Model;
+﻿using DeluxeEdit.Extensions;
+using DeluxeEdit.Model;
 using DeluxeEdit.Model.Interface;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Windows.Controls;
 
 namespace DeluxeEdit.DefaultPlugins.Managers
-{
+{   
     public class NugetPluginManager
     { 
         private string pluginPath;
@@ -22,6 +23,10 @@ namespace DeluxeEdit.DefaultPlugins.Managers
           loadedAsms = new Dictionary<string, Assembly>();
         }
 
+        public List<PluginSourceItem> RemoteList()
+        {
+            throw new NotImplementedException();
+        }
 
         public List<PluginSourceItem> LocalList()
         {
