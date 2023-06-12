@@ -7,8 +7,8 @@ namespace DeluxeEdit.Extensions.Model
     public class AppInfo
     {
 
-        public string Name { get; set; }
-        public string Version { get; set; }
+        public string Name { get; set; } = "";
+        public string Version { get; set; } = "";
         public AppEnvironment Environment { get; set; }
         public override string ToString()
         {

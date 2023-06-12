@@ -17,19 +17,17 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         public PluginViewModel()
         {
-            pluginView = new DeluxeEdit.DefaultPlugins.Views.Plugins();
-        }
+            pluginView = new Views.Plugins();
+            manager = new NugetPluginManager();    
+        }   
         public IEnumerable<PluginSourceItem> RemoteList()
         {
             return manager.RemoteList();
         }
-
-
         public IEnumerable<PluginSourceItem> LocalList()
         {
             var result=manager.LocalList();
             return result;
-
         }
 
     }
