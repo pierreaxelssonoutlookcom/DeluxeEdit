@@ -12,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DeluxeEdit.DefaultPlugins.ViewModel;
 
-namespace DeluxeEdit.DefaultPlugins.Views
+namespace DeluxeEdit
 {
     /// <summary>
     /// Interaction logic for MainEdit.xaml
     /// </summary>
     public partial class MainEdit : UserControl
     {
-        private MainEditViewModel editViewModel:
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel();
         }
     } 
 }

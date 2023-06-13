@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MainEditView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MainEditView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
     <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
   </ItemGroup>

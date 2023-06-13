@@ -5,17 +5,15 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
     public class MainEditViewModel: INotifyPropertyChanged
     {
-        private MainEdit mainEdit;
-
         // Declare the event
         public event PropertyChangedEventHandler? PropertyChanged;
+        public string Text { get; set; }
         public MainEditViewModel()
         {
-            mainEdit = new MainEdit();
-            
+            Text = string.Empty;
         }
 
-        //      OnPropertyChange();
+         
 
         // Create the OnPropertyChanged method to raise the event
         // The calling member's name will be used as the parameter.
@@ -27,10 +25,8 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         }
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
-            if (mainEdit != null && mainEdit.MainEditBox != null && mainEdit.MainEditBox.Text != null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(mainEdit.MainEditBox.Text));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Text));
+            
         }   
     }
 }

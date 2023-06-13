@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using DeluxeEdit.DefaultPlugins.ViewModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DeluxeEdit.DefaultPlugins.Views
 {
@@ -20,9 +8,11 @@ namespace DeluxeEdit.DefaultPlugins.Views
     /// </summary>
     public partial class Plugins : UserControl
     {
+        PluginViewModel pluginViewModel;
         public Plugins()
         {
             InitializeComponent();
+            pluginViewModel = new PluginViewModel();
         }
     }
 }
