@@ -1,9 +1,5 @@
 ﻿using DeluxeEdit.DefaultPlugins;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,13 +20,8 @@ namespace DeluxeEdit
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var x = new FileOpenPlugin();
-            x.GuiAction(x);
-
+            //todo:add usercontols dynamically
+            Content = new MainEdit();
         }
     }
 }

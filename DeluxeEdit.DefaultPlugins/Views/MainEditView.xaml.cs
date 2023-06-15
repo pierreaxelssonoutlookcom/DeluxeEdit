@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using DeluxeEdit.DefaultPlugins.ViewModel;
+using DeluxeEdit.Model;
+using DeluxeEdit.Model.Interface;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DeluxeEdit.DefaultPlugins.ViewModel;
+
 
 namespace DeluxeEdit.DefaultPlugins.Views
 {
@@ -21,11 +11,27 @@ namespace DeluxeEdit.DefaultPlugins.Views
     /// </summary>
     public partial class MainEdit : UserControl
     {
-        private MainEditViewModel editViewModel:
+        private MainEditViewModel editViewModel;
+
         public MainEdit()
         {
             InitializeComponent();
             editViewModel = new MainEditViewModel();
+
+            MainEditBox.Text = editViewModel.Text; 
+
+
         }
-    } 
+
+        public void UpdateBeforeLoad(INamedActionPlugin plugin, ActionParameter parameter)
+        {
+            new FileOpenPlugin();
+        }
+        public void UpdateBeforeSave(INamedActionPlugin plugin, ActionParameter parameter)
+        {
+
+
+        }
+
+    }
 }

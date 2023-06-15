@@ -10,7 +10,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         public string Text { get; set; }
         public MainEditViewModel()
         {
-            Text = string.Empty;
+            Text = "Default text";
         }
 
          

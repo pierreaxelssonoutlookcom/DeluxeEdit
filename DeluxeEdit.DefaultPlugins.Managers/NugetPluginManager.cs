@@ -3,6 +3,7 @@ using DeluxeEdit.Model;
 using DeluxeEdit.Model.Interface;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,13 +15,38 @@ namespace DeluxeEdit.DefaultPlugins.Managers
     { 
         private string pluginPath;
         private static Dictionary<string, Assembly>? loadedAsms;
+        private List<string> pluginFiles;
 
         public NugetPluginManager() 
         {
           pluginPath = $"{Environment.SpecialFolder.Programs}\\DeluxeEdit\\plugins";
           loadedAsms = new Dictionary<string, Assembly>();
+          pluginFiles=Directory.GetFiles(pluginPath, "*.dll").ToList();
+          pluginFiles.Select(p =>  LoadPluginFile(p));
         }
 
+        public INamedActionPlugin InvokePlugin<T>()
+            where T : INamedActionPlugin
+        {
+            object? newItem=null;
+            if (loadedAsms == null) throw new NullReferenceException();
+            foreach (var asm in loadedAsms)
+            {
+                  var type = asm.Value.GetTypes().SingleOrDefault(p => p == typeof(T));
+                if (type != null)
+                {
+                     newItem= Activator.CreateInstance(type);
+                    break;
+
+                }
+            }
+            if (newItem == null) throw new NullReferenceException();
+          var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
+            if (newItemCasted == null) throw new InvalidCastException();
+
+
+            return newItemCasted;
+        }
         public List<PluginSourceItem> RemoteList()
         {
             throw new NotImplementedException();
@@ -33,7 +59,7 @@ namespace DeluxeEdit.DefaultPlugins.Managers
             var result = Directory.GetFiles(pluginPath, "*.dll")
                  .Select(p => parser.ParseFileName(p)).ToList();
             return result;
-           }
+       }
 
         private INamedActionPlugin CreateObjects(Type t)
         {
