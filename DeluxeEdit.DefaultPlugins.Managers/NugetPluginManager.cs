@@ -25,7 +25,7 @@ namespace DeluxeEdit.DefaultPlugins.Managers
           pluginFiles.Select(p =>  LoadPluginFile(p));
         }
 
-        public INamedActionPlugin InvokePlugin<T>()
+        public T InvokePlugin<T>()
             where T : INamedActionPlugin
         {
             object? newItem=null;
@@ -44,8 +44,8 @@ namespace DeluxeEdit.DefaultPlugins.Managers
           var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new InvalidCastException();
 
-
-            return newItemCasted;
+            T result = (T)Convert.ChangeType(newItemCasted, typeof(T));
+            return result;
         }
         public List<PluginSourceItem> RemoteList()
         {
