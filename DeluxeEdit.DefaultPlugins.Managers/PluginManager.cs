@@ -4,20 +4,19 @@ using DeluxeEdit.Model.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace DeluxeEdit.DefaultPlugins.Managers
-{   
-    public class NugetPluginManager
+{
+    public class PluginManager
     { 
         private string pluginPath;
         private static Dictionary<string, Assembly>? loadedAsms;
         private List<string> pluginFiles;
 
-        public NugetPluginManager() 
+        public PluginManager() 
         {
           pluginPath = $"{Environment.SpecialFolder.Programs}\\DeluxeEdit\\plugins";
           loadedAsms = new Dictionary<string, Assembly>();
@@ -35,9 +34,8 @@ namespace DeluxeEdit.DefaultPlugins.Managers
                   var type = asm.Value.GetTypes().SingleOrDefault(p => p == typeof(T));
                 if (type != null)
                 {
-                     newItem= Activator.CreateInstance(type);
+                    newItem= Activator.CreateInstance(type);
                     break;
-
                 }
             }
             if (newItem == null) throw new NullReferenceException();
@@ -47,12 +45,12 @@ namespace DeluxeEdit.DefaultPlugins.Managers
             T result = (T)Convert.ChangeType(newItemCasted, typeof(T));
             return result;
         }
-        public List<PluginSourceItem> RemoteList()
+        public List<PluginFileItem> RemoteList()
         {
             throw new NotImplementedException();
         }
 
-        public List<PluginSourceItem> LocalList()
+        public List<PluginFileItem> LocalList()
         {
             var parser = new PluginSourceParser();
 
@@ -83,8 +81,6 @@ namespace DeluxeEdit.DefaultPlugins.Managers
             }
             if (loadedAsms==null) throw new NullReferenceException();
             //done:could be multiple plugisAssemblyn in the same, FILE
-             
- 
            foreach (var t in loadedAsms[path].GetTypes())
            {
                 var newItemCasted = CreateObjects(t);

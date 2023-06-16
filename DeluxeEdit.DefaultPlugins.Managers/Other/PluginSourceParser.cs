@@ -12,9 +12,9 @@ namespace DeluxeEdit.DefaultPlugins.Managers.Other
         {
 
         }
-        public PluginSourceItem ParseFileName(string path)
+        public PluginFileItem ParseFileName(string path)
         {
-            var result = new PluginSourceItem { LocalPath = path };
+            var result = new PluginFileItem { LocalPath = path };
             string fileNameFirstPart = path.Split('.')[0];
             var fileNameFirstPartArray = fileNameFirstPart.ToArray();
             for (int i = 0; i < fileNameFirstPartArray.Length - 1; i++)

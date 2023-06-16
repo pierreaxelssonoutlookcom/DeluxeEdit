@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DeluxeEdit.Model
 {
-    public class PluginSourceItem
+    public class PluginFileItem
     {
         public string? ID { get; set;  }
         public Version? Version { get; set; }
