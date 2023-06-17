@@ -45,7 +45,7 @@ namespace DeluxeEdit.DefaultPlugins
             
         public PresentationOptions PresentationOptions { get; set; }
         public string Path { get; set; } = "";
-        public string ClassName { get; set; } = "";
+ 
 
 
         public FileOpenPlugin()

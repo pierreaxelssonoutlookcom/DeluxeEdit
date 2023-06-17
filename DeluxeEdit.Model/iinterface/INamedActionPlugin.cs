@@ -29,8 +29,7 @@ namespace DeluxeEdit.Model.Interface
 
         string GuiAction(INamedActionPlugin instance) ;
         string Path { get; set; } 
-        Type Plugin { get; set; }
-
+  
         
         }
 

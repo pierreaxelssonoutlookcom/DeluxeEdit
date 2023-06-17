@@ -23,14 +23,13 @@ namespace DeluxeEdit.DefaultPlugins.Managers
           pluginFiles.Select(p =>  LoadPluginFile(p));
         }
 
-        public T InvokePlugin<T>()
-            where T : INamedActionPlugin
+         public INamedActionPlugin InvokePlugin(Type pluginType)
         {
             object? newItem=null;
             if (loadedAsms == null) throw new NullReferenceException();
             foreach (var asm in loadedAsms)
             {
-                  var type = asm.Value.GetTypes().SingleOrDefault(p => p == typeof(T));
+                  var type = asm.Value.GetTypes().SingleOrDefault(p => p == pluginType);
                 if (type != null)
                 {
                     newItem= Activator.CreateInstance(type);
@@ -41,13 +40,12 @@ namespace DeluxeEdit.DefaultPlugins.Managers
           var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new InvalidCastException();
 
-            T result = (T)Convert.ChangeType(newItemCasted, typeof(T));
-            return result;
+            return newItemCasted;
         }
         public List<PluginFileItem> RemoteList()
         {
             throw new NotImplementedException();
-        }
+        }   
 
         public List<PluginFileItem> LocalList()
         {
