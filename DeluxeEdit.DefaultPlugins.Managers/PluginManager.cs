@@ -25,18 +25,22 @@ namespace DeluxeEdit.DefaultPlugins.Managers
 
          public INamedActionPlugin InvokePlugin(Type pluginType)
         {
-            object? newItem=null;
+            object? newItem = Activator.CreateInstance(pluginType);
+
+
+            /*
             if (loadedAsms == null) throw new NullReferenceException();
             foreach (var asm in loadedAsms)
             {
                   var type = asm.Value.GetTypes().SingleOrDefault(p => p == pluginType);
                 if (type != null)
                 {
-                    newItem= Activator.CreateInstance(type);
+                       newItem=  .CreateInstance(type);
                     break;
                 }
             }
-            if (newItem == null) throw new NullReferenceException();
+            */
+          //  if (newItem == null) throw new NullReferenceException();
           var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new InvalidCastException();
 

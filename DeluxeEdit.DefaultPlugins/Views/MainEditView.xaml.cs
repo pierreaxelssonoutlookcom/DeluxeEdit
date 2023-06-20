@@ -26,7 +26,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         public void UpdateBeforeLoad(ActionParameter parameter)
         {
-            var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen);
+            var plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
 
             editViewModel.Text=plugin.Perform(parameter);
             MainEditBox.Text = editViewModel.Text;

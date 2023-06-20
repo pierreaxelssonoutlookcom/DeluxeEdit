@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace DeluxeEdit.DefaultPlugins
 {
-    public enum PluginType { FileOpen,  UrlDecode, UrlEncode}
+    public enum PluginId { FileOpen,  UrlDecode, UrlEncode}
     public class AllPlugins
     {
-        public static INamedActionPlugin  InvokePlugin(PluginType plugin)
+        public static INamedActionPlugin  InvokePlugin(PluginId plugin)
         {
             Type? myType = null;
             switch (plugin)
             {
-                case PluginType.FileOpen: 
+                case PluginId.FileOpen: 
                     myType = typeof(FileOpenPlugin);
                     break;
-                    case PluginType.UrlDecode: 
+                    case PluginId.UrlDecode: 
                     myType = typeof(UrlDecodePlugin);
                     break;
-                    case PluginType.UrlEncode:
+                    case PluginId.UrlEncode:
                     myType = typeof(UrlEncodePlugin);
                     break;
             }
