@@ -13,7 +13,7 @@ namespace DeluxeEdit.DefaultPlugins
     {
          public object? Control { get; set; }
         public Type? ControlType{ get; set; }=typeof(DeluxeEdit.DefaultPlugins.Views.MainEdit);
-        public string GuiAction(INamedActionPlugin instance)
+        public string? GuiAction(INamedActionPlugin instance)
         {
             var x = new FileOpenGuiAction();
             var result= x.GuiAction(instance);

@@ -27,7 +27,7 @@ namespace DeluxeEdit.Model.Interface
 
         Type?  ControlType { get; set; }
 
-        string GuiAction(INamedActionPlugin instance) ;
+        string? GuiAction(INamedActionPlugin instance) ;
         string Path { get; set; } 
   
         

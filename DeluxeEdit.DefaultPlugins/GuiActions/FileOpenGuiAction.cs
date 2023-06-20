@@ -10,11 +10,14 @@ namespace DeluxeEdit.DefaultPlugins.GuiActions
         
         public FileOpenGuiAction() 
         {
+        }
+        public string? GuiAction(INamedActionPlugin parameter)
+        {
             // Configure open file dialog box
             OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".txt"; // Default file extension
-            dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            dlg.FileName = ""; // Default file name
+            dlg.DefaultExt = ""; // Default file extension
+            dlg.Filter = "All files |*.*"; // Filter files by extension
 
             // Show open file dialog box
             Nullable<bool> result = dlg.ShowDialog();
@@ -25,10 +28,8 @@ namespace DeluxeEdit.DefaultPlugins.GuiActions
                 // Open document
                 string filename = dlg.FileName;
             }
-        }
-        public string GuiAction(INamedActionPlugin parameter)
-        {
-            return "";
+            string? retval= result==true ? dlg.FileName : null;
+            return retval;
         }
     }
 

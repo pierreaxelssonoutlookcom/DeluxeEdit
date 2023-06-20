@@ -3,6 +3,7 @@ using DeluxeEdit.DefaultPlugins.ViewModel;
 using DeluxeEdit.Model;
 using DeluxeEdit.Model.Interface;
 using System.Windows.Controls;
+using DeluxeEdit.Extensions;
 
 
 namespace DeluxeEdit.DefaultPlugins.Views
@@ -28,9 +29,12 @@ namespace DeluxeEdit.DefaultPlugins.Views
         {
             var plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
             var path=plugin.GuiAction(plugin);
-          
-            editViewModel.Text=plugin.Perform( new ActionParameter {Parameter=path });
-            MainEditBox.Text = editViewModel.Text;
+            //if user cancelled path is empty 
+            if (path.HasContent())
+            { 
+                editViewModel.Text=plugin.Perform( new ActionParameter {Parameter=path });
+                MainEditBox.Text = editViewModel.Text;
+            }
         }
         public void UpdateBeforeSave(INamedActionPlugin plugin, ActionParameter parameter)
         {

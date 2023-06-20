@@ -9,7 +9,7 @@ namespace DeluxeEdit.DefaultPlugins
     {
         public object? Control { get; set; }
         public Type? ControlType { get; set; } = null;
-        public string GuiAction(INamedActionPlugin instance) { return ""; }
+        public string? GuiAction(INamedActionPlugin instance) { return ""; }
 
         public bool Enabled { get; set; }
 
