@@ -21,14 +21,15 @@ namespace DeluxeEdit.DefaultPlugins.Views
             editViewModel = new MainEditViewModel();
 
             manager = new PluginManager();
-
+            UpdateLoad();
         }
 
-        public void UpdateBeforeLoad(ActionParameter parameter)
+        public void UpdateLoad()
         {
             var plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
-
-            editViewModel.Text=plugin.Perform(parameter);
+            var path=plugin.GuiAction(plugin);
+          
+            editViewModel.Text=plugin.Perform( new ActionParameter {Parameter=path });
             MainEditBox.Text = editViewModel.Text;
         }
         public void UpdateBeforeSave(INamedActionPlugin plugin, ActionParameter parameter)

@@ -18,7 +18,7 @@ namespace DeluxeEdit.DefaultPlugins.Managers
 
         public PluginManager() 
         {
-          pluginPath = $"{Environment.SpecialFolder.Programs}\\DeluxeEdit\\plugins";
+          pluginPath = $"{Environment.GetFolderPath( Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
           pluginFiles=Directory.GetFiles(pluginPath, "*.dll").ToList();
           pluginFiles.Select(p =>  LoadPluginFile(p));
         }

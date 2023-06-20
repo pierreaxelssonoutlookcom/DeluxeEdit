@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy C:\gitroot\personal\DeluxeEdit\DeluxeEdit\bin\Debug\net7.0-windows\DeluxeEdit.DefaultPlugins.* C:\Program\DeluxeEdit\plugins" />
+    <Exec Command="copy C:\gitroot\personal\DeluxeEdit\DeluxeEdit\bin\Debug\net7.0-windows\DeluxeEdit.DefaultPlugins.* &quot;C:\Program Files\DeluxeEdit\plugins&quot;" />
   </Target>
 
 </Project>
