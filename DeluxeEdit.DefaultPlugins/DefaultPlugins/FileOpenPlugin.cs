@@ -4,9 +4,10 @@ using DeluxeEdit.Model.Interface;
 using DeluxeEdit.Shared;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-
+using DeluxeEdit.Extensions;
 namespace DeluxeEdit.DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
@@ -74,7 +75,9 @@ namespace DeluxeEdit.DefaultPlugins
 
             var buffy = new char[SystemConstants.FileBufferSize];
             reader.ReadBlock(buffy);
-            var result = String.Concat(buffy); 
+            int idx=buffy.IndexOf('\0');
+            var result = new String(buffy, 0, 
+                idx); 
             return result;
         }
 

@@ -8,10 +8,11 @@ using DeluxeEdit.Model;
 
 namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 {
-    public class FilreOpenPluginTests
+    public class FileOpenPluginTests
      {
         public static string TempDir = "C:/temp";
         public static string TestFile= TempDir+"/testfile.txt";
+
         [Fact]
         public void FileOpenPluginTest()
         {
@@ -25,14 +26,19 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void UrlDecodeTestSimple()
+        public void FileOpenPluginTestSimple()
         {
-            var plugin = new UrlDecodePlugin();
-            var expected = "Ninja";
+            var expected = "ninjaåäö";
+            if (File.Exists(TestFile)) File.Delete(TestFile);
+            File.WriteAllText(TestFile, "ninjaåäö");
+            var plugin = new FileOpenPlugin();
+            plugin.OpenEncoding = null;
             var actual = plugin.Perform(
-                new ActionParameter("Ninja"));
+                new ActionParameter(TestFile));
             Assert.Equal(expected, actual);
         }
+
+
 
 
     }

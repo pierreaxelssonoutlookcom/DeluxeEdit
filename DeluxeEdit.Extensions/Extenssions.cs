@@ -5,7 +5,19 @@ namespace DeluxeEdit.Extensions
 {
     public static class Extenssions
     {
-
+        public static int IndexOf(this char[] buffer, char c)
+        { 
+            int indexOf = -1;
+            for (int i = 0; i < buffer.Length;i++)
+            {
+                if (buffer[i] ==  c)
+                {
+                    indexOf = i;
+                    break;
+                }
+            }
+            return indexOf;
+       }
         public static bool IsEmpty(this string item)
         {
             return String.IsNullOrEmpty(item);
