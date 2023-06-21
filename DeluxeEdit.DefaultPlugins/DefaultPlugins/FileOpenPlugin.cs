@@ -36,7 +36,7 @@ namespace DeluxeEdit.DefaultPlugins
         }
 
         public bool AsReaOnly { get; set; }
-        public Encoding OpenEncoding { get; set; }
+        public Encoding? OpenEncoding { get; set; }
         public string Id { get; set; } = "";
         public string Titel { get; set; } = "";
         public int SortOrdder { get; set; }
@@ -50,7 +50,7 @@ namespace DeluxeEdit.DefaultPlugins
 
         public FileOpenPlugin()
         {
-            OpenEncoding = Encoding.UTF8;
+          //  OpenEncoding = Encoding.UTF8;
             PresentationOptions = new PresentationOptions();
            Parameter = new ActionParameter();
         }
@@ -62,18 +62,24 @@ namespace DeluxeEdit.DefaultPlugins
         }
         public string ReadPortion(ActionParameter parameter)
         {
-            string? result;
+            if (reader==null)
+            {
+            if (OpenEncoding==null)
+               reader= new StreamReader(new FileStream(parameter.Parameter, FileMode.Open), true  );
+            else
+               reader = new StreamReader(new FileStream(parameter.Parameter, FileMode.Open), OpenEncoding);
 
+            }
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-            reader = reader ?? new StreamReader(new FileStream(parameter.Parameter, FileMode.Open));
 
             var buffy = new char[SystemConstants.FileBufferSize];
             reader.ReadBlock(buffy);
-            result= reader.ToString();
-            return result ?? "";
+            var result = String.Concat(buffy); 
+            return result;
         }
 
     }
+
 
 
 }
