@@ -4,7 +4,7 @@ using DeluxeEdit.Model;
 using DeluxeEdit.Model.Interface;
 using System.Windows.Controls;
 using DeluxeEdit.Extensions;
-
+using System;
 
 namespace DeluxeEdit.DefaultPlugins.Views
 {
@@ -28,11 +28,11 @@ namespace DeluxeEdit.DefaultPlugins.Views
         public void UpdateLoad()
         {
             var plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
-            var path=plugin.GuiAction(plugin);
+            string? path=plugin.GuiAction(plugin);
             //if user cancelled path is empty 
-            if (path.HasContent())
+            if (path.HasContent() && !String.IsNullOrEmpty(path))
             { 
-                editViewModel.Text=plugin.Perform( new ActionParameter {Parameter=path });
+                editViewModel.Text=plugin.Perform( new ActionParameter(path) );
                 MainEditBox.Text = editViewModel.Text;
             }
         }

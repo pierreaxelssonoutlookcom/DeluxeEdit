@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DeluxeEdit.Extensions
 {
@@ -18,11 +19,12 @@ namespace DeluxeEdit.Extensions
             }
             return indexOf;
        }
-        public static bool IsEmpty(this string item)
+        
+        public static bool IsEmpty(this string? item)
         {
             return String.IsNullOrEmpty(item);
         }
-        public static bool HasContent(this string item)
+        public static bool HasContent(this string? item)
         {
             return !String.IsNullOrEmpty(item);
         }

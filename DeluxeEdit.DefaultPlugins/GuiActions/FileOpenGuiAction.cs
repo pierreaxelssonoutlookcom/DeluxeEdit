@@ -1,19 +1,20 @@
 ﻿using DeluxeEdit.Model;
-using System;
+using MvvmDialogs;
 //using Microsoft.Win32;
 using DeluxeEdit.Model.Interface;
+using DeluxeEdit.DefaultPlugins.ViewModel;
 
 namespace DeluxeEdit.DefaultPlugins.GuiActions
 {
     public  class FileOpenGuiAction
     {
         
-        public FileOpenGuiAction() 
-        {
-        }
         public string? GuiAction(INamedActionPlugin parameter)
         {
-//            (new MvvmDialogs.DialogService()).ShowDialog(this, this);
+            var service = new DialogService();
+
+            //ModalDialogTabContentViewModel();
+ //           service.ShowCustomDialog( );
             /* Configure open file dialog box
             OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
              dlg.AddExtension = false;

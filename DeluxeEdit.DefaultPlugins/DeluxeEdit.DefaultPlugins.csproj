@@ -21,6 +21,7 @@
 	  <Compile Include="GuiActions\Plugins.xaml.cs" />
 	  <Compile Include="ViewModel\MainEditViewModel.cs" />
 	  <Compile Include="ViewModel\PluginViewModel.cs" />
+	  <Compile Include="Views\OpenDialog.xaml.cs" />
 	  <Compile Include="Views\PluginsView.xaml.cs" />
 	</ItemGroup>
 
