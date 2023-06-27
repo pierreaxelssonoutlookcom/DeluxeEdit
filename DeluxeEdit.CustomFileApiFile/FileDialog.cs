@@ -5,7 +5,7 @@ namespace Deluxe.CustomFileApiFile
    {
         public string? ShowFileOpenDialog()
         {
-            var dialog = new ();
+            return  null;
         }
 
     }

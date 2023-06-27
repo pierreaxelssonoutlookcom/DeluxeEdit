@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using DeluxeEdit.Extensions;
+using System.IO.MemoryMappedFiles;
+
 namespace DeluxeEdit.DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
@@ -41,7 +43,9 @@ namespace DeluxeEdit.DefaultPlugins
         public string Id { get; set; } = "";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
-    
+
+        private StringBuilder resultBuffer;
+
         public PresentationOptions PresentationOptions { get; set; }
         public string Path { get; set; } = "";
  
@@ -49,25 +53,32 @@ namespace DeluxeEdit.DefaultPlugins
 
         public FileOpenPlugin()
         {
+            resultBuffer = new StringBuilder();
           //  OpenEncoding = Encoding.UTF8;
             PresentationOptions = new PresentationOptions();
         }
 
         public string Perform(ActionParameter parameter)
         {
+            resultBuffer.Length = 0;
             var result = ReadPortion(parameter);
+            resultBuffer.Append(result);
             return result;
-        }
+        } 
         public string ReadPortion(ActionParameter parameter)
         {
-            if (reader==null)
-            {
-            if (OpenEncoding==null)
-               reader= new StreamReader(new FileStream(parameter.Parameter, FileMode.Open), true  );
-            else
-               reader = new StreamReader(new FileStream(parameter.Parameter, FileMode.Open), OpenEncoding);
+            using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
 
-            }
+
+            var stream = mmf.CreateViewStream();
+            
+
+               
+            if (reader==null)
+                reader = OpenEncoding == null ? reader = new StreamReader(stream, true) : new StreamReader(stream, OpenEncoding);
+     
+            
+
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
 
             var buffy = new char[SystemConstants.FileBufferSize];

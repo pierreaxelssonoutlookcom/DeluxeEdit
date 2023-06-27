@@ -7,6 +7,6 @@ namespace DeluxeEdit.Shared
     public class SystemConstants
     {
         public static Char ControlKey = (char)136;
-        public static int FileBufferSize = 1024;
+        public static int FileBufferSize = 1024*2;
     }
 }
