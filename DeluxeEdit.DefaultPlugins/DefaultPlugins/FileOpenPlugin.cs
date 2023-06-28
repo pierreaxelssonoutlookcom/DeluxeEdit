@@ -87,7 +87,7 @@ namespace DeluxeEdit.DefaultPlugins
             
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-          result=  reader.ReadLines(SystemConstants.ReadPortionBufferSizeLines).ToList();
+          result=  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines).ToList();
 
             return result;
         }

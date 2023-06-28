@@ -17,9 +17,9 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         [Fact]
         public void FileOpenPluginTest()
         {
-            var expected = "ninjaåäö";
+            var expected = "ninjaåäÖ";
             if (File.Exists(TestFile)) File.Delete(TestFile);
-            File.WriteAllText(TestFile, "ninjaåäö", Encoding.UTF8);
+            File.WriteAllText(TestFile, "ninjaåäÖ", Encoding.UTF8);
             var plugin = new FileOpenPlugin();
             plugin.OpenEncoding=Encoding.UTF8;
             var actual = plugin.Perform(

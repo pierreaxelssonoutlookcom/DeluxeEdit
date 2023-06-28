@@ -8,7 +8,7 @@ namespace DeluxeEdit.Extensions
 {
     public static class Extenssions
     {
-        public static int IndexOf(this char[] buffer, char c)
+        public static int IndexOf(this string buffer, char c)
         { 
             int indexOf = -1;
             for (int i = 0; i < buffer.Length;i++)
@@ -21,15 +21,20 @@ namespace DeluxeEdit.Extensions
             }
             return indexOf;
        }
-        public static IEnumerable<string> ReadLines(this StreamReader reader, int maxLines)
+        public static IEnumerable<string> ReadLinesMax(this StreamReader reader, int maxLines)
         {
             var result = new List<string>();
             int i = 0;
             string line = String.Empty;
 
+
             while ((line=reader.ReadLine()) != null && i<maxLines ) 
             {
-                result.Append(line);
+                //were we manualy have to locate the NUL char 
+                int index = line.IndexOf('\0');
+                var resultLine = new String( line.ToCharArray(), 0, index);
+                result.Add(resultLine);
+                i++;
             }
             return result;
         }
