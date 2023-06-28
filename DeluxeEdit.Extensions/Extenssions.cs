@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
 
 namespace DeluxeEdit.Extensions
 {
@@ -19,6 +21,18 @@ namespace DeluxeEdit.Extensions
             }
             return indexOf;
        }
+        public static IEnumerable<string> ReadLines(this StreamReader reader, int maxLines)
+        {
+            var result = new List<string>();
+            int i = 0;
+            string line = String.Empty;
+
+            while ((line=reader.ReadLine()) != null && i<maxLines ) 
+            {
+                result.Append(line);
+            }
+            return result;
+        }
         
         public static bool IsEmpty(this string? item)
         {

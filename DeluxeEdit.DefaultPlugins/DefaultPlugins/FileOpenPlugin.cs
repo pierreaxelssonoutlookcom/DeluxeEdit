@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Controls;
 using DeluxeEdit.Extensions;
 using System.IO.MemoryMappedFiles;
+using System.Collections.Generic;
 
 namespace DeluxeEdit.DefaultPlugins
 {
@@ -44,7 +45,7 @@ namespace DeluxeEdit.DefaultPlugins
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
-        private StringBuilder resultBuffer;
+        private List<string> resultBuffer;
 
         public PresentationOptions PresentationOptions { get; set; }
         public string Path { get; set; } = "";
@@ -53,39 +54,41 @@ namespace DeluxeEdit.DefaultPlugins
 
         public FileOpenPlugin()
         {
-            resultBuffer = new StringBuilder();
+            resultBuffer = new List<string>();
           //  OpenEncoding = Encoding.UTF8;
             PresentationOptions = new PresentationOptions();
         }
 
         public string Perform(ActionParameter parameter)
         {
-            resultBuffer.Length = 0;
+            resultBuffer.Clear();
             var result = ReadPortion(parameter);
-            resultBuffer.Append(result);
-            return result;
-        } 
-        public string ReadPortion(ActionParameter parameter)
-        {
-            using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+            if (resultBuffer.Count > SystemConstants.ReadBufferSizeLines) resultBuffer.Clear();
 
-
-            var stream = mmf.CreateViewStream();
             
+            resultBuffer.AddRange(result);
+            return String.Join(Environment.NewLine, result);
+        } 
+        public List<string> ReadPortion(ActionParameter parameter)
+        {
+            var result = new List<string>();
 
-               
-            if (reader==null)
+
+
+            if (reader == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+
+
+                var stream = mmf.CreateViewStream();
+
                 reader = OpenEncoding == null ? reader = new StreamReader(stream, true) : new StreamReader(stream, OpenEncoding);
-     
+            }
             
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
+          result=  reader.ReadLines(SystemConstants.ReadPortionBufferSizeLines).ToList();
 
-            var buffy = new char[SystemConstants.FileBufferSize];
-            reader.ReadBlock(buffy);
-            int idx=buffy.IndexOf('\0');
-            var result = new String(buffy, 0, 
-                idx); 
             return result;
         }
 
