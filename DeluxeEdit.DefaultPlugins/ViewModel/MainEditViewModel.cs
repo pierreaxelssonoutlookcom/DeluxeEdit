@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using DeluxeEdit.Extensions;
 using System.Security.Cryptography;
 using System.Linq;
-using System.Windows.Input;
+//using System.Windows.Input;
 
 namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
@@ -40,21 +40,26 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         // Create the OnPropertyChanged method to raise the event
         // The calling member's name will be used as the parameter.
- 
 
-        public string  KeyDown(KeyEventArgs e)
+        /// <summary>
+        /// now counting number of matched key pressed    
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public string  KeyDown(System.Windows.Input.KeyEventArgs e)
         {
+            //done:cast enum from int
             string result=String.Empty;
             bool keysOkProceed = false;
             var matchCount = plugin.Configuration.KeyCommand
-                .Count(p => Keyboard.IsKeyDown(Enum.Parse<System.Windows.Input.Key>(p.ToString())));
+                .Cast<System.Windows.Input.Key>()
+                .Count(p => System.Windows.Input.Keyboard.IsKeyDown(p));
             
-            keysOkProceed=matchCount == plugin.Configuration.KeyCommand.Count;
+            keysOkProceed=matchCount == plugin.Configuration.KeyCommand.Count && plugin.Configuration.KeyCommand.Count>0;
             if (keysOkProceed) result=UpdateLoad();
 
-
+             
             return result;
-            throw new NotImplementedException();
         }
 
     }
