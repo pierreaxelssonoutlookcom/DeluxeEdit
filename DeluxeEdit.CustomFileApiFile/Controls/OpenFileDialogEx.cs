@@ -28,9 +28,9 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-using CustomControls.OS;
+using DeluxeEdit.CustomFileApiFile.OS;
 
-namespace CustomControls.Controls
+namespace DeluxeEdit.CustomFileApiFile.Controls
 {
     public partial class OpenFileDialogEx : UserControl
     {

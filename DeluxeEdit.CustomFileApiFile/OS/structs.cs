@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace CustomControls.OS
+namespace DeluxeEdit.CustomFileApiFile.OS
 {
 	#region WINDOWINFO
     [StructLayout(LayoutKind.Sequential)]

@@ -1,4 +1,4 @@
-namespace CustomControls.Controls
+namespace DeluxeEdit.CustomFileApiFile.Controls
 {
     partial class OpenFileDialogEx
     {
