@@ -25,7 +25,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            MainEditBox.Text=editViewModel.KeyDown(e);
+            MainEditBox.Text=editViewModel.KeyDown();
         }
     }
 }

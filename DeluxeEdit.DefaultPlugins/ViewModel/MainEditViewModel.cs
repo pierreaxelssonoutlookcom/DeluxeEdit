@@ -46,10 +46,10 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public string  KeyDown(System.Windows.Input.KeyEventArgs e)
+        public string  KeyDown()
         {
             //done:cast enum from int
-            string result=String.Empty;
+            string result = String.Empty;
             bool keysOkProceed = false;
             var matchCount = plugin.Configuration.KeyCommand
                 .Cast<System.Windows.Input.Key>()

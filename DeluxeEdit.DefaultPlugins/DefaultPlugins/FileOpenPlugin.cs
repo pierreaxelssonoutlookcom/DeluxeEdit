@@ -45,7 +45,7 @@ namespace DeluxeEdit.DefaultPlugins
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
-        private List<string> resultBuffer;
+        private List<string> contentBuffer;
 
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
@@ -54,7 +54,7 @@ namespace DeluxeEdit.DefaultPlugins
 
         public FileOpenPlugin()
         {
-            resultBuffer = new List<string>();
+            contentBuffer = new List<string>();
           //  OpenEncoding = Encoding.UTF8;
             Configuration = new ConfigurationOptions();
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O }; 
@@ -62,12 +62,12 @@ namespace DeluxeEdit.DefaultPlugins
 
         public string Perform(ActionParameter parameter)
         {
-            resultBuffer.Clear();
+            contentBuffer.Clear();
             var result = ReadPortion(parameter);
-            if (resultBuffer.Count > SystemConstants.ReadBufferSizeLines) resultBuffer.Clear();
+            if (contentBuffer.Count > SystemConstants.ReadBufferSizeLines) contentBuffer.Clear();
 
             
-            resultBuffer.AddRange(result);
+            contentBuffer.AddRange(result);
             return String.Join(Environment.NewLine, result);
         } 
         public List<string> ReadPortion(ActionParameter parameter)
