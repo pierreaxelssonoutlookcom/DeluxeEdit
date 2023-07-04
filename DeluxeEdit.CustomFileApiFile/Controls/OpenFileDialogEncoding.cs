@@ -44,14 +44,12 @@ namespace DeluxeEdit.CustomFileApiFile.Controls
         public event EventHandler ClosingDialog;
         #endregion
 
-        #region Constants Declaration
         private const SetWindowPosFlags UFLAGSHIDE =
             SetWindowPosFlags.SWP_NOACTIVATE |
             SetWindowPosFlags.SWP_NOOWNERZORDER |
             SetWindowPosFlags.SWP_NOMOVE |
             SetWindowPosFlags.SWP_NOSIZE |
             SetWindowPosFlags.SWP_HIDEWINDOW;
-        #endregion
 
         #region Variables Declaration
         private AddonWindowLocation mStartLocation = AddonWindowLocation.Right;

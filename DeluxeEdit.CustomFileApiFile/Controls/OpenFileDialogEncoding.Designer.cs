@@ -5,6 +5,7 @@ namespace DeluxeEdit.CustomFileApiFile.Controls
 {
     public partial class OpenFileDialogEncoding : OpenFileDialogEx
     {
+        
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -43,9 +44,7 @@ namespace DeluxeEdit.CustomFileApiFile.Controls
             cmbEncoding.Name = "cmbEncoding";
             cmbEncoding.Size = new System.Drawing.Size(182, 33);
             cmbEncoding.TabIndex = 0;
-            var encodingNames = Encoding.GetEncodings().Select(p => p.Name).ToArray();
-            cmbEncoding.Items.AddRange(encodingNames);
-
+           
             // 
             // OpenFileDialogEncoding
             // 
