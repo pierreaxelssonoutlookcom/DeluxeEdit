@@ -24,9 +24,8 @@ using System.Text;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using FileDialogExtenders;
 
-namespace Win32Types
+namespace CustomFileApiFile.FileDlgExtenders
 {
 	#region WINDOWINFO
 

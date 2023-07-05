@@ -1,7 +1,7 @@
 using System.ComponentModel;
-namespace CustomControls
+namespace CustomFileApiFile
 {
-    partial class MySaveDialogControl
+    public partial class MySaveDialogControl
     {
         /// <summary>
         /// Required designer variable.

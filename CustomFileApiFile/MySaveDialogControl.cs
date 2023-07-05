@@ -28,10 +28,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.IO;
-using FileDialogExtenders;
+using CustomFileApiFile.FileDlgExtenders;
 
 
-namespace CustomControls
+namespace CustomFileApiFile
 {
     public partial class MySaveDialogControl : FileDialogControlBase
     {

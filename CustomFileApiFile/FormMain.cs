@@ -30,9 +30,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using AboutUtil;
-using FileDialogExtenders;
+using CustomFileApiFile.FileDlgExtenders;
+using CustomFileApiFile;
 
-namespace CustomControls
+namespace CustomFileApiFile
 {
 
     public partial class FormMain : Form
@@ -74,7 +75,7 @@ namespace CustomControls
             }
             else if (sender.Equals(this._btnExtension))
             {
-                using (MyOpenFileDialogControl openDialogCtrl = new MyOpenFileDialogControl())
+                using (MyOpenFileDialogControl    openDialogCtrl = new MyOpenFileDialogControl())
                 {
                     openDialogCtrl.FileDlgInitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                     OpenFileDialog openDialog = new OpenFileDialog();

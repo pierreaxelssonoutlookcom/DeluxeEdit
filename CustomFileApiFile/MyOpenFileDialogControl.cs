@@ -28,10 +28,9 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using CustomFileApiFile.FileDlgExtenders;
 
-using FileDialogExtenders;
-
-namespace CustomControls
+namespace CustomFileApiFile
 {
 
     public partial class MyOpenFileDialogControl : FileDialogControlBase

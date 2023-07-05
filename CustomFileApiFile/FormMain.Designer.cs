@@ -1,5 +1,5 @@
 
-namespace CustomControls
+namespace CustomFileApiFile
 {
     partial class FormMain
     {

@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
 using Win32Types;
 
-namespace FileDialogExtenders
+namespace CustomFileApiFile.FileDlgExtenders
 {
     #region Base class
 

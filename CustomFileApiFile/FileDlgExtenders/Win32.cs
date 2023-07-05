@@ -21,10 +21,9 @@
 
 using System;
 using System.Text;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using FileDialogExtenders;
-namespace Win32Types
+
+namespace CustomFileApiFile.FileDlgExtenders
 {
     internal static class NativeMethods
     {

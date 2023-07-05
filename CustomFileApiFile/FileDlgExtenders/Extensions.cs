@@ -25,7 +25,7 @@ using Win32Types;
 using System.ComponentModel;
 using Microsoft.Win32;
 
-namespace FileDialogExtenders
+namespace CustomFileApiFile.FileDlgExtenders
 {
     public static class Extensions
     {
@@ -39,7 +39,7 @@ namespace FileDialogExtenders
                 return DialogResult.Ignore;
         }
         #endregion
-    }
+    }   
 
     //see http://msdn.microsoft.com/en-us/magazine/cc300434.aspx
     public static class FileDialogPlaces
