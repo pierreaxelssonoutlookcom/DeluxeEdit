@@ -1,5 +1,5 @@
-﻿using DeluxeEdit.DefaultPlugins;
-using DeluxeEdit.DefaultPlugins.Views;
+﻿using Model;
+using DefaultPlugins.Views;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;

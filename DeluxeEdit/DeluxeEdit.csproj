@@ -8,17 +8,16 @@
 	<Version>0.0.1</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DeluxeEdit.CustomFileApiFile\DeluxeEdit.CustomFileApiFile.csproj" />
-    <ProjectReference Include="..\DeluxeEdit.DefaultPlugins.Managers\DeluxeEdit.DefaultPlugins.Managers.csproj" />
-    <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
-    <ProjectReference Include="..\DeluxeEdit.Extensions\DeluxeEdit.Extensions.csproj" />
-    <ProjectReference Include="..\DeluxeEdit.Model\DeluxeEdit.Model.csproj" />
-    <ProjectReference Include="..\DeluxeEdit.Shared\DeluxeEdit.Shared.csproj" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy C:\gitroot\personal\DeluxeEdit\DeluxeEdit\bin\Debug\net7.0-windows\DeluxeEdit.DefaultPlugins.* &quot;C:\Program Files\DeluxeEdit\plugins&quot;" />
+    <Exec Command="copy C:\gitroot\personal\DeluxeEdit\DeluxeEdit\bin\Debug\net7.0-windows\DefaultPlugins.* &quot;C:\Program Files\DeluxeEdit\plugins&quot;" />
   </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomFileApiFile\CustomFileApiFile.csproj" />
+    <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
 
 </Project>

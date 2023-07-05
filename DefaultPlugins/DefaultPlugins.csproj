@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<UseWPF>true</UseWPF>
+		<Version>0.0.1</Version>
+		<Title>A List o defaullt plugins fo DeluxeEdit</Title>
+		<Authors>Pierre Axelsson</Authors>
+		<Company>Pierre Axelsson</Company>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<UserSecretsId>b129b379-a295-4367-a3e3-7aae961e7337</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Include="AllPlugins.cs" />
+	  <Compile Include="AssemblyInfo1cs.cs" />
+	  <Compile Include="DefaultPlugins\FileOpenPlugin.cs" />
+	  <Compile Include="DefaultPlugins\UrlDecodePlugin.cs" />
+	  <Compile Include="DefaultPlugins\UrlEncodePlugin.cs" />
+	  <Compile Include="GuiActions\FileOpenGuiAction.cs" />
+	  <Compile Include="ViewModel\MainEditViewModel.cs" />
+	  <Compile Include="ViewModel\PluginViewModel.cs" />
+	  <Compile Include="Views\PluginsView.xaml.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Views\MainEditView.xaml.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+	  <PackageReference Include="Microsoft.Win32" Version="2.0.1" />
+	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\CustomFileApiFile\CustomFileApiFile.csproj" />
+	  <ProjectReference Include="..\Extensions\Extensions.csproj" />
+	  <ProjectReference Include="..\ModelMisc\ModelMisc.csproj" />
+	  <ProjectReference Include="..\Model\Model.csproj" />
+	  <ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+
+</Project>
