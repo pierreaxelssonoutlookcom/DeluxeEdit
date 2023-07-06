@@ -46,13 +46,16 @@ namespace CustomFileApiFile
 
         protected override void OnPrepareMSDialog()
         {
+            
             base.FileDlgInitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (Environment.OSVersion.Version.Major < 6)
                 MSDialog.SetPlaces(new object[] { @"c:\", (int)Places.MyComputer, (int)Places.Favorites, (int)Places.Printers, (int)Places.Fonts, });
             base.OnPrepareMSDialog();
+
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1807:AvoidUnnecessaryStringCreation", MessageId = "filePath")]
-       
+    
+
 
         private void MyOpenFileDialogControl_ClosingDialog(object sender, CancelEventArgs e)
         {

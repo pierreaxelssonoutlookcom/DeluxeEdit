@@ -213,11 +213,7 @@ namespace CustomFileApiFile.FileDlgExtenders
 
         [Category("FileDialogExtenders")]
         [DefaultValue("All files (*.*)|*.*")]
-        public string FileDlgFilter
-        {
-            get { return DesignMode ? _Filter : MSDialog.Filter; }
-            set { _Filter = value; }
-        }
+        public string FileDlgFilter= "All files(*.*)|*.*";
 
         [Category("FileDialogExtenders")]
         [DefaultValue(1)]

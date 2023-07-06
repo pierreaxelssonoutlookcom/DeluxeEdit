@@ -121,13 +121,13 @@ namespace CustomFileApiFile
             Controls.Add(lblSize);
             Controls.Add(lblFormat);
             Controls.Add(lblColors);
-            FileDlgCaption = "Select an Image";
+            FileDlgCaption = "Open text file";
             FileDlgDefaultViewMode = FolderViewMode.Thumbnails;
             FileDlgEnableOkBtn = false;
-            FileDlgFileName = "Select Picture";
+            FileDlgFileName = "Open text file";
             FileDlgFilter = "";
             FileDlgFilterIndex = 2;
-            FileDlgOkCaption = "Select";
+            FileDlgOkCaption = "Open";
             ImeMode = System.Windows.Forms.ImeMode.NoControl;
             Name = "MyOpenFileDialogControl";
             Size = new System.Drawing.Size(270, 66);
