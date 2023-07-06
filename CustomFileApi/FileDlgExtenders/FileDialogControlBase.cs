@@ -405,47 +405,7 @@ namespace CustomFileApiFile.FileDlgExtenders
                 EventFilterChanged(sender, index);
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (DesignMode)
-            {
-                Graphics gr = e.Graphics;
-                {
-                    HatchBrush hb = null;
-                    Pen p = null;
-                    try
-                    {
-                        switch (this.FileDlgStartLocation)
-                        {
-                            case AddonWindowLocation.Right:
-                                hb = new System.Drawing.Drawing2D.HatchBrush(HatchStyle.NarrowHorizontal, Color.Black, Color.Red);
-                                p = new Pen(hb, 5);
-                                gr.DrawLine(p, 0, 0, 0, this.Height);
-                                break;
-                            case AddonWindowLocation.Bottom:
-                                hb = new System.Drawing.Drawing2D.HatchBrush(HatchStyle.NarrowVertical, Color.Black, Color.Red);
-                                p = new Pen(hb, 5);
-                                gr.DrawLine(p, 0, 0, this.Width, 0);
-                                break;
-                            case AddonWindowLocation.BottomRight:
-                            default:
-                                hb = new System.Drawing.Drawing2D.HatchBrush(HatchStyle.Sphere, Color.Black, Color.Red);
-                                p = new Pen(hb, 5);
-                                gr.DrawLine(p, 0, 0, 4, 4);
-                                break;
-                        }
-                    }
-                    finally
-                    {
-                        if (p != null)
-                            p.Dispose();
-                        if (hb != null)
-                            hb.Dispose();
-                    }
-                }
-            }
-            base.OnPaint(e);
-        }
+        
 
 
         #endregion

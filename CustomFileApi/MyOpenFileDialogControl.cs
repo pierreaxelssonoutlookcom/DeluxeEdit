@@ -19,7 +19,7 @@
 //  PURPOSE. IT CAN BE DISTRIBUTED FREE OF CHARGE AS LONG AS THIS HEADER 
 //  REMAINS UNCHANGED.
 
-using System;
+using Extensions;
 using System.IO;
 using System.Data;
 using System.Text;
@@ -35,19 +35,17 @@ namespace CustomFileApiFile
 
     public partial class MyOpenFileDialogControl : FileDialogControlBase
     {
-        public MyOpenFileDialogControl()
+        public MyOpenFileDialogControl(string? initialDirectory=null)
         {
-
+            FileDlgInitialDirectory = initialDirectory.HasContent() ? initialDirectory: "";
             InitializeComponent();
             if (cmbEncoding!=null)  cmbEncoding.Items.AddRange(Encoding.GetEncodings().Select(p => p.Name).ToArray());
         }
 
         public string? WantedEncoding { get;  set; }
-
         protected override void OnPrepareMSDialog()
         {
             
-            base.FileDlgInitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (Environment.OSVersion.Version.Major < 6)
                 MSDialog.SetPlaces(new object[] { @"c:\", (int)Places.MyComputer, (int)Places.Favorites, (int)Places.Printers, (int)Places.Fonts, });
             base.OnPrepareMSDialog();

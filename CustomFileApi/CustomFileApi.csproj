@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft-WindowsAPICodePack-Core" Version="1.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
+  </ItemGroup>
+
 </Project>

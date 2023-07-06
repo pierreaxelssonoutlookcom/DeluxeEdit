@@ -99,7 +99,7 @@ namespace CustomFileApiFile
             cmbEncoding.Name = "cmbEncoding";
             cmbEncoding.Size = new System.Drawing.Size(182, 33);
             cmbEncoding.TabIndex = 9;
-            // 
+            // n,
             // label1
             // 
             label1.AutoSize = true;
