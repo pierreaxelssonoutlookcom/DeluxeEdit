@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Extensions
@@ -23,6 +24,16 @@ namespace Extensions
                 i++;
             }
             return result;
+        }
+
+
+        public static void WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
+        {
+            foreach (var item in buffer.Select(p => p.Take(maxLines)))
+            {
+                writer.WriteLine(item);
+            } 
+
         }
 
 

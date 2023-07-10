@@ -10,10 +10,10 @@ namespace CustomFileApiFile
 {
      public class DeluxeFileDialog
     {
-        public EncodingPath? ShowFileOpenDialog()
+        public EncodingPath? ShowFileOpenDialog(string? initDir=null)
         {
             EncodingPath? result;
-            using var dialog = new MyOpenFileDialogControl(@"c:\");
+            using var dialog = new MyOpenFileDialogControl(initDir);
             var dummyForm = new Form();
             var dialogResult=dialog.ShowDialog(dummyForm);
 
@@ -25,6 +25,11 @@ namespace CustomFileApiFile
             
             return null;
 
+        }
+
+        public object ShowFileSaveDialog(string oldDir)
+        {
+            throw new NotImplementedException();
         }
     }
 }

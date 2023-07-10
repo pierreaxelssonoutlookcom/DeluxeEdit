@@ -13,35 +13,29 @@ using CustomFileApiFile;
 
 namespace DefaultPlugins
 {
-    public class FileOpenPlugin : INamedActionPlugin
-    { 
+    public class FileSavePlugin : INamedActionPlugin
+    {
         public ActionParameter? Parameter { get; set; }
 
         public object? Control { get; set; }
-        public Type? ControlType{ get; set; }=typeof(DefaultPlugins.Views.MainEdit);
+        public Type? ControlType { get; set; } = typeof(DefaultPlugins.Views.MainEdit);
         public string? GuiAction(INamedActionPlugin instance)
         {
-            string oldDir =@"c:\";
+            string oldDir = @"c:\";
 
             if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            var dialog= new DeluxeFileDialog();
-            var result=dialog.ShowFileOpenDialog(oldDir);
+            var dialog = new DeluxeFileDialog();
+            var result = dialog.ShowFileSaveDialog(oldDir);
             return null;
         }
 
-      
+
 
         //todo; we might have to implement setcontext for plugins   
-            
+
         public bool Enabled { get; set; }
 
-        private StreamReader? reader;
-        public bool CanReadMore()
-        {
-            var result = false;
-            if (reader != null) result = reader.BaseStream.CanRead;
-            return result;
-        }
+        private StreamWriter? writer;
 
         public bool AsReaOnly { get; set; }
         public Encoding? OpenEncoding { get; set; }
@@ -53,51 +47,45 @@ namespace DefaultPlugins
 
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
- 
 
 
-        public FileOpenPlugin()
+
+        public FileSavePlugin()
         {
             ContentBuffer = new List<string>();
-          //  OpenEncoding = Encoding.UTF8;
+            //  OpenEncoding = Encoding.UTF8;
             Configuration = new ConfigurationOptions();
-            Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O }; 
+            Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.S };
         }
 
         public string Perform(ActionParameter parameter)
         {
-              Parameter=parameter;
+            Parameter = parameter;
 
-        ContentBuffer.Clear();
-            var result = ReadPortion(parameter);
+            WritePortion(parameter);
             if (ContentBuffer.Count > SystemConstants.ReadBufferSizeLines) ContentBuffer.Clear();
 
-            
-            ContentBuffer.AddRange(result);
-            return String.Join(Environment.NewLine, result);
-        } 
-        public List<string> ReadPortion(ActionParameter parameter)
+            return "";
+
+        }
+        public void WritePortion(ActionParameter parameter)
         {
-            var result = new List<string>();
 
 
-
-            if (reader == null)
+            if (writer == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
                 var stream = mmf.CreateViewStream();
-                reader = OpenEncoding == null ? reader = new StreamReader(stream, true) : new StreamReader(stream, OpenEncoding);
+                writer = OpenEncoding == null ? writer = new StreamWriter(stream) : new StreamWriter(stream, OpenEncoding);
             }
-            
+
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-          result=  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines).ToList();
 
-            return result;
+            writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
         }
 
     }
 
-
-
 }
+    
