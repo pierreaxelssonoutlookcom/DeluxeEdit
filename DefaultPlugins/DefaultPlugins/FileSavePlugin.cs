@@ -37,6 +37,8 @@ namespace DefaultPlugins
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
+        //todo:make dynamic
+        public bool CanWriteMore { get; set;}=false;
 
         private StreamWriter? writer;
 
@@ -87,10 +89,18 @@ namespace DefaultPlugins
 
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-
             writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
             writer.Flush();
-            writer.Close();
+
+            if (!CanWriteMore)
+            {
+                writer.Flush();
+
+                writer.Close();
+                writer = null;
+
+            }
+
         }
 
     }

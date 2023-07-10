@@ -50,19 +50,15 @@ namespace DefaultPlugins
         }
 
 
-        public bool CanReadMore()
-        {
-            var result = false;
-            if (reader != null) result = reader.BaseStream.CanRead;
-            return result;
-        }
+        public bool CanReadMore { get { return reader.BaseStream.CanRead; } }
+                
 
  
 
         public FileOpenPlugin()
         {
             ContentBuffer = new List<string>();
-          //  OpenEncoding = Encoding.UTF8;
+          //  OpenEncoding = Encoding.UTF8; m 
             Configuration = new ConfigurationOptions();
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O }; 
         }
@@ -95,8 +91,17 @@ namespace DefaultPlugins
             
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-
+            
             result =  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines).ToList();
+
+            if (!CanReadMore)
+            {
+                reader.Close();
+
+                reader = null;
+            }
+
+
 
             return result;
         }
