@@ -12,22 +12,27 @@ namespace DefaultPlugins.ViewModel
 {
     public class MainEditViewModel
     {
-        private INamedActionPlugin plugin;
+        private FileOpenPlugin plugin;
 
 
         public MainEditViewModel()
         {
-            plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
+            plugin = AllPlugins.InvokePlugin(PluginId.FileOpen) as FileOpenPlugin;
         }
-
+        /// <summary>
+        /// Code should we run when loading a file
+        /// </summary>
+        /// <returns></returns>
         public string UpdateLoad()
         {
             var result=String.Empty;
-            string? path = plugin.GuiAction(plugin);
+            var actionResult = plugin.GuiAction(plugin);
             //if user cancelled path is empty 
-            if (path.HasContent() && !String.IsNullOrEmpty(path))
+            if (actionResult != null && actionResult.Path.HasContent())
             {
-                result = plugin.Perform(new ActionParameter(path));
+
+                plugin.OpenEncoding = actionResult.Encoding;
+                result = plugin.Perform(new ActionParameter(actionResult.Path));
             }
             return result;
         }

@@ -13,7 +13,7 @@ namespace DefaultPlugins
 
         public object? Control { get; set; }
         public Type? ControlType { get; set; } = null;
-        public string? GuiAction(INamedActionPlugin instance) { return ""; }
+        public EncodingPath? GuiAction(INamedActionPlugin instance) { return null; }
 
         public bool Enabled { get; set; }
 

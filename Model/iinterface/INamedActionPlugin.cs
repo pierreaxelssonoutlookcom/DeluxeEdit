@@ -23,8 +23,8 @@ namespace Model.Interface
         object? Control { get; set; }
 
         Type?  ControlType { get; set; }
-            
-        string? GuiAction(INamedActionPlugin instance) ;
+
+        EncodingPath?  GuiAction(INamedActionPlugin instance) ;
         string Path { get; set; } 
   
         

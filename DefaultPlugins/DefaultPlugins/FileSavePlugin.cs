@@ -16,30 +16,22 @@ namespace DefaultPlugins
 {
     public class FileSavePlugin : INamedActionPlugin
     {
-         public long FileSize { get; set; }
+        public long FileSize { get; set; }
+        public long BytesWritten { get; set; }
 
         public ActionParameter? Parameter { get; set; }
 
         public object? Control { get; set; }
         public Type? ControlType { get; set; } = typeof(DefaultPlugins.Views.MainEdit);
-        public string? GuiAction(INamedActionPlugin instance)
-        {
-            string oldDir = @"c:\";
-
-            if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            var dialog = new DeluxeFileDialog();
-            var result = dialog.ShowFileSaveDialog(oldDir);
-            return null;
-        }
-
+        
 
 
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
-        //todo:make dynamic
-        public bool CanWriteMore { get; set;}=false;
-
+        //done:make dynamic
+        public bool CanWriteMore {  get { return FileSize != 0 && BytesWritten < FileSize; } }
+        
         private StreamWriter? writer;
 
         public bool AsReaOnly { get; set; }
@@ -62,6 +54,16 @@ namespace DefaultPlugins
             Configuration = new ConfigurationOptions();
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.S };
         }
+        public EncodingPath? GuiAction(INamedActionPlugin instance)
+        {
+            string oldDir = @"c:\";
+
+            if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+            var dialog = new DeluxeFileDialog();
+            var result = dialog.ShowFileSaveDialog(oldDir);
+            return result;
+        }
+
         public string Perform(ActionParameter parameter)
         {
             Parameter = parameter;
@@ -89,13 +91,12 @@ namespace DefaultPlugins
 
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-            writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
+            long bytes= writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
+            BytesWritten += bytes;
             writer.Flush();
 
             if (!CanWriteMore)
-            {
-                writer.Flush();
-
+            { 
                 writer.Close();
                 writer = null;
 

@@ -16,7 +16,7 @@ namespace DefaultPlugins
         public Type? ControlType { get; set; } = null;
 
         
-        public string? GuiAction(INamedActionPlugin instance) { return ""; }
+        public EncodingPath? GuiAction(INamedActionPlugin instance) { return null; }
         public bool Enabled { get; set; }
         public char[] MyKeyCommand { get; set; } = new char[0];
         public string Id { get; set; } ="UrlDeclode";

@@ -14,13 +14,15 @@ using CustomFileApiFile;
 namespace DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
-    { 
+    {
+        public long FileSize { get; set; }
+        public long BytesRead { get; set; }
+
         public ActionParameter? Parameter { get; set; }
 
         public object? Control { get; set; }
         public Type? ControlType{ get; set; }=typeof(DefaultPlugins.Views.MainEdit);
-        public long FileSize { get; set; }
-
+    
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
@@ -39,7 +41,7 @@ namespace DefaultPlugins
 
 
 
-        public string? GuiAction(INamedActionPlugin instance)
+        public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
             string oldDir =@"c:\";
 
@@ -66,8 +68,8 @@ namespace DefaultPlugins
         public string Perform(ActionParameter parameter)
         {
               Parameter=parameter;
-            FileSize = new FileInfo(Path).Length;
-
+            FileSize = File.Exists(parameter.Parameter) ?   new FileInfo(parameter.Parameter).Length: 0;
+            BytesRead = 0;
 
             ContentBuffer.Clear();
             var result = ReadPortion(parameter);
@@ -79,8 +81,8 @@ namespace DefaultPlugins
         } 
         public List<string> ReadPortion(ActionParameter parameter)
         {
-            var result = new List<string>();
 
+            if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
 
             if (reader == null)
             {
@@ -90,10 +92,9 @@ namespace DefaultPlugins
             }
             
 
-            if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
             
-            result =  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines).ToList();
-
+            var linesRead=  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines);
+            BytesRead += linesRead.Bytes;
             if (!CanReadMore)
             {
                 reader.Close();
@@ -103,7 +104,7 @@ namespace DefaultPlugins
 
 
 
-            return result;
+            return linesRead.Items;
         }
 
     }

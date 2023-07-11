@@ -1,4 +1,4 @@
-﻿using CustomFileApi.Model;
+﻿using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace CustomFileApiFile
     {
         public EncodingPath? ShowFileOpenDialog(string? initDir=null)
         {
-            EncodingPath? result;
+            EncodingPath? result=null;
             using var dialog = new MyOpenFileDialogControl(initDir);
             var dummyForm = new Form();
             var dialogResult=dialog.ShowDialog(dummyForm);
@@ -23,11 +23,11 @@ namespace CustomFileApiFile
                 result.Encoding = dialog.WantedEncoding != null ? (Encoding?)(Encoding.GetEncoding(dialog.WantedEncoding)): null; 
             }
             
-            return null;
+            return result;
 
         }
 
-        public object ShowFileSaveDialog(string oldDir)
+        public EncodingPath ShowFileSaveDialog(string oldDir)
         {
             throw new NotImplementedException();
         }
