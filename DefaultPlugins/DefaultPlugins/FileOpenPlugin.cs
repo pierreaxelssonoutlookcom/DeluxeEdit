@@ -26,6 +26,7 @@ namespace DefaultPlugins
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
+        public MemoryMappedViewStream MýStream { get; private set; }
 
         private StreamReader? reader;
         public bool AsReaOnly { get; set; }
@@ -69,7 +70,16 @@ namespace DefaultPlugins
         {
               Parameter=parameter;
             FileSize = File.Exists(parameter.Parameter) ?   new FileInfo(parameter.Parameter).Length: 0;
-            BytesRead = 0;
+            BytesRead = 0; 
+            if (reader == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                MýStream = mmf.CreateViewStream();
+                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+            }
+
+
+
 
             ContentBuffer.Clear();
             var result = ReadPortion(parameter);
@@ -81,15 +91,11 @@ namespace DefaultPlugins
         } 
         public List<string> ReadPortion(ActionParameter parameter)
         {
+            //todo:how do I share file data between different plugins
+
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
 
-            if (reader == null)
-            {
-                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
-                var stream = mmf.CreateViewStream();
-                reader = OpenEncoding == null ? reader = new StreamReader(stream, true) : new StreamReader(stream, OpenEncoding);
-            }
             
 
             
