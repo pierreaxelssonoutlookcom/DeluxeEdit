@@ -75,6 +75,22 @@ namespace DefaultPlugins
             return "";
 
         }
+        public void WritesAllPortions(ActionParameter parameter)
+        {
+       
+            while (CanWriteMore)
+            {
+               WritePortion(parameter);
+            }
+
+            if (!CanWriteMore)
+            {
+                writer.Close();
+                writer = null;
+            }
+            
+        }
+
         public void WritePortion(ActionParameter parameter)
         {
 
