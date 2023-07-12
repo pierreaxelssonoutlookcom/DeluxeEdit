@@ -30,7 +30,7 @@ namespace DefaultPlugins
 
         public bool Enabled { get; set; }
         //done:make dynamic
-        public bool CanWriteMore {  get { return FileSize != 0 && BytesWritten < FileSize; } }
+        public bool CanWriteMore { get { return (FileSize != 0 && BytesWritten < FileSize) || ContentBuffer.Count > 0; } }
         
         private StreamWriter? writer;
 
@@ -95,15 +95,8 @@ namespace DefaultPlugins
         {
 
 
-            if (writer == null)
-            {
-                using (var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter))
-                {
-                    var stream = mmf.CreateViewStream();
-                    writer = OpenEncoding == null ? writer = new StreamWriter(stream) : new StreamWriter(stream, OpenEncoding);
 
-                }
-            }
+            
 
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);

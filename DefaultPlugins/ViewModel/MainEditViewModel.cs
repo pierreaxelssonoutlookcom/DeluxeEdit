@@ -12,22 +12,23 @@ namespace DefaultPlugins.ViewModel
 {
     public class MainEditViewModel
     {
-        private INamedActionPlugin plugin;
+        private FileOpenPlugin plugin;
 
 
         public MainEditViewModel()
         {
-            plugin = AllPlugins.InvokePlugin(PluginId.FileOpen);
+            plugin = AllPlugins.InvokePlugin(PluginId.FileOpen) as FileOpenPlugin;
         }
         //done :find way to renember old path before dialog 
         public string UpdateLoad()
         {
             var result=String.Empty;
-            string? path = plugin.GuiAction(plugin);
+            var action= plugin.GuiAction(plugin);
             //if user cancelled path is empty 
-            if (path.HasContent() && !String.IsNullOrEmpty(path))
+            if (action!= null && action.Path.HasContent())
             {
-                result = plugin.Perform(new ActionParameter(path));
+                plugin.OpenEncoding = action.Encoding;
+                result = plugin.Perform(new ActionParameter(action.Path));
             }
             return result;
         }
