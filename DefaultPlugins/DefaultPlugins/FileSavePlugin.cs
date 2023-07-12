@@ -69,7 +69,7 @@ namespace DefaultPlugins
             Parameter = parameter;
             FileSize = new FileInfo(Path).Length;
 
-            WritePortion(parameter);
+            WritesAllPortions(parameter);
             if (ContentBuffer.Count > SystemConstants.ReadBufferSizeLines) ContentBuffer.Clear();
 
             return "";
@@ -94,22 +94,10 @@ namespace DefaultPlugins
         public void WritePortion(ActionParameter parameter)
         {
 
-
-
-            
-
-
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
             long bytes= writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
             BytesWritten += bytes;
             writer.Flush();
-
-            if (!CanWriteMore)
-            { 
-                writer.Close();
-                writer = null;
-
-            }
 
         }
 

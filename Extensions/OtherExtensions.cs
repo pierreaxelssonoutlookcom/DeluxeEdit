@@ -37,20 +37,26 @@ namespace Extensions
         }
 
         /// <summary>
-        /// Returns bytes written
+        /// Returns bytes written, removes lines written
         /// </summaryR
-        /// <param name="writer"></param>
+        /// S<param name="writer"></param>
         /// <param name="buffer"></param>
         /// <param name="maxLines"></param>
         /// <returns></returns>
         public static long WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
         {
             long oldPos=writer.BaseStream.Position;
+            var removals = new List<string>();
 
-            foreach (var item in buffer.Select(p => p.Take(maxLines)))
+            foreach (var item in buffer.Take(maxLines).Select(p=>p.ToString()))
             {
                 writer.WriteLine(item);
+                removals.Add(item);
             }
+
+
+            removals.Select(p => buffer.Remove(p));
+
             return writer.BaseStream.Position - oldPos;
             
 
