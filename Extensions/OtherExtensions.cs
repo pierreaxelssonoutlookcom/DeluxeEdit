@@ -53,10 +53,9 @@ namespace Extensions
                 writer.WriteLine(item);
                 removals.Add(item);
             }
-
-
-            removals.Select(p => buffer.Remove(p));
-
+                         
+            removals.ForEach(p => buffer.Remove(p));
+            
             return writer.BaseStream.Position - oldPos;
             
 

@@ -30,8 +30,11 @@ namespace DefaultPlugins
 
         public bool Enabled { get; set; }
         //done:make dynamic
-        public bool CanWriteMore { get { return (FileSize != 0 && BytesWritten < FileSize) || ContentBuffer.Count > 0; } }
-        
+        public bool CanWriteMore { get { return FileSize != 0 && BytesWritten < FileSize && ContentBuffer.Count > 0; } }
+
+        public MemoryMappedViewStream MyStream { get; private set; }
+
+
         private StreamWriter? writer;
 
         public bool AsReaOnly { get; set; }
@@ -65,10 +68,15 @@ namespace DefaultPlugins
         }
 
         public string Perform(ActionParameter parameter)
-
         {
             Parameter = parameter;
             FileSize = File.Exists(parameter.Parameter)? new FileInfo(parameter.Parameter).Length: 0;
+            if (writer == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                MyStream= mmf.CreateViewStream();
+                writer = OpenEncoding == null ?  new StreamWriter(MyStream) : new StreamWriter(MyStream, OpenEncoding);
+            }
 
             WritesAllPortions(parameter);
             if (ContentBuffer.Count > SystemConstants.ReadBufferSizeLines) ContentBuffer.Clear();
