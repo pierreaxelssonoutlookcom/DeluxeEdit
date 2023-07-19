@@ -17,8 +17,8 @@ namespace DefaultPlugins.ViewModel
     {
         private FileOpenPlugin openPlugin;
         private FileSavePlugin savePlugin;
-        private ActionParameter LastParam;
-        private static Dictionary<string, string>  Contents=new Dictionary<string, string>();
+        private static ContentPath? currentContent = null;
+        private static List<ContentPath>  allContents=new List<ContentPath>();
 
         public MainEditViewModel()
         {
@@ -26,29 +26,31 @@ namespace DefaultPlugins.ViewModel
             savePlugin = AllPlugins.InvokePlugin(PluginId.FileSave) as FileSavePlugin;
         }
         //done :find way to renember old path before dialog 
-        public ContentPath UpdateLoad()
+        public ContentPath? UpdateLoad()
         {
-            var result = new ContentPath();
+            ContentPath? result = null;
             var action= openPlugin.GuiAction(openPlugin);
             //if user cancelled path is empty 
             if (action != null && action.Path.HasContent())
-            { 
+            {
+                result = new ContentPath();
                 result.Path = action.Path;
                 result.Header = new FileInfo(result.Path).Name;
-                LastParam = new ActionParameter(action.Path);
                 openPlugin.OpenEncoding = action.Encoding;
-                result.Content = openPlugin.Perform(LastParam, String.Empty);
+                result.Content = openPlugin.Perform(new ActionParameter(result.Path), String.Empty);
+                currentContent = result;
+                allContents.Add(result);
             }
-            //todo:fix so we can keep track of contents and paths
-            Contents[LastParam.Parameter]= result.Content;
+            //done:fix so we can keep track of contents and paths
             return result;
             
         }
         public void ChangeTab(ContentPath item)
-        { }
+        {
+            currentContent=allContents.First(p=>p.Path==item.Path && p.Header==item.Header);
+        }
         public void UpdateSave(string data)
         {
-            if (LastParam == null) throw new NullReferenceException();
             savePlugin.Perform(null, data);
         }
 
