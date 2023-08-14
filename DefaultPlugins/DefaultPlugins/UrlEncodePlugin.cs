@@ -32,9 +32,9 @@ namespace DefaultPlugins
             Configuration = new ConfigurationOptions();
         }
 
-        public string Perform(ActionParameter parameter, string indata)
+        public string Perform(ActionParameter parameter)
         {
-            var result = HttpUtility.UrlEncode( indata, Encoding.UTF8);
+            var result = HttpUtility.UrlEncode(parameter.Parameter, Encoding.UTF8);
             return result;
         }
     }

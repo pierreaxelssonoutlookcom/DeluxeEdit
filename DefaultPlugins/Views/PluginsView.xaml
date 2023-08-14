@@ -8,13 +8,7 @@
     <StackPanel Orientation="Vertical">
         <Label Content="Plugins " />
         <ListBox x:Name="pluginList" SelectionMode="Multiple" ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <ListBoxItem IsSelected="{Binding IsChecked}">
-                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Path=Item}" />
-                    </ListBoxItem>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+    
         </ListBox>
 
     </StackPanel>

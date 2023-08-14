@@ -7,13 +7,15 @@ namespace Model
     public class ActionParameter
     {
         public string Parameter { get; set; } = "";
+        public string InData { get; set; } = "";
         public ActionParameter()
         {
             Parameter = "";
         }
-        public ActionParameter(string value)
+        public ActionParameter(string parameter,string indata="")
         {
-            Parameter = value;
+            Parameter = parameter;
+            InData = indata;
         }
     }
 }

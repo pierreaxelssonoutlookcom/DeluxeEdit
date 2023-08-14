@@ -17,17 +17,18 @@ namespace DeluxeEdit
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+       public MainWindow()
         {
             InitializeComponent();
             //todo:add usercontols dynamically
-            Content = new MainEdit();
+          //  Content = new MainEdit();
         }
 
 
         private void Plugins_Click(object sender, RoutedEventArgs e)
         {
-
-        }
+            var plugins = new Plugins( );
+            Content = plugins;
+      ;  }
     }
 }

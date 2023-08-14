@@ -67,7 +67,7 @@ namespace DefaultPlugins
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O }; 
         }
 
-        public string Perform(ActionParameter parameter, string indata)
+        public string Perform(ActionParameter parameter)
         {
               Parameter=parameter;
             FileSize = File.Exists(parameter.Parameter) ?   new FileInfo(parameter.Parameter).Length: 0;

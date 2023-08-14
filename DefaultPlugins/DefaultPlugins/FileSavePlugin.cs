@@ -66,9 +66,9 @@ namespace DefaultPlugins
             return result;
         }
 
-        public string Perform(ActionParameter parameter, string indata)
+        public string Perform(ActionParameter parameter)
         {
-            ContentBuffer = indata.Split(Environment.NewLine).ToList();
+            ContentBuffer = parameter.InData.Split(Environment.NewLine).ToList();
               Parameter = parameter;
             FileSize = File.Exists(parameter.Parameter)? new FileInfo(parameter.Parameter).Length: 0;
             

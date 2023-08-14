@@ -39,7 +39,7 @@ namespace DefaultPlugins.ViewModel
                 result.Path = action.Path;
                 result.Header = new FileInfo(result.Path).Name;
                 openPlugin.OpenEncoding = action.Encoding;
-                result.Content = openPlugin.Perform(new ActionParameter(result.Path), String.Empty);
+                result.Content = openPlugin.Perform(new ActionParameter(result.Path));
                 CurrenContent= result;
                                  
                 AllContents.Add(result);
@@ -54,8 +54,8 @@ namespace DefaultPlugins.ViewModel
         }
         public void UpdateSave(string data)
         {
-            savePlugin.Perform(null, data);
-        }
+            savePlugin.Perform(new ActionParameter(CurrenContent.Path, CurrenContent.Content));
+        } 
 
 
         // Create the OnPropertyChanged method to raise the event
