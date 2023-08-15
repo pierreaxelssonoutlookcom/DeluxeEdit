@@ -7,9 +7,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Vertical">
         <Label Content="Plugins " />
-        <ListBox x:Name="pluginList" SelectionMode="Multiple" ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection}">
-    
-        </ListBox>
-
+        <DataGrid x:Name="pluginsGrid">
+        </DataGrid>
     </StackPanel>
 </UserControl>

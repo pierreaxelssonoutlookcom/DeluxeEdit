@@ -9,6 +9,8 @@ namespace DefaultPlugins
 {
     public class UrlDecodePlugin : INamedActionPlugin
     {
+        public Version Version { get; set; }
+
         public ActionParameter Parameter { get; set; }
 
         public object? Control { get; set; }
@@ -28,7 +30,9 @@ namespace DefaultPlugins
 
         public UrlDecodePlugin()
         {
-            Configuration= new ConfigurationOptions(); 
+            Configuration= new ConfigurationOptions();
+            Version = Version.Parse("v0.1");
+
         }
         public string Perform(ActionParameter parameter)
         {   

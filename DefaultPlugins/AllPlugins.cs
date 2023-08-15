@@ -1,7 +1,7 @@
-﻿using ModelMisc;
-using Model.Interface;
+﻿using Model.Interface;
 using System;
 using System.Collections.Generic;
+using DefaultPlugins.Misc;
 
 namespace DefaultPlugins
 {

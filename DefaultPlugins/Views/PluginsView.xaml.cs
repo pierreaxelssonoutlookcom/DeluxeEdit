@@ -18,11 +18,11 @@ namespace DefaultPlugins.Views
         }
         private void LocalList()
         {
-            pluginList.DataContext = pluginViewModel.LocalList();
+            pluginsGrid.ItemsSource = pluginViewModel.LocalList();
         }
         private void RemoteList()
         {
-            pluginList.DataContext = pluginViewModel.RemoteList();
+            pluginsGrid.ItemsSource = pluginViewModel.RemoteList();
         }
     }
 }

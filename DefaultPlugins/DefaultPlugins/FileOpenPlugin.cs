@@ -15,6 +15,9 @@ namespace DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
     {
+        public Version Version { get; set; }
+
+
         public long FileSize { get; set; }
         public long BytesRead { get; set; }
 
@@ -64,7 +67,8 @@ namespace DefaultPlugins
             ContentBuffer = new List<string>();
           //  OpenEncoding = Encoding.UTF8; m 
             Configuration = new ConfigurationOptions();
-            Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O }; 
+            Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O };
+            Version = Version.Parse("v0.1");
         }
 
         public string Perform(ActionParameter parameter)

@@ -8,8 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace ModelMisc
-{
+namespace DefaultPlugins.Misc
+ {
     public class PluginManager
     { 
         private static string pluginPath;
@@ -49,12 +49,12 @@ namespace ModelMisc
             return newItemCasted;
 
         }
-        public List<PluginFileItem> RemoteList()
+        public List<PluginFile> RemoteList()
         {
-            throw new NotImplementedException();
+            thrownew NotImplementedException();
         }   
 
-        public List<PluginFileItem> LocalList()
+        public List<PluginFile> LocalList()
         {
             var parser = new PluginFileItemParser();
 

@@ -1,7 +1,7 @@
-﻿using ModelMisc;
-using Model;
+﻿using Model;
 using System;
 using System.Collections.Generic;
+using DefaultPlugins.Misc;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -13,11 +13,11 @@ namespace DefaultPlugins.ViewModel
         {
             manager = new PluginManager();    
         }   
-        public IEnumerable<PluginFileItem> RemoteList()
+        public IEnumerable<PluginFile> RemoteList()
         {
             return manager.RemoteList();
         }
-        public IEnumerable<PluginFileItem> LocalList()
+        public IEnumerable<PluginFile> LocalList()
         {
             var result=manager.LocalList();
             return result;
