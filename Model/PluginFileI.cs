@@ -7,7 +7,7 @@ namespace Model
 {
     public class PluginFile
     {
-        public string? LocalPath { get; set; }
+        public string LocalPath { get; set; }
         public string? Url { get; set; }
         public List<PluginItem> Plugins { get; set; }
         public List<INamedActionPlugin> Instances { get; set; }

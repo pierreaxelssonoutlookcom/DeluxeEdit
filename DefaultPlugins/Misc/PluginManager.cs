@@ -27,8 +27,9 @@ namespace DefaultPlugins.Misc
             SourceFiles =
                 Directory.GetFiles(pluginPath, "*.dll").ToList()
                 .Select(p => new PluginFile { LocalPath = p }).ToList();
-            SourceFiles
-            .ForEach(pp => pp.Instances = LoadPluginFile(pp.LocalPath)); ;
+            
+            SourceFiles.ForEach(p=> Instances=LoadPluginFile(p.LocalPath));
+            ; ;
             
         }
      
@@ -76,9 +77,15 @@ namespace DefaultPlugins.Misc
             //done:could be multiple plugisAssemblyn in the same, FILE
            foreach (var t in loadedAsms[path].GetTypes())
            {
-                var newItemCasted = CreateObjects(t);
-                result.Add(newItemCasted);
-           }
+                INamedActionPlugin newItemCasted;
+                if (t is INamedActionPlugin)
+                { 
+                    newItemCasted = CreateObjects(
+                    t);
+                    result.Add(newItemCasted);
+
+                }
+            }
             
             return result;
         }
