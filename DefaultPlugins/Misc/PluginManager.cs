@@ -27,10 +27,11 @@ namespace DefaultPlugins.Misc
             SourceFiles =
                 Directory.GetFiles(pluginPath, "*.dll").ToList()
                 .Select(p => new PluginFile { LocalPath = p }).ToList();
-            
-            SourceFiles.ForEach(p=> Instances=LoadPluginFile(p.LocalPath));
-            ; ;
-            
+
+            foreach (var file in SourceFiles)
+            {
+                file.Instances = LoadPluginFile(file.LocalPath);               SourceFiles.Select(p => LoadPluginFile(p.LocalPath));
+            }
         }
      
 
@@ -49,16 +50,15 @@ namespace DefaultPlugins.Misc
 
         }
 
-        private static INamedActionPlugin CreateObjects(Type t)
+        private static INamedActionPlugin CreateObjects(object item, Type t)
         {
-            var newItem = Activator.CreateInstance(t);
-            var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
+            var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new NullReferenceException();
+             
+            if (newItemCasted.ControlType != null)
+                newItemCasted.Control = Activator.CreateInstance(newItemCasted.ControlType);
             
-                if (newItemCasted.ControlType != null)
-                    newItemCasted.Control = Activator.CreateInstance(newItemCasted.ControlType);
 
-            
             return newItemCasted;
         }
   
@@ -75,17 +75,18 @@ namespace DefaultPlugins.Misc
 
             if (loadedAsms == null) throw new NullReferenceException();
             //done:could be multiple plugisAssemblyn in the same, FILE
-           foreach (var t in loadedAsms[path].GetTypes())
-           {
-                INamedActionPlugin newItemCasted;
-                if (t is INamedActionPlugin)
+            var allTypes = loadedAsms[path].GetTypes().ToList();
+            foreach (var t in allTypes)
+            {
+
+                 object testObject=Activator.CreateInstance(t);
+                if (testObject is  INamedActionPlugin)
                 { 
-                    newItemCasted = CreateObjects(
-                    t);
+                    var newItemCasted = CreateObjects(testObject, t);
                     result.Add(newItemCasted);
 
                 }
-            }
+             }
             
             return result;
         }
