@@ -50,8 +50,10 @@ namespace DefaultPlugins.Misc
 
         }
 
-        private static INamedActionPlugin CreateObjects(object item, Type t)
+        private static INamedActionPlugin CreateObjects(Type t)
         {
+            object item= Activator.CreateInstance(t);
+
             var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new NullReferenceException();
              
@@ -75,17 +77,14 @@ namespace DefaultPlugins.Misc
 
             if (loadedAsms == null) throw new NullReferenceException();
             //done:could be multiple plugisAssemblyn in the same, FILE
-            var allTypes = loadedAsms[path].GetTypes().ToList();
-            foreach (var t in allTypes)
+            var matchingTypes = loadedAsms[path].GetTypes()
+                .Where(p=>p.ToString().EndsWith("Plugin") ).ToList();
+            foreach (var t in matchingTypes)
             {
 
-                 object testObject=Activator.CreateInstance(t);
-                if (testObject is  INamedActionPlugin)
-                { 
-                    var newItemCasted = CreateObjects(testObject, t);
-                    result.Add(newItemCasted);
+                var newItemCasted = CreateObjects(t);
+                result.Add(newItemCasted);
 
-                }
              }
             
             return result;
