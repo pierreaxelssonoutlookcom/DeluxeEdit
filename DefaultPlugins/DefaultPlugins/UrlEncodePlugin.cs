@@ -33,7 +33,7 @@ namespace DefaultPlugins
         public UrlEncodePlugin()
         {
             Configuration = new ConfigurationOptions();
-            Version = Version.Parse("v0.1");
+            Version = Version.Parse("0.1");
 
         }
 

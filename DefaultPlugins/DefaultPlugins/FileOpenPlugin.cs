@@ -67,7 +67,7 @@ namespace DefaultPlugins
           //  OpenEncoding = Encoding.UTF8; m 
             Configuration = new ConfigurationOptions();
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.O };
-            Version = Version.Parse("v0.1");
+            Version = Version.Parse("0.1");
         }
 
         public string Perform(ActionParameter parameter)

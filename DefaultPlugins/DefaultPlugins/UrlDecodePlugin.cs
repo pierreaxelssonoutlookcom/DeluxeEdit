@@ -31,7 +31,7 @@ namespace DefaultPlugins
         public UrlDecodePlugin()
         {
             Configuration= new ConfigurationOptions();
-            Version = Version.Parse("v0.1");
+            Version = Version.Parse("0.1");
 
         }
         public string Perform(ActionParameter parameter)

@@ -58,7 +58,7 @@ namespace DefaultPlugins
             //  OpenEncoding = Encoding.UTF8;
             Configuration = new ConfigurationOptions();
             Configuration.KeyCommand = new List<Key> { Key.LeftCtrl, Key.S };
-            Version = Version.Parse("v0.1");
+            Version = Version.Parse("0.1");
         }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
