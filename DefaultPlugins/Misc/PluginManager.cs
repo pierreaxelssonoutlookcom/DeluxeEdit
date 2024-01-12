@@ -51,8 +51,7 @@ namespace DefaultPlugins.Misc
         private static INamedActionPlugin CreateObjects(Type t)
         {
             object item= Activator.CreateInstance(t);
-
-            var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
+              var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new NullReferenceException();
              
             if (newItemCasted.ControlType != null)
