@@ -6,6 +6,7 @@ namespace Model
 {
     public class PluginItem
     {
+        public Type MyType { get; set; }
         public string Id { get; set; }
         public Version? Version { get; set; }
         public bool Enabled { get; set; }

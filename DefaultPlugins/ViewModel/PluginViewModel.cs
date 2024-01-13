@@ -11,10 +11,6 @@ namespace DefaultPlugins.ViewModel
     {
         private PluginManager manager;
 
-        public PluginViewModel()
-        {
-            manager = new PluginManager();    
-        }   
         public IEnumerable<PluginItem> RemoteList()
         {
             throw new NotImplementedException();     

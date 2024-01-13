@@ -1,6 +1,7 @@
 ﻿using DefaultPlugins.Misc;
 using Model;
 using Model.Interface;
+using MS.WindowsAPICodePack.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,22 +25,17 @@ namespace DefaultPlugins.Misc
         }
         public static List<PluginFile> LoadFiles()
         {
-            SourceFiles =
-                Directory.GetFiles(pluginPath, "*.dll").ToList()
-                .Select(p => new PluginFile { LocalPath = p }).ToList();
-               SourceFiles.ForEach(p=> 
-                  p.Instances = LoadPluginFile(p.LocalPath));
-            return SourceFiles;
+           var result=Directory.GetFiles(pluginPath, "*.dll")
+               .Select(p=>LoadPluginFile(p))
+               .ToList();
+               
+            return result;
         }
      
 
         public static INamedActionPlugin InvokePlugin(Type pluginType)
         {
             object? newItem = Activator.CreateInstance(pluginType);
-
-
-
-
           var newItemCasted = newItem is INamedActionPlugin ? newItem as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new InvalidCastException();
             //now recording all plugin objects
@@ -60,23 +56,36 @@ namespace DefaultPlugins.Misc
 
             return newItemCasted;
         }
-  
-        public static List<INamedActionPlugin> LoadPluginFile(string path)
+
+        public INamedActionPlugin Create(PluginItem item) 
+        {
+            var result=CreateObjects(item.MyType);
+            return result;
+        }
+
+
+        public static PluginFile LoadPluginFile(string path)
         {
             //done:could be multiple plugis in the same, FILE
-
-            var result = new List<INamedActionPlugin>();
-            var ourSource= SourceFiles.First(p => String.Equals(p.LocalPath, path, StringComparison.InvariantCultureIgnoreCase));
             
-            
-            if (ourSource.Assembly == null) ourSource.Assembly = Assembly.LoadFile(path);
+            var ourSource= SourceFiles.FirstOrDefault(p => String.Equals(p.LocalPath, path, StringComparison.InvariantCultureIgnoreCase));
 
+            if (ourSource == null)
+            {
+                ourSource = new PluginFile { LocalPath = path };
+                ourSource.Assembly = Assembly.LoadFile(path);
+                SourceFiles.Add(ourSource);
+            }
             var matchingTypes = ourSource.Assembly.GetTypes()
-                .Where(p=>p.ToString().EndsWith("Plugin") )
+                .Where(p => p.ToString().EndsWith("Plugin"))
                 .ToList();
-            matchingTypes.ForEach(t => result.Add(CreateObjects(t)));
-            
-            return result;
+ 
+            ourSource.Plugins = matchingTypes.Select(p => 
+            new PluginItem { Id = p.ToString(), MyType = p, DerivedSourcePath=path, Version = p.Assembly.GetName().Version })
+                .ToList();
+
+            return ourSource;
+
         }
 
 
