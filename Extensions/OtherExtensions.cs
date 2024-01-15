@@ -1,4 +1,5 @@
 ﻿using Extensions.Model;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,22 @@ namespace Extensions
 {
     public static class OtherExtensions
     {
+        public static PluginFile ParseNugetFileName(this string path)
+        {
+            var result = new PluginFile();
+            result.LocalPath = path;
+
+            var index = path.IndexOfDigit();
+            var lastIndex = path.LastIndexOfDigit();
+            result.Name = Path.GetFileNameWithoutExtension(new FileInfo(path).Name);
+            if (index.HasValue && index.Value > -1)
+            {
+                result.Version = Version.Parse(path.SubstringPos(index.Value, lastIndex.Value));
+                result.Name = result.Name.SubstringPos(0, lastIndex.Value);
+           };
+
+            return result;
+        }        
         /// <summary>
         /// Also returns bytes writtten
         /// </summary>

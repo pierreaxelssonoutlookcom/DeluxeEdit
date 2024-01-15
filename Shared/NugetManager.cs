@@ -62,10 +62,10 @@ namespace Shared
 
         public static PluginFile LoadPluginFile(string path)
         {
-          var pkg=ZipPackage.Open("test.nupkg");
-          var id = pkg.PackageProperties.Identifier ;
+            var result = path.ParseNugetFileName();
+            var pkg = ZipPackage.Open(path);
             var parts = pkg.GetParts();
-
+            return result;
             var ourSource = SourceFiles.FirstOrDefault(p => String.Equals(p.LocalPath, path, StringComparison.InvariantCultureIgnoreCase));
 
             if (ourSource == null)

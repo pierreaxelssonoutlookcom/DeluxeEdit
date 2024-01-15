@@ -1,16 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Extensions
 {
     public static class StringExtenssions
     {
+        public static string SubstringPos(this string s, int startIndex, int lastIndex)
+        {
+            var result = new StringBuilder();
+            for (int i = startIndex; i < lastIndex - startIndex; i++)
+                result.Append(s[i]);
+              
+            return result.ToString();
+        } 
+          
         public static bool SameFileName(this string a, string b)
         {
-            var filea = new FileInfo(a);
+            var filea = new FileInfo(a);    
             var fileb = new FileInfo(b);
-            var result=String.Equals(filea.Name, fileb.Name, StringComparison.CurrentCultureIgnoreCase);
+            var result = String.Equals(filea.Name, fileb.Name, StringComparison.CurrentCultureIgnoreCase);
+
             return result;
         }
         public static bool IsEmpty(this string? item)
