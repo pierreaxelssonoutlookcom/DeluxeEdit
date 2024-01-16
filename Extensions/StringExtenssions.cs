@@ -10,8 +10,12 @@ namespace Extensions
         public static string SubstringPos(this string s, int startIndex, int lastIndex)
         {
             var result = new StringBuilder();
-            for (int i = startIndex; i < lastIndex - startIndex; i++)
+
+            for (int i = startIndex; i<= lastIndex && i<s.Length; i++)
+            {
                 result.Append(s[i]);
+            }
+
               
             return result.ToString();
         } 

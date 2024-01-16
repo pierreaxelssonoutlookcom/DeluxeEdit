@@ -12,6 +12,7 @@ namespace Extensions
     {
         public static PluginFile ParseNugetFileName(this string path)
         {
+            //DefaultPlugins.0.0.1.nupkg
             var result = new PluginFile();
             result.LocalPath = path;
 
@@ -21,8 +22,8 @@ namespace Extensions
             if (index.HasValue && index.Value > -1)
             {
                 result.Version = Version.Parse(path.SubstringPos(index.Value, lastIndex.Value));
-                result.Name = result.Name.SubstringPos(0, lastIndex.Value);
-           };
+                result.Name = result.Name.SubstringPos(0, index.Value-2);
+             };                                                                                                         
 
             return result;
         }        
