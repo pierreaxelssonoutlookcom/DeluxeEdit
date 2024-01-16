@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using Extensions;
 using System.Reflection;
-using NuGet.Packaging;
-using NuGet.Packaging.Core;
+using NuGet;
 using System.IO.Packaging;
+using NuGet.Packaging;
 
 namespace Shared
 {
@@ -64,12 +64,23 @@ namespace Shared
         {
             var result = path.ParseNugetFileName();
             var pkg = ZipPackage.Open(path);
-            var parts = pkg.GetParts();
+            pkg.GetRelationships().Select(p => p.SourceUri);
+            var parts = pkg.GetParts().ToList();
+            var contentTypes = parts.Select(p=>p.ContentType).ToList();
+
+            var packagePart = parts
+                .FirstOrDefault(p => p.Uri.ToString().EndsWith("DefaultPlugins.dll"));
             return result;
+
+            /*
+            var myStream=packagePart.GetStream(FileMode.Open);
+            packagePart.ContentType=
+            var reader = new StreamReader(myStream);
+            myStream
             var ourSource = SourceFiles.FirstOrDefault(p => String.Equals(p.LocalPath, path, StringComparison.InvariantCultureIgnoreCase));
 
             if (ourSource == null)
-            { 
+            
                 ourSource = new PluginFile { LocalPath = path };
                 ourSource.Assembly = Assembly.LoadFrom(path);
 
@@ -84,6 +95,7 @@ namespace Shared
                 .ToList();
 
             return ourSource;
+            */
         }
         public static void UnLoadPluginFile(string path)
         {
