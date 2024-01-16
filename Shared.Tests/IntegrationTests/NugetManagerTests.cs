@@ -24,8 +24,7 @@ namespace Shared.Tests
             PluginFile file = NugetManager.LoadPluginFile(PluginFile);
             Assert.Equal(file.Name, "DefaultPlugins");
             Assert.Equal(file.Version, Version.Parse("0.0.1"));
-            Assert.Equal(file.LocalPath, "DefaultPlugins");
-            Assert.Equal(file.Name, "DefaultPlugins");
+            Assert.Equal(file.LocalPath, PluginFile);
         }
 
 

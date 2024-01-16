@@ -22,8 +22,9 @@ namespace Extensions
             if (index.HasValue && index.Value > -1)
             {
                 result.Version = Version.Parse(path.SubstringPos(index.Value, lastIndex.Value));
-                result.Name = result.Name.SubstringPos(0, index.Value-2);
-             };                                                                                                         
+                result.Name= Path.GetFileNameWithoutExtension( path.SubstringPos(0, index.Value-2));
+                ;
+            };                                                                                                         
 
             return result;
         }        
