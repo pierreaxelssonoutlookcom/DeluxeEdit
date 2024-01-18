@@ -15,7 +15,7 @@ namespace Shared.Tests
         public void FileOpenPluginFileTest1()
         {
             PluginFile file = NugetManager.LoadPluginFile(PluginFile);
-            Assert.Equal(file.Name, "DefaultPlugin  s");
+            Assert.Equal(file.Name, "DefaultPlugins");
             Assert.Equal(file.Version, Version.Parse("0.0.1"));
             Assert.Equal(file.LocalPath, PluginFile);
         }
@@ -25,7 +25,7 @@ namespace Shared.Tests
         {
             var pack = NugetManager.Create(PluginFile);
             var man = NugetManager.ReadManifest(pack);
-            Assert.True(man.Files.Count>0);
+            Assert.True(man.Files.Count >0);
         }
 
     }
