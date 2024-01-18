@@ -20,6 +20,13 @@ namespace Shared.Tests
             Assert.Equal(file.LocalPath, PluginFile);
         }
 
+        [Fact]
+        public void ReadManifestTest()
+        {
+            var pack = NugetManager.Create(PluginFile);
+            var man = NugetManager.ReadManifest(pack);
+            Assert.True(man.Files.Count>0);
+        }
 
     }
 }

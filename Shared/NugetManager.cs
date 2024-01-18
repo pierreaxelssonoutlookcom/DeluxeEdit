@@ -19,7 +19,9 @@ namespace Shared
         public static List<INamedActionPlugin> Instances = new List<INamedActionPlugin>();
         public static List<PluginFile> SourceFiles = new List<PluginFile>();
 
-        public NugetManager()
+        public static object NullPropertyProvider { get; private set; }
+
+        static NugetManager()
         {
             pluginPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
 
@@ -39,7 +41,7 @@ namespace Shared
             var result = CreateObjects(type);
             return result;
         }
-        public INamedActionPlugin InvokePlugin(PluginItem item)
+        public static INamedActionPlugin InvokePlugin(PluginItem item)
         {
             var result = CreateObjects(item.MyType);
             return result;
@@ -47,6 +49,7 @@ namespace Shared
 
         private static INamedActionPlugin CreateObjects(Type t)
         {
+
             object item = Activator.CreateInstance(t);
             var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new NullReferenceException();
@@ -58,15 +61,35 @@ namespace Shared
             return newItemCasted;
         }
 
+        //todo:move
+        public static Package Create(string path)
+        {
+            var result = ZipPackage.Open(path);
+            return result;
+        }
+        public static Manifest ReadManifest(Package pack)
+        {
+            var manifestRelationType = pack.GetRelationshipsByType("http://schemas.microsoft.com/packaging/2010/07/manifest").SingleOrDefault();
+            var manifestPart = pack.GetPart(manifestRelationType.TargetUri);
 
+            var manifest = Manifest.ReadFrom(manifestPart.GetStream(), false);
+            return manifest;
+        }
+
+        
 
         public static PluginFile LoadPluginFile(string path)
         {
+            var pack =  Create(path);
             var result = path.ParseNugetFileName();
-            var pkg = ZipPackage.Open(path);
+            ReadManifest(pack);
+            return result;
+       }
+            /*
             pkg.GetRelationships().Select(p => p.SourceUri);
             var parts = pkg.GetParts().ToList();
-            var contentTypes = parts.Select(p=>p.ContentType).ToList();
+                   parts. cSelect(p => PackageEntry.HashFilename(p.Uri.LocalPath)).ToArray();
+            var c  = parts.Select(p=>p.GetStream()).ToList();
 
             var packageParts = parts
                 .Where(p => p.ContentType == "aplication/octet").ToList();
@@ -95,7 +118,7 @@ namespace Shared
 
             return ourSource;
             */
-        }
+        
         public static void UnLoadPluginFile(string path)
         {
             var match = SourceFiles.FirstOrDefault(p => String.Equals(path, p.LocalPath, StringComparison.CurrentCultureIgnoreCase));
