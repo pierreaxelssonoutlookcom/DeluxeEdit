@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using Extensions;
 using System.Reflection;
-using NuGet;
 using System.IO.Packaging;
 using NuGet.Packaging;
+using NuGet.Packaging.Core;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Shared
 {
@@ -42,7 +44,7 @@ namespace Shared
             return result;
         }
         public static INamedActionPlugin InvokePlugin(PluginItem item)
-        {
+        { 
             var result = CreateObjects(item.MyType);
             return result;
         }
@@ -67,14 +69,14 @@ namespace Shared
             var result = ZipPackage.Open(path);
             return result;
         }
-        public static Manifest ReadManifest(Package pack)
+        public static async Task<List<string>> ReadManifest(Package pack, string path)
         {
             var manifestRelationType = pack.GetRelationshipsByType("http://schemas.microsoft.com/packaging/2010/07/manifest").SingleOrDefault();
             var manifestPart = pack.GetPart(manifestRelationType.TargetUri);
-
-            var manifest = Manifest.ReadFrom(manifestPart.GetStream(), false);
-            return manifest;
-        }
+            var reader = new PackageFolderReader(new FileInfo(path).Directory);
+            //    .Select(p => PackageEntry.´öHashFilename(p.Uri.LocalPath)).ToArray();
+            var result= await reader.GetPackageFilesAsync(PackageSaveMode.None, CancellationToken.None);
+            return result.ToList();        }
 
         
 
@@ -82,7 +84,7 @@ namespace Shared
         {
             var pack =  Create(path);
             var result = path.ParseNugetFileName();
-            ReadManifest(pack);
+            ReadManifest(pack, path);
             return result;
        }
             /*

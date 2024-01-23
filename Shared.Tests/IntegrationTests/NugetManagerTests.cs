@@ -9,7 +9,7 @@ namespace Shared.Tests
 {
     public class NugetManagerTests
     {
-        public static string PluginFile = "C:/Program Files/DeluxeEdit/plugins/DefaultPlugins.0.0.1.nupkg";
+        public static string PluginFile = @"C:\Program Files\DeluxeEdit\plugins\DefaultPlugins.0.0.1.nupkg";
 
         [Fact]
         public void FileOpenPluginFileTest1()
@@ -21,11 +21,12 @@ namespace Shared.Tests
         }
 
         [Fact]
-        public void ReadManifestTest()
+        public async void ReadManifestTest()
         {
             var pack = NugetManager.Create(PluginFile);
-            var man = NugetManager.ReadManifest(pack);
-            Assert.True(man.Files.Count >0);
+            var man = await NugetManager.ReadManifest(pack, PluginFile);
+            
+            Assert.True(man.Count >0);
         }
 
     }
