@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
+    <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 
