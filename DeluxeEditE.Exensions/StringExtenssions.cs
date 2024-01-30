@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Extensions
 {
+
     public static class StringExtenssions
     {
         public static PluginItem CreatePluginItem(this string path, Type item)

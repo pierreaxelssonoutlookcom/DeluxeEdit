@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Extensions
+namespace DeluxeEdit.Extensions
 {
     public static class OtherExtensions
 
@@ -19,14 +19,13 @@ namespace Extensions
             var result = new PluginFile();
             result.LocalPath = path;
 
-            var index = path.IndexOfDigit();
-            var lastIndex = path.LastIndexOfDigit();
+            var index = StringExtenssions.IndexOfDigit(path);
+            var lastIndex = StringExtenssions.LastIndexOfDigit(path);
             result.Name = Path.GetFileNameWithoutExtension(new FileInfo(path).Name);
             if (index.HasValue && index.Value > -1)
             {
-                result.Version = Version.Parse(path.SubstringPos(index.Value, lastIndex.Value));
-                result.Name= Path.GetFileNameWithoutExtension( path.SubstringPos(0, index.Value-2));
-                ;
+                result.Version = Version.Parse(StringExtenssions.SubstringPos(path, index.Value, lastIndex.Value));
+                result.Name= Path.GetFileNameWithoutExtension(StringExtenssions.SubstringPos(path, 0, index.Value-2));
             };                                                                                                         
 
             return result;

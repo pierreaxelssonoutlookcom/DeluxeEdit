@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Extensions;
+using DeluxeEdit.Extensions;
 using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
 using CustomFileApiFile;

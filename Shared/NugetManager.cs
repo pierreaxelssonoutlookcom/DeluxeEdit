@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using Extensions;
+using  DeluxeEdit.Extensions;
 using System.Reflection;
 using System.IO.Packaging;
 using NuGet.Packaging;

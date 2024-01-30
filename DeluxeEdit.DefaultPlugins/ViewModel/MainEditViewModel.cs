@@ -3,7 +3,7 @@ using Model;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Extensions;
+using DeluxeEdit.Extensions;
 using System.Security.Cryptography;
 using System.Linq;
 using System.Drawing;

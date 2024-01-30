@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 
