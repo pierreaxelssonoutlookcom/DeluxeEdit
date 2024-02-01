@@ -13,7 +13,6 @@ namespace DefaultPlugins.Views
     public partial class MainEdit : UserControl
     {
         private MainEditViewModel editViewModel;
-        private Dictionary<string, ConfigurationOptions> menuConfig;
 
         public MainEdit()
         {
@@ -56,13 +55,23 @@ namespace DefaultPlugins.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             editViewModel = new MainEditViewModel();
-            menuConfig = editViewModel.LoadMenu();
-            foreach (var key in menuConfig.Keys)
+            var  menu = editViewModel.LoadMenu();
+
+
+
+            foreach (var item in menu )
             {
-                var myMenu = MainMenu.Items.Add(key);
-                var menuItem = new System.Windows.Controls.MenuItem();
-                menuItem.Header= $" {menuConfig[key].ShowInMenuItem}  ( {menuConfig[key].KeyCommand} )";
-                MainMenu.Items.Add(menuItem);
+                int index= MainMenu.Items.Add( new MenuItem {  Header= item.Header });
+
+                foreach (var inner in item.MenuItems)
+                {
+                     MainMenu.Items.Add(new MenuItem { Header =inner.Title });
+
+                }
+
+
+
+
 
             }
 

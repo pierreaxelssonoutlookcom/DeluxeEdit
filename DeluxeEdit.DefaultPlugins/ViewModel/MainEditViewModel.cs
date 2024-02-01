@@ -23,29 +23,45 @@ namespace DefaultPlugins.ViewModel
         public static  ContentPath CurrenContent=null;
         public static List<ContentPath> AllContents = new List<ContentPath>();
 
-        public static List<string> PluginList { get; private set; }
-        public  static Dictionary<string,ConfigurationOptions> EditMenu{ get; set; }= new Dictionary<string,ConfigurationOptions>();
+        public  static List< CustomMenu> MainMenu= new List<CustomMenu>();
 
-        public Dictionary<string, ConfigurationOptions> LoadMenu()
+        public List<CustomMenu> LoadMenu()
         {
             var plugins=PluginManager.InvokePlugins(PluginManager.GetPluginsLocal());
             var showInMenuConfs = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
                  .Select(p => p.Configuration);
+            foreach (var conf in showInMenuConfs)
+            {
+                var header = MainMenu.FirstOrDefault(p => p.Header == conf.ShowInMenu);
+                if (header == null)
+                {
+                    header = new CustomMenu { Header = header.Header };
+                    MainMenu.Add(header);
+                }
 
-            showInMenuConfs.ForEach(p => EditMenu[p.ShowInMenu] = p);
+                var item = new CustomMenuItem { Title = conf.ShowInMenuItem };
+                header.MenuItems.Add(item);
+            }
+            var pluginsHeader = MainMenu.FirstOrDefault(p => p.Header == "Plugins");
+            if (pluginsHeader == null)
+            {
+                pluginsHeader = new CustomMenu { Header = "Plugins" };
+                
+                MainMenu.Add(pluginsHeader);
+            }
 
 
 
 
-            PluginList = plugins.Select(p => p.ToString()).ToList();
-
-            return EditMenu;
+            var pitems= plugins.Select(p => new CustomMenuItem{ Title= p.ToString()).ToList();
+            pluginsHeader.MenuItems.AddRange(pitems);
+            return MainMenu;
         } 
                                     
         public MainEditViewModel()
         {
 
-            openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
+            openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as ;
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
         }
         //done :find way to renember old path before dialog 
