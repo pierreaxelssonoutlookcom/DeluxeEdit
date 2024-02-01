@@ -35,7 +35,7 @@ namespace DefaultPlugins.ViewModel
                 var header = MainMenu.FirstOrDefault(p => p.Header == conf.ShowInMenu);
                 if (header == null)
                 {
-                    header = new CustomMenu { Header = header.Header };
+                    header = new CustomMenu { Header = conf.ShowInMenuItem };
                     MainMenu.Add(header);
                 }
 
