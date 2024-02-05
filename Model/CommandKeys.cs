@@ -7,15 +7,15 @@ namespace Model
 {
     public class CommandKeys
     {
-        public List<Key> KeyCommand { get; set; }
+        public List<Key> Keys { get; set; }
 
         public CommandKeys() 
         {
-            KeyCommand = new List<Key>();
+            Keys = new List<Key>();
         }
         public override string ToString()
         {
-           var result= String.Join("+", KeyCommand.Select(p => p.ToString()));
+           var result= String.Join("+", Keys.Select(p => p.ToString()));
             return result;
         }
     }

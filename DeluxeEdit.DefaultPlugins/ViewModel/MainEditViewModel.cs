@@ -117,11 +117,11 @@ namespace DefaultPlugins.ViewModel
             //done:cast enum from int
             ContentPath result = null;
             bool keysOkProceed = false;
-            var matchCount = openPlugin.Configuration.KeyCommand.KeyCommand
+            var matchCount = openPlugin.Configuration.KeyCommand.Keys
                 .Cast<System.Windows.Input.Key>()
                 .Count(p => System.Windows.Input.Keyboard .IsKeyDown(p));
             
-            keysOkProceed=matchCount == openPlugin.Configuration.KeyCommand.KeyCommand.Count && openPlugin.Configuration.KeyCommand.KeyCommand.Count>0;
+            keysOkProceed=matchCount == openPlugin.Configuration.KeyCommand.Keys.Count && openPlugin.Configuration.KeyCommand.Keys.Count>0;
             if (keysOkProceed) result=UpdateLoad();
 
              
