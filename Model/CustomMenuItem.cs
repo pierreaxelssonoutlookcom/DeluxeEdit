@@ -1,4 +1,5 @@
 ﻿
+using Model.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ namespace Model
 
     {
         public string Title { get; set; }
-        public Action OnAction { get; set; }
+        public INamedActionPlugin Plugin { get; set; }
+        public ActionParameter Parameter { get; set; }
+
     }
 }

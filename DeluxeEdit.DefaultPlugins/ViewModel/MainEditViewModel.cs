@@ -25,39 +25,44 @@ namespace DefaultPlugins.ViewModel
 
         public  static List< CustomMenu> MainMenu= new List<CustomMenu>();
 
-        public List<CustomMenu> LoadMenu()
+        public List<CustomMenu> LoadMenuParts()
         {
-            var plugins=PluginManager.InvokePlugins(PluginManager.GetPluginsLocal());
-            var showInMenuConfs = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
-                 .Select(p => p.Configuration);
-            foreach (var conf in showInMenuConfs)
-            {
-                var header = MainMenu.FirstOrDefault(p => p.Header == conf.ShowInMenu);
+            var plugins = PluginManager.InvokePlugins(PluginManager.GetPluginsLocal());
+            var ps = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
+            foreach (var x in ps)
+            {;
+                var header = MainMenu.FirstOrDefault(p => p.Header == x.Configuration.ShowInMenu); 
                 if (header == null)
                 {
-                    header = new CustomMenu { Header = conf.ShowInMenu };
+                    header = new CustomMenu { Header = x.Configuration.ShowInMenu };
                     MainMenu.Add(header);
                 }
-
-                var item = new CustomMenuItem { Title = $"{conf.ShowInMenuItem} ({conf.KeyCommand })" };
+                var item = new CustomMenuItem { Title = $"{x.Configuration.ShowInMenuItem} ({x.Configuration.KeyCommand})" , Plugin=x};
                 header.MenuItems.Add(item);
+                
             }
             var pluginsHeader = MainMenu.FirstOrDefault(p => p.Header == "Plugins");
             if (pluginsHeader == null)
             {
                 pluginsHeader = new CustomMenu { Header = "Plugins" };
-                
+
                 MainMenu.Add(pluginsHeader);
             }
-
-
-
-
-            var pitems = plugins.Select(p => new CustomMenuItem { Title = p.ToString() } ).ToList();
+            var pitems = plugins.Select(p => new CustomMenuItem { Title = p.ToString(), Plugin=p }).ToList();
 
             pluginsHeader.MenuItems.AddRange(pitems);
+            
+
 
             return MainMenu;
+        }
+
+
+        public List<CustomMenu> LoadMenu()
+        {
+
+            return LoadMenuParts();
+   
         } 
                                     
         public MainEditViewModel()
