@@ -8,12 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <DockPanel Margin="0,-1,0,1">
         <Menu x:Name="MainMenu" DockPanel.Dock="Top"/>
-    
-    <TabControl Name="TabFiles">
-        <TabItem Header="TabItem"> 
+
+        <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"      >
+            <TabItem Header="TabItem"> 
             <TextBox x:Name="MainEditBox" TextWrapping="NoWrap" ScrollBar.Scroll="MainEditBox_Scroll"   KeyDown="MainEditBox_KeyDown"/>
         </TabItem>
         </TabControl>
     </DockPanel>
 
 </UserControl>
+ 

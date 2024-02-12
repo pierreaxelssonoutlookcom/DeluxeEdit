@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Formats.Tar;
 
 namespace DefaultPlugins.Views
 {
@@ -21,10 +22,27 @@ namespace DefaultPlugins.Views
             // temporary call
             //currenContents =editViewModel.UpdateLoad();
         }
-        public void addTab(string header)
+        public void addOrUpddateTab(string header)
         {
-             var item=new TabItem { Header = header };
-            TabFiles.Items .Add(item);
+            if (TabÉxist(header, TabFiles) ==false)
+            { 
+              var item = new TabItem { Header = header };
+              TabFiles.Items.Add(item);
+            }
+        }
+        public static bool TabÉxist(string header, TabControl control)
+        {
+            bool result=false;
+            foreach(TabItem x in control.Items)
+            {
+                if (x.Header == header)
+                {
+                    result = true;
+                    break;
+                }
+
+            }
+            return result; 
         }
 
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -33,16 +51,21 @@ namespace DefaultPlugins.Views
             if (MainEditViewModel.CurrenContent == null) return;
 
 
-            addTab(MainEditViewModel.CurrenContent.Header);
-             MainEditViewModel.AllContents.Add(MainEditViewModel.CurrenContent);
 
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string head = (TabFiles.SelectedItem as TabItem).Header as string;
-             MainEditViewModel.CurrenContent= MainEditViewModel.AllContents.First(p => p.Header==head);
-            editViewModel.ChangeTab( MainEditViewModel.CurrenContent);
+        { 
+            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
+            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+
+            MainEditViewModel.AllContents.Add(MainEditViewModel.CurrenContent);
+
+            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+
+           // addTab(MainEditViewModel.CurrenContent.Header);
+///       //     MainEditViewModel.AllContents.Add(MainEditViewModel.CurrenContent);
+
 
         }
 
@@ -52,6 +75,7 @@ namespace DefaultPlugins.Views
             MainEditBox.Text = MainEditViewModel.CurrenContent.Content;
         }
 
+        
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             editViewModel = new MainEditViewModel();
@@ -87,10 +111,19 @@ namespace DefaultPlugins.Views
             else
             {
                 MainEditBox.Text = keyeddata.Content;
+                addOrUpddateTab(keyeddata.Header);
                 e.Handled = true;
             }
 
             
+        }
+
+        private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
+            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+
+
         }
     }
 }
