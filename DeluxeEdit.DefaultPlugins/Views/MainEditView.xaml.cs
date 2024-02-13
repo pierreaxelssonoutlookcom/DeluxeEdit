@@ -22,29 +22,6 @@ namespace DefaultPlugins.Views
             // temporary call
             //currenContents =editViewModel.UpdateLoad();
         }
-        public void addOrUpddateTab(string header)
-        {
-            if (TabÉxist(header, TabFiles) ==false)
-            { 
-              var item = new TabItem { Header = header };
-              TabFiles.Items.Add(item);
-            }
-        }
-        public static bool TabÉxist(string header, TabControl control)
-        {
-            bool result=false;
-            foreach(TabItem x in control.Items)
-            {
-                if (x.Header == header)
-                {
-                    result = true;
-                    break;
-                }
-
-            }
-            return result; 
-        }
-
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             MainEditViewModel.CurrenContent = editViewModel.KeyDown();
@@ -111,7 +88,7 @@ namespace DefaultPlugins.Views
             else
             {
                 MainEditBox.Text = keyeddata.Content;
-                addOrUpddateTab(keyeddata.Header);
+                MainEditViewModel.AddOrUpddateTab(keyeddata.Header, TabFiles);
                 e.Handled = true;
             }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using DefaultPlugins.Misc;
 using Shared;
+using System.Windows.Controls;
 //using System.Windows.Input;
 
 namespace DefaultPlugins.ViewModel
@@ -78,6 +79,29 @@ namespace DefaultPlugins.ViewModel
             CurrenContent.Content = String.Join("\r\n", seeked);
 
     }
+        public static void AddOrUpddateTab(string header, TabControl control)
+        {
+            if (TabÉxist(header, control) == false)
+            {
+                var item = new TabItem { Header = header };
+                control.Items.Add(item);
+            }
+        }
+        public static bool TabÉxist(string header, TabControl control)
+        {
+            bool result = false;
+            foreach (TabItem x in control.Items)
+            {
+                if (x.Header == header)
+                {
+                    result = true;
+                    break;
+                }
+
+            }
+            return result;
+        }
+
 
         public ContentPath? UpdateLoad()
         {
