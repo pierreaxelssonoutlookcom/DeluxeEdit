@@ -83,9 +83,9 @@ namespace Shared
         public static PluginFile LoadPluginFile(string path)
         {
             var pack =  Create(path);
-            var result = path.ParseNugetFileName();
+            //var result = path.ParseNugetFileName();
             ReadManifest(pack, path);
-            return result;
+            return null;
        }
             /*
             pkg.GetRelationships().Select(p => p.SourceUri);

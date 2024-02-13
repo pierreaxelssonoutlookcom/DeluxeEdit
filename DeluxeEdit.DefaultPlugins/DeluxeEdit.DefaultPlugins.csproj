@@ -36,7 +36,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\CustomFileApi\CustomFileApi.csproj" />
-	  <ProjectReference Include="..\DeluxeEditE.Exensions\DeluxeEditE.Exensions.csproj" />
 	  <ProjectReference Include="..\Model\Model.csproj" />
 	  <ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
