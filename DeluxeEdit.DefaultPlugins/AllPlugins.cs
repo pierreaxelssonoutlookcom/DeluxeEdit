@@ -1,11 +1,12 @@
 ﻿using Model.Interface;
 using System;
 using System.Collections.Generic;
-using DefaultPlugins.Misc;
+using DefaultPlugins;
 using Model;
 using Shared;
+using System.Linq;
 
-namespace DefaultPlugins.Misc
+namespace DefaultPlugins
 {
     public class AllPlugins
     {
@@ -29,11 +30,27 @@ namespace DefaultPlugins.Misc
             }
             if (myType == null) throw new NullReferenceException();
 
-            var result= PluginManager.InvokePlugin(myType);
+            var result= InvokePlugin(myType);
             return result;
         }
-        public static List<INamedActionPlugin> Instances { get; } = PluginManager.Instances;
-        
+        public static INamedActionPlugin InvokePlugin(Type type)
+        {
+            var result = PluginManager.CreateObject(type);
+            return result;
+        }
+        public static INamedActionPlugin InvokePlugin(PluginItem item)
+        {
+            var result =  InvokePlugin(item.MyType);
+            return result;
+        }
+        public static IEnumerable<INamedActionPlugin> InvokePlugins(IEnumerable<PluginItem> items)
+        {
+            var result = items.Select(p => InvokePlugin(p)).ToList();
+
+            return result;
+        }
+
+
 
     }
 }

@@ -43,24 +43,8 @@ namespace Shared
         }
 
 
-        public static INamedActionPlugin InvokePlugin(Type type)
-        {
-            var result = CreateObject(type);
-            return result;
-        }
-        public static INamedActionPlugin InvokePlugin(PluginItem item)
-        {   
-            var result = CreateObject(item.MyType);
-            return result;
-        }
-        public static IEnumerable<INamedActionPlugin> InvokePlugins(IEnumerable<PluginItem> items)
-        {
-            var result=items.Select(p => InvokePlugin(p)).ToList(); 
-
-            return result;
-        }
-
-        private static INamedActionPlugin CreateObject(Type t)
+ 
+        public  static INamedActionPlugin CreateObject(Type t)
         {
             object item = Activator.CreateInstance(t);
             var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;

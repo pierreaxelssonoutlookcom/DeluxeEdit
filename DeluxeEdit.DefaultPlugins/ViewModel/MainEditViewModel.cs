@@ -9,7 +9,7 @@ using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
-using DefaultPlugins.Misc;
+using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
 //using System.Windows.Input;
@@ -28,7 +28,7 @@ namespace DefaultPlugins.ViewModel
 
         public List<CustomMenu> LoadMenuParts()
         {
-            var plugins = PluginManager.InvokePlugins(PluginManager.GetPluginsLocal());
+            var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
             var ps = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
             foreach (var x in ps)
             {;
