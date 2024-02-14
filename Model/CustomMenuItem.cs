@@ -10,8 +10,11 @@ namespace Model
 
     {
         public string Title { get; set; }
-        public INamedActionPlugin Plugin { get; set; }
-        public ActionParameter Parameter { get; set; }
+        public string Plugin { get; set; }
+
+        public Func<ActionParameter,string>  MenuAction { get; set; }
+
+
 
     }
-}
+}    

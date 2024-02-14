@@ -12,6 +12,8 @@ using System.IO;
 using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
+using DefaultPlugins.Views;
+using MS.WindowsAPICodePack.Internal;
 //using System.Windows.Input;
 
 namespace DefaultPlugins.ViewModel
@@ -26,46 +28,37 @@ namespace DefaultPlugins.ViewModel
 
         public  static List< CustomMenu> MainMenu= new List<CustomMenu>();
 
-        public List<CustomMenu> LoadMenuParts()
+        public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
         {
-            var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
             var ps = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
-            foreach (var x in ps)
-            {;
-                var header = MainMenu.FirstOrDefault(p => p.Header == x.Configuration.ShowInMenu); 
-                if (header == null)
-                {
-                    header = new CustomMenu { Header = x.Configuration.ShowInMenu };
-                    MainMenu.Add(header);
-                }
-                var item = new CustomMenuItem { Title = $"{x.Configuration.ShowInMenuItem} ({x.Configuration.KeyCommand})" , Plugin=x};
-                header.MenuItems.Add(item);
-                
-            }
-            var pluginsHeader = MainMenu.FirstOrDefault(p => p.Header == "Plugins");
-            if (pluginsHeader == null)
-            {
-                pluginsHeader = new CustomMenu { Header = "Plugins" };
-
-                MainMenu.Add(pluginsHeader);
-            }
-            var pitems = plugins.Select(p => new CustomMenuItem { Title = p.ToString(), Plugin=p }).ToList();
-
-            pluginsHeader.MenuItems.AddRange(pitems);
-            
+            var result = ps.Select(p=> new CustomMenu { Header = p.Configuration.ShowInMenu }).ToList();
 
 
-            return MainMenu;
+            var pluginsHeader = new CustomMenu { Header = "Plugins" };
+            result.Add(pluginsHeader);
+ 
+            return result;
         }
 
-
-        public List<CustomMenu> LoadMenu()
+         public List<CustomMenu> LoadMenu()
+        { 
+            var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
+            var head = GetMenuHeaders(plugins);
+            foreach(var item in head)
+            {
+             item.MenuItems.AddRange(     GetMenuItems(item, plugins));
+            }
+            return head;
+        }
+        public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
         {
-
-            return LoadMenuParts();
-   
-        } 
+            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
+                .Select(p => new CustomMenuItem {  Title=openPlugin.Configuration.ShowInMenuItem })
+                .ToList();
+            return result;
+        }
                                     
+
         public MainEditViewModel()
         {
 
