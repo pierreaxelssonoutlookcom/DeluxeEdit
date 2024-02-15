@@ -53,14 +53,14 @@ namespace DefaultPlugins.ViewModel
         public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
         {
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
-                .Select(p => new CustomMenuItem {  Title=openPlugin.Configuration.ShowInMenuItem })
+                .Select(p => new CustomMenuItem { Title = openPlugin.Configuration.ShowInMenuItem, MenuAction=(x=> p.Perform(p.Parameter)) } )
                 .ToList();
-            return result;
+          return result;
         }
                                     
 
         public MainEditViewModel()
-        {
+        { 
 
             openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
