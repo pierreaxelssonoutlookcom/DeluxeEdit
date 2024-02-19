@@ -19,7 +19,7 @@
 //  PURPOSE. IT CAN BE DISTRIBUTED FREE OF CHARGE AS LONG AS THIS HEADER 
 //  REMAINS UNCHANGED.
 
-using Extensions;
+using DeluxeEdit.Extensions;
 using System.IO;
 using System.Data;
 using System.Text;

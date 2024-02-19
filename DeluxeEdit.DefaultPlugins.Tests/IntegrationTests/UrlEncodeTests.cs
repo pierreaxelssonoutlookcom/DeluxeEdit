@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DefaultPlugins;
-using DefaultPlugins.Misc;
 using Model;
 
 namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests

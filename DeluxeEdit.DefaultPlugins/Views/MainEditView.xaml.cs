@@ -1,7 +1,7 @@
 ﻿using DefaultPlugins.ViewModel;
 using Model;
 using System.Windows.Controls;
-using Extensions;
+using DeluxeEdit.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Formats.Tar;
@@ -67,7 +67,12 @@ namespace DefaultPlugins.Views
                 foreach (var inner in item.MenuItems)
                 {
                     MenuItem newExistMenuItem = (MenuItem)this.MainMenu.Items[index];
-                    newExistMenuItem.Items.Add(new MenuItem { Header = inner.Title });
+                    var newItem = new MenuItem { Header = inner.Title };
+                    newItem.Click += MenuItem_Click;
+                        
+
+
+;                    newExistMenuItem.Items.Add(newItem);
 
 
 
@@ -99,6 +104,12 @@ namespace DefaultPlugins.Views
         {
             MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
             editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+
+
+        }
+
+        private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
 
 
         }

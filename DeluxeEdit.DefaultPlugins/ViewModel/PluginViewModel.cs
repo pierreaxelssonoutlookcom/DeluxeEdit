@@ -1,7 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
-using DefaultPlugins.Misc;
+using DefaultPlugins;
 using Model.Interface;
 using System.Linq;
 using Shared;

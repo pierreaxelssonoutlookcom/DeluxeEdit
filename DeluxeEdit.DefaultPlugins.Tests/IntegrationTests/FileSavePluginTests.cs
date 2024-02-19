@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DefaultPlugins;
-using DefaultPlugins.Misc;
 using Model;
+using Extensions;
 
 namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 {

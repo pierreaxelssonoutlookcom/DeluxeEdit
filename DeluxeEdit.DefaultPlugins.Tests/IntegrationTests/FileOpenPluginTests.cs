@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DefaultPlugins;
-using DefaultPlugins.Misc;
+using DefaultPlugins;
 using DefaultPlugins.Views;
 using Model;
 

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace DeluxeEdit.Extensions
+namespace Extensions
 {
     public static class OtherExtensions
 
