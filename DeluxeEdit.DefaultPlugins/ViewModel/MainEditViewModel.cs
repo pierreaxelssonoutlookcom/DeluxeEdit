@@ -14,7 +14,8 @@ using Shared;
 using System.Windows.Controls;
 using DefaultPlugins.Views;
 using MS.WindowsAPICodePack.Internal;
-using System.Windows.Forms;
+//using System.Windows.Forms;
+using System.Diagnostics;
 //using System.Windows.Input;
 
 namespace DefaultPlugins.ViewModel
@@ -30,13 +31,12 @@ namespace DefaultPlugins.ViewModel
         public static List<CustomMenu> MainMenu = new List<CustomMenu>();
         public void SetCommands(INamedActionPlugin instance, List<CustomMenu> menu)
         {
-            foreach (var item in menu.SelectMany(p => p.MenuItems))
-            {
-                item.MenuAction = null; 
-            }
+            if (instance == null) throw new ArgumentNullException(nameof(instance));
+            if (instance.Parameter == null) throw new ArgumentNullException(nameof(instance));
+            menu.SelectMany(p => p.MenuItems)
+                .ForEach(x => x.MenuAction = c => instance.Perform(instance.Parameter));
         }
-
-        public void SetCommand(CustomMenuItem item)
+            public void SetCommand(CustomMenuItem item)
         {
             
         }
