@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using Shared;
 using System.Windows.Controls;
+using DeluxeEdit.DefaultPlugins;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -87,25 +88,11 @@ namespace DefaultPlugins.ViewModel
     }
         public void AddOrUpddateTab(string header, TabControl control)
         {
-            if (TabÉxist(header, control) == false)
+            if (WPFUtil.TabÉxist(header, control) == false)
             {
                 var item = new TabItem { Header = header };
                 control.Items.Add(item);
             }
-        }
-        public static bool TabÉxist(string header, TabControl control)
-        {
-            bool result = false;
-            foreach (TabItem x in control.Items)
-            {
-                if (x.Header == header)
-                {
-                    result = true;
-                    break;
-                }
-
-            }
-            return result;
         }
 
 
@@ -173,9 +160,12 @@ namespace DefaultPlugins.ViewModel
 
             foreach (var item in MainMenu)
             {
-                int index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+                int index= mainMenu.Items.IndexOf(item.Header);
+                if (index!=-1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+
 
                 foreach (var menuItem in item.MenuItems)
+
                 {
                     MenuItem newExistMenuItem = (MenuItem)mainMenu.Items[index];
                     var newItem = new MenuItem { Header = menuItem.Title };

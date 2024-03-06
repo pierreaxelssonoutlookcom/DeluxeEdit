@@ -6,12 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+
 namespace Extensions
 {
     public static class OtherExtensions
-
     {
-
 
         public static PluginFile ParseNugetFileName(this string path)
         {
