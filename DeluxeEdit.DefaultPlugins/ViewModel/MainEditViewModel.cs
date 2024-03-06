@@ -85,7 +85,7 @@ namespace DefaultPlugins.ViewModel
             CurrenContent.Content = String.Join("\r\n", seeked);
 
     }
-        public static void AddOrUpddateTab(string header, TabControl control)
+        public void AddOrUpddateTab(string header, TabControl control)
         {
             if (TabÉxist(header, control) == false)
             {

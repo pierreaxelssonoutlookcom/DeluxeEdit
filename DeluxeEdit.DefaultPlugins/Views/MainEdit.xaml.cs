@@ -29,21 +29,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
-            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
-
-            MainEditViewModel.AllContents.Add(MainEditViewModel.CurrenContent);
-
-            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
-
-            // addTab(MainEditViewModel.CurrenContent.Header);
-            ///       //     MainEditViewModel.AllContents.Add(MainEditViewModel.CurrenContent);
-
-
-        }
-
+ 
         private void MainEditBox_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
         {
             editViewModel.ScrollTo(e.NewValue);
@@ -71,21 +57,18 @@ namespace DeluxeEdit.DefaultPlugins.Views
             {
                 MainEditBox.Text = keyeddata.Content;
 
-                MainEditViewModel.AddOrUpddateTab(keyeddata.Header, TabFiles);
+                editViewModel.AddOrUpddateTab(keyeddata.Header, TabFiles);
                 e.Handled = true;
             }
 
 
         }
 
-        private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
-        }
 
         private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var clicked = e.Source as MenuItem;
+            var clicked =
+                e.Source as MenuItem;
             editViewModel.DoCommand(clicked, MainEditBox.SelectedText);
 
 
@@ -96,6 +79,15 @@ namespace DeluxeEdit.DefaultPlugins.Views
             Plugins.CreateAndShow();
 
         }
+
+        private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TabFiles.Items.Count <= 1) return;
+            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
+            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+
+        }
     }
 
 }
+

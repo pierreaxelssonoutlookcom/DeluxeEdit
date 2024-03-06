@@ -22,17 +22,25 @@ namespace DeluxeEdit.DefaultPlugins.Views
         {
             InitializeComponent();
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void ShowDisplay()
         {
-            viewModel= new PluginsViewModel();
             if (ShowFiles.IsChecked.Value)
                 data.ItemsSource = viewModel.LocalListFiles();
             else
-                data.ItemsSource = viewModel.LocalListFiles() ;
+                data.ItemsSource = viewModel.LocalList();
+
+        } 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel= new PluginsViewModel();
+            ShowDisplay();
 
 
+        }
 
+        private void ShowFiles_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDisplay();
         }
     }
 }
