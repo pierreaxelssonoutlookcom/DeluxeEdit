@@ -43,8 +43,9 @@ namespace DefaultPlugins.ViewModel
 
         public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
             {
-            var ps = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
-            var result = ps.Select(p=> new CustomMenu { Header = p.Configuration.ShowInMenu }).ToList();
+            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
+                .Select(p=>p.Configuration.ShowInMenu)                .Distinct()
+            .Select(p=> new CustomMenu { Header = p }).ToList();
  
             return result;
         }
@@ -118,18 +119,7 @@ namespace DefaultPlugins.ViewModel
         }
 
 
-        // Create the OnPropertyChanged method to raise the event
-        // The calling member's name will be used as the parameter.
 
-        /// <summary>
-        /// now counting number of matched key pressed    
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        public bool HeaderExist(string header)
-        {
-            throw new NotImplementedException();
-        }
         public ContentPath?  KeyDown()
         {
             //done:cast enum from int
@@ -152,8 +142,9 @@ namespace DefaultPlugins.ViewModel
 
             foreach (var item in MainMenu)
             {
-                int index= mainMenu.Items.IndexOf(item.Header);
-                if (index!=-1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+
+                               int index= mainMenu.Items.IndexOf( new MenuItem {  Header=item.Header });
+                if (index==-1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
 
 
                 foreach (var menuItem in item.MenuItems)

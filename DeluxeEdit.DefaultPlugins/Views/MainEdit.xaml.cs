@@ -66,6 +66,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+
             var clicked =
                 e.Source as MenuItem;
             editViewModel.DoCommand(clicked, MainEditBox.SelectedText);
