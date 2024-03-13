@@ -4,5 +4,5 @@ using System.Text;
 
 namespace Model
 {
-    public enum PluginType { FileOpen, UrlDecode, UrlEncode, FileSave }
+    public enum PluginType { FileOpen, UrlDecode, UrlEncode, FileSave, FileNew }
 }

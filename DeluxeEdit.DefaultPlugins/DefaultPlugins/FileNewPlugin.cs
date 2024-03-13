@@ -80,7 +80,7 @@ namespace DefaultPlugins
  
 
         public FileNewPlugin()
-        {
+        { 
             ContentBuffer = new List<string>(); 
           //  OpenEncoding = Encoding.UTF8; m 
             Configuration = new ConfigurationOptions();

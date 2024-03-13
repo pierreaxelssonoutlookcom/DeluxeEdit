@@ -27,6 +27,9 @@ namespace DefaultPlugins
                 case PluginType.FileSave:
                     myType = typeof(FileSavePlugin);
                     break;
+                case PluginType.FileNew:
+                    myType = typeof(FileNewPlugin);
+                    break;
             }
             if (myType == null) throw new NullReferenceException();
 
