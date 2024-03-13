@@ -9,6 +9,7 @@ using Extensions;
 using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
 using CustomFileApiFile;
+using DeluxeEdit.DefaultPlugins.Views;
 
 namespace DefaultPlugins
 {
@@ -17,10 +18,10 @@ namespace DefaultPlugins
 
         public bool ParameterIsSelectedText { get; set; } = false;
 
-        public object CreateControl()
+        public object CreateControl(bool showToo)
         {
-            object result = null;
-            if (ControlType!!=null)  result= Activator.CreateInstance (ControlType);
+            var result = new MainEdit();
+
             return result;
         }
 
@@ -31,8 +32,6 @@ namespace DefaultPlugins
 
         public ActionParameter? Parameter { get; set; }
 
-        public object? Control { get; set; }
-        public Type? ControlType{ get; set; }=typeof(DeluxeEdit.DefaultPlugins.Views.MainEdit);
     
         //todo; we might have to implement setcontext for plugins   
 
@@ -43,7 +42,7 @@ namespace DefaultPlugins
         private StreamReader? reader;
         public bool AsReaOnly { get; set; }
         public Encoding? OpenEncoding { get; set; }
-        public string Id { get; set; } = "FileOpenPlugin";
+        public string Id { get; set; } = "FileNewPlugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 

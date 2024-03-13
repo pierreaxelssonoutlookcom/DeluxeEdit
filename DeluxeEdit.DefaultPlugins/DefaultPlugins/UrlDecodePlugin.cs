@@ -12,7 +12,7 @@ namespace DefaultPlugins
 
         public bool ParameterIsSelectedText { get; set; } = true;
 
-        public object CreateControl()
+        public object CreateControl(bool showToo)
         {
             return null;
         }
@@ -22,9 +22,6 @@ namespace DefaultPlugins
 
         public ActionParameter Parameter { get; set; }
 
-        public object? Control { get; set; }
-
-        public Type? ControlType { get; set; } = null;
 
         
         public EncodingPath? GuiAction(INamedActionPlugin instance) { return null; }

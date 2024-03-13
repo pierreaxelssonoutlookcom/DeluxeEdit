@@ -27,10 +27,9 @@ namespace DeluxeEdit
             //todo:add usercontols dynamically
 
             var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
-            UserControl edit=plugin.CreateControl() as UserControl;
+            plugin.CreateControl(true);
 
 
-            Content = edit; ;
         }
 
 

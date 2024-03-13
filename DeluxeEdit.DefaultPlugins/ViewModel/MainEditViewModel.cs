@@ -9,6 +9,7 @@ using System.IO;
 using Shared;
 using System.Windows.Controls;
 using DeluxeEdit.DefaultPlugins;
+using FolderBrowser;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -25,6 +26,14 @@ namespace DefaultPlugins.ViewModel
         public object ShowM { get; internal set; }
 
          
+        public MainEditViewModel()
+
+        { 
+
+            openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
+            savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
+        }
+
         public string DoCommand(MenuItem item, string SelectedText)
         {
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems).First(p => p.Title == item.Header);
@@ -35,61 +44,60 @@ namespace DefaultPlugins.ViewModel
             else
                 parameter = myMenuItem.Plugin.Parameter;
 
-                
-            var result=myMenuItem.Plugin.Perform(parameter);
+
+            var result = myMenuItem.Plugin.Perform(parameter);
             return result;
 
         }
 
         public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
-            {
+        {
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
-                .Select(p=>p.Configuration.ShowInMenu)                .Distinct()
-            .Select(p=> new CustomMenu { Header = p }).ToList();
- 
+                .Select(p => p.Configuration.ShowInMenu).Distinct()
+            .Select(p => new CustomMenu { Header = p }).ToList();
+
             return result;
         }
 
 
 
         public List<CustomMenu> LoadMenu()
-        { 
+        {
             var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
             var result = GetMenuHeaders(plugins);
 
-            foreach(var item in result) item.MenuItems.AddRange(     GetMenuItems(item, plugins));
-            
+            foreach (var item in result) item.MenuItems.AddRange(GetMenuItems(item, plugins));
+
             MainMenu.Clear();
-            MainMenu.AddRange( result );
+            MainMenu.AddRange(result);
 
 
             return result;
         }
+        public void ShowNewFile()
+        {
+            throw new NotImplementedException();
+        }
+            
         public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
         {
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
-                .Select(p => new CustomMenuItem { Title = openPlugin.Configuration.ShowInMenuItem, MyType=p.GetType(), Plugin=p } )
+                .Select(p => new CustomMenuItem { Title = openPlugin.Configuration.ShowInMenuItem, MyType = p.GetType(), Plugin = p })
                 .ToList();
           return result;
         }
-                                    
 
-        public MainEditViewModel()
 
-        { 
 
-            openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
-            savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
-        }
         //done :find way to renember old path before dialog 
-        public  void ScrollTo(double newValue)
+        public void ScrollTo(double newValue)
         {
             var seeked= openPlugin.SeekData(newValue);
             CurrenContent.Content = String.Join("\r\n", seeked);
 
     }
 
-
+          
         public ContentPath? UpdateLoad()
         {
             ContentPath? result = null;

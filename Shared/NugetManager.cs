@@ -56,9 +56,6 @@ namespace Shared
             var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
             if (newItemCasted == null) throw new NullReferenceException();
 
-            if (newItemCasted.ControlType != null)
-                newItemCasted.Control = Activator.CreateInstance(newItemCasted.ControlType);
-
 
             return newItemCasted;
         }

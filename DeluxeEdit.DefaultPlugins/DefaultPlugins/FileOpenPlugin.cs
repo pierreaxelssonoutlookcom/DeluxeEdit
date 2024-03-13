@@ -9,6 +9,8 @@ using Extensions;
 using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
 using CustomFileApiFile;
+using DeluxeEdit.DefaultPlugins.Views;
+using System.Windows;
 
 namespace DefaultPlugins
 {
@@ -17,10 +19,21 @@ namespace DefaultPlugins
 
         public bool ParameterIsSelectedText { get; set; } = false;
 
-        public object CreateControl()
+        public object CreateControl(bool showToo)
         {
-            object result = null;
-            if (ControlType!!=null)  result= Activator.CreateInstance (ControlType);
+            object view = new MainEdit();
+            Window win = null;
+            var result = view;
+            if (showToo)
+            {
+                win = new Window();
+                result = win;
+
+                win.Content = view;
+                win.Show();
+
+            }
+
             return result;
         }
 
@@ -31,8 +44,7 @@ namespace DefaultPlugins
 
         public ActionParameter? Parameter { get; set; }
 
-        public object? Control { get; set; }
-        public Type? ControlType{ get; set; }=typeof(DeluxeEdit.DefaultPlugins.Views.MainEdit);
+
     
         //todo; we might have to implement setcontext for plugins   
 

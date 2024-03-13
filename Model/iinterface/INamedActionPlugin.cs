@@ -21,12 +21,10 @@ namespace Model.Interface
         ActionParameter?  Parameter { get; set; }
         string Perform(ActionParameter parameter);
 
-        object? Control { get; set; }
 
-        Type?  ControlType { get; set; }
 
         EncodingPath? GuiAction(INamedActionPlugin instance);
-        object CreateControl();
+        object CreateControl(bool showToo);
         string Path { get; set; } 
   
         
