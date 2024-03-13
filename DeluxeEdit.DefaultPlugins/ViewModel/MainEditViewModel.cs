@@ -10,6 +10,9 @@ using Shared;
 using System.Windows.Controls;
 using DeluxeEdit.DefaultPlugins;
 using FolderBrowser;
+using System.Formats.Tar;
+using System.Windows.Controls.Primitives;
+using DeluxeEdit.DefaultPlugins.ViewModel;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -21,14 +24,12 @@ namespace DefaultPlugins.ViewModel
         public static ContentPath CurrenContent = null;
         public static List<ContentPath> AllContents = new List<ContentPath>();
 
-        public static List<CustomMenu> MainMenu = new List<CustomMenu>();
+        private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
         public object ShowM { get; internal set; }
 
-         
         public MainEditViewModel()
-
-        { 
+        {
 
             openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
@@ -50,42 +51,34 @@ namespace DefaultPlugins.ViewModel
 
         }
 
-        public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
-        {
-            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
-                .Select(p => p.Configuration.ShowInMenu).Distinct()
-            .Select(p => new CustomMenu { Header = p }).ToList();
-
-            return result;
-        }
 
 
-
-        public List<CustomMenu> LoadMenu()
-        {
-            var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-            var result = GetMenuHeaders(plugins);
-
-            foreach (var item in result) item.MenuItems.AddRange(GetMenuItems(item, plugins));
-
-            MainMenu.Clear();
-            MainMenu.AddRange(result);
-
-
-            return result;
-        }
         public void ShowNewFile()
         {
             throw new NotImplementedException();
         }
-            
-        public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
+        public void AddNewTextControl(TabControl control, string name)
         {
-            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
-                .Select(p => new CustomMenuItem { Title = openPlugin.Configuration.ShowInMenuItem, MyType = p.GetType(), Plugin = p })
-                .ToList();
-          return result;
+            WPFUtil.AddOrUpddateTab(name, control);
+
+            var text = new TextBox();
+            text.Name = name;
+           text.KeyDown += Text_KeyDown;
+            control.Items.Add(text);
         }
+        private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var keyeddata = KeyDown();
+            if (keyeddata == null) e.Handled = false;
+            else
+            {
+
+
+                e.Handled = true;
+            }
+        }
+
+
 
 
 
@@ -143,31 +136,6 @@ namespace DefaultPlugins.ViewModel
 
              
             return result;
-        }
-
-        public void ShowMenu(Menu mainMenu)
-        {
-            LoadMenu();
-
-            foreach (var item in MainMenu)
-            {
-
-                int index= mainMenu.Items.IndexOfText( item.Header);
-                if (index==-1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
-
-
-                foreach (var menuItem in item.MenuItems)
-
-                {
-                    MenuItem newExistMenuItem = (MenuItem)mainMenu.Items[index];
-                    var newItem = new MenuItem { Header = menuItem.Title };
-                    newExistMenuItem.Items.Add(newItem);
-                }
-                
-
-            }
-
-
         }
     }
 }

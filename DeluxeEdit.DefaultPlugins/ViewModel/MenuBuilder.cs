@@ -1,0 +1,72 @@
+﻿using Model.Interface;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Extensions ;
+using DefaultPlugins;
+using Shared;
+using System.Windows.Controls;
+
+namespace DeluxeEdit.DefaultPlugins.ViewModel
+{
+    public class MenuBuilder
+    {
+
+        public List<CustomMenu> BuildMenu()
+        {
+            var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
+            var result = GetMenuHeaders(plugins);
+
+            foreach (var item in result) item.MenuItems.AddRange(GetMenuItems(item, plugins));
+
+
+
+            return result;
+        }
+
+        public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
+        {
+            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
+                .Select(p => p.Configuration.ShowInMenu).Distinct()
+            .Select(p => new CustomMenu { Header = p }).ToList();
+
+            return result;
+        }
+
+        public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
+        {
+            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
+                .Select(p => new CustomMenuItem { Title = p.Configuration.ShowInMenuItem, Plugin = p })
+                .ToList();
+            return result;
+        }
+
+
+        public void ShowMenu(Menu mainMenu)
+        {
+            var customMebu = BuildMenu();
+
+            foreach (var item in customMebu)
+            {
+
+                int index = mainMenu.Items.IndexOfText(item.Header);
+                if (index == -1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+
+
+                foreach (var menuItem in item.MenuItems)
+
+                {
+                    MenuItem newExistMenuItem = (MenuItem)mainMenu.Items[index];
+                    var newItem = new MenuItem { Header = menuItem.Title };
+                    newExistMenuItem.Items.Add(newItem);
+                }
+
+
+            }
+
+        }
+
+    }
+}

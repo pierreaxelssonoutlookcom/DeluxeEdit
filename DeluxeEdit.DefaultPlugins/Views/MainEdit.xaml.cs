@@ -1,4 +1,5 @@
 ﻿using DefaultPlugins.ViewModel;
+using DeluxeEdit.DefaultPlugins.ViewModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +40,10 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             editViewModel = new MainEditViewModel();
-            editViewModel.ShowMenu(this.MainMenu);
+
+            var builder = new MenuBuilder();
+
+            builder.ShowMenu(this.MainMenu);
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
            
