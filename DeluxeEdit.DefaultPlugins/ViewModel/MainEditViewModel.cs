@@ -59,36 +59,7 @@ namespace DefaultPlugins.ViewModel
 
 
 
-        public void ShowNewFile()
-        {
-            throw new NotImplementedException();
-        }
-        public void AddNewTextControl(TabControl control, string name)
-        {
-            WPFUtil.AddOrUpddateTab(name, control);
-
-            var text = new TextBox();
-            text.Name = name;
-           text.KeyDown += Text_KeyDown;
-            control.Items.Add(text);
-        }
-        private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            var keyeddata = KeyDown();
-            if (keyeddata == null) e.Handled = false;
-            else
-            {
-
-
-                e.Handled = true;
-            }
-        }
-
-
-
-
-
-        //done :find way to renember old path before dialog 
+       //done :find way to renember old path before dialog 
         public void ScrollTo(double newValue)
         {
             var seeked= openPlugin.SeekData(newValue);
@@ -96,7 +67,6 @@ namespace DefaultPlugins.ViewModel
 
     }
 
-          
         public ContentPath? UpdateLoad()
         {
             ContentPath? result = null;
@@ -125,9 +95,6 @@ namespace DefaultPlugins.ViewModel
         {
             savePlugin.Perform(new ActionParameter(CurrenContent.Path, CurrenContent.Content));
         }
-
-
-
         public ContentPath?  KeyDown()
         {
             //done:cast enum from int
