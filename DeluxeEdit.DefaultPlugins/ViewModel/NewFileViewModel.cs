@@ -15,26 +15,29 @@ namespace DefaultPlugins.ViewModel
     public class NewFileViewModel
     {
         private INamedActionPlugin plugin;
+        private TabControl currentTab;
 
-        public NewFileViewModel()
+        public NewFileViewModel(TabControl tab)
         {
             plugin = AllPlugins.InvokePlugin(PluginType.FileNew);
+            currentTab = tab;
         }
         public ContentPath GetNewFile()
         {
+
             var result = new ContentPath { Header = "newfile.txt", Content = "" };
+        
             return result;
-            //             AddNewTextControl(control, "newfile.txt");
         }
-        public void AddNewTextControl(TabControl control, string name)
+        public void AddNewTextControlAndListen(string name)
         {
 
-            WPFUtil.AddOrUpddateTab(name, control);
+            WPFUtil.AddOrUpddateTab(name, currentTab);
 
             var text = new TextBox();
             text.Name = name;
             text.KeyDown += Text_KeyDown;
-            control.Items.Add(text);
+            currentTab.Items.Add(text);
         }
         private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {

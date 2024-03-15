@@ -91,7 +91,7 @@ namespace DefaultPlugins
 
         public string Perform(ActionParameter parameter)
         {
-            return null;
+            return "";
           
         }
         public List<string> ReadAllPortions(ActionParameter parameter)

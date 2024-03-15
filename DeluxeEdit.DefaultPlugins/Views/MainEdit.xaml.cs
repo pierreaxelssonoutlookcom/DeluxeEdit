@@ -12,6 +12,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
     {
 
         private MainEditViewModel editViewModel;
+        private NewFileViewModel newViewModel;
 
         public MainEdit()
         {
@@ -40,7 +41,9 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             editViewModel = new MainEditViewModel();
-            var customMenu= editViewModel.GetMenu();
+            newViewModel = new NewFileViewModel(TabFiles);
+            newViewModel.AddNewTextControlAndListen("newfile.txt");
+            var customMenu = editViewModel.GetMenu();
 
             var builder = new MenuBuilder();
 
