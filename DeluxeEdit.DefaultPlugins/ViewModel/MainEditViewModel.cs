@@ -49,13 +49,20 @@ namespace DefaultPlugins.ViewModel
                 else if (item.Plugin is FileNewPlugin)
                     item.MenuActon = (p => LoadFile());
 
-            }
+            } 
         }
-        
+        public void SetViewData(CustomMenuItem item)
+        {
+
+        }
+
+
+
+
 public string DoCommand(MenuItem item, string SelectedText)
         {
-            SetMenuActions(MainMenu);
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems).First(p => p.Title == item.Header);
+
 
             ActionParameter parameter;
             if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
@@ -102,7 +109,7 @@ public string DoCommand(MenuItem item, string SelectedText)
                 openPlugin.OpenEncoding = action.Encoding;
 
                 result.Content = openPlugin.Perform(new ActionParameter(result.Path));
-
+                MyFiles.Files.Add(new MyFile { Path = result.Path });
                 var text=AddNewTextControlAndListen(result.Header);
                 text.Text = result.Content;
                 CurrenContent = result;

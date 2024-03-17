@@ -37,10 +37,11 @@ namespace DefaultPlugins.ViewModel
 
         public ContentPath GetNewFile()
         {
-            var result = new ContentPath { Header = "newfile.txt", Content = "" };
+               var result = new ContentPath { Header = "newfile.txt", Content = "" };
+            MyFiles.Files.Add(new MyFile { Header = result.Header });
+           AddNewTextControlAndListen(result.Header);
 
-            plugin.Perform(new ActionParameter { Parameter = result.Header });
-                
+
             return result;
 
 
