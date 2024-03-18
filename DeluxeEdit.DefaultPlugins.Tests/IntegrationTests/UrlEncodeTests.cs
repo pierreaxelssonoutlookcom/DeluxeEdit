@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using DefaultPlugins;
+﻿using DefaultPlugins;
 using Model;
+using Xunit;
 
 namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 {

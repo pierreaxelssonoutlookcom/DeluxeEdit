@@ -1,14 +1,9 @@
-﻿using System;
-namespace Model
+﻿namespace Model
 {
-  public class MyFile
+  public class ContentPath
     {
         public string Path { get; set; }
         public string Content { get; set; }
         public string Header { get; set; }
-        public object Text { get; set; }
     }
-
-
-
 }

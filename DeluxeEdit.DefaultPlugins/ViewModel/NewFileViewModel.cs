@@ -32,6 +32,8 @@ namespace DefaultPlugins.ViewModel
             text.Name = name;
             text.KeyDown += Text_KeyDown;
             currentTab.Items.Add(text);
+            MyFiles.Files.Add(new MyFile { Header  =  name,  Text = text });
+
             return text;
         }
 
