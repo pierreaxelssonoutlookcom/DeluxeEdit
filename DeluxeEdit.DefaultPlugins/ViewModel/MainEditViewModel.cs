@@ -39,11 +39,13 @@ namespace DefaultPlugins.ViewModel
             {
 
                 if (item.Plugin is FileNewPlugin)
-                    item.MenuActon = (p => new NewFileViewModel(currentTab).GetNewFile());
-                else if (item.Plugin is FileNewPlugin)
-                    item.MenuActon = (p => LoadFile);
-
+                    item.MenuActon = () => new NewFileViewModel(currentTab).GetNewFile();
+                else if (item.Plugin is FileOpenPlugin)
+                    item.MenuActon = () => LoadFile();
+                else if (item.Plugin is FileSavePlugin)
+                    item.MenuActon = () => SaveFile();
             }
+
         }
         public void SetViewData(CustomMenuItem item)
         {
@@ -120,10 +122,12 @@ namespace DefaultPlugins.ViewModel
         {
             CurrenContent = MainEditViewModel.AllContents.First(p => p.Path == item.Path && p.Header == item.Header);
         }
-        public void SaveFile()
+        public ContentPath SaveFile()
         {
             var text = MyFiles.Current.Text as TextBox;
-            savePlugin.Perform(new ActionParameter { Parameter = MyFiles.Current.Path, InData=text.Text });
+            var result = new ContentPath { Path = MyFiles.Current.Path, Content = text.Text };
+            savePlugin.Perform(new ActionParameter { Parameter = result.Path, InData = result.Content });
+            return result;
         }
         private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
