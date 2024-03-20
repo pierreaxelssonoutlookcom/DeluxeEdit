@@ -8,7 +8,9 @@ namespace Model
     public class CustomMenuItem
     {
         public INamedActionPlugin Plugin { get; set; }
-        public Func<ContentPath>  MenuActon { get; set; }
+//
+//'
+//public Func<ContentPath>  MenuActon { get; set; }
 
         public Type MyType { get; set; }
 

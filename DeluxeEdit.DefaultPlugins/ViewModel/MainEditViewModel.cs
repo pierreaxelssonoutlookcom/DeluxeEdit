@@ -13,6 +13,7 @@ namespace DefaultPlugins.ViewModel
     public class MainEditViewModel
     {
         TabControl currentTab;
+        private NewFileViewModel newFileViewModel;
         private FileOpenPlugin openPlugin;
         private FileSavePlugin savePlugin;
         public static ContentPath CurrenContent = null;
@@ -25,6 +26,7 @@ namespace DefaultPlugins.ViewModel
         public MainEditViewModel(TabControl tab)
         {
             currentTab = tab;
+            newFileViewModel= new NewFileViewModel(tab);
             openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
         }
@@ -38,12 +40,6 @@ namespace DefaultPlugins.ViewModel
             foreach (var item in allItems)
             {
 
-                if (item.Plugin is FileNewPlugin)
-                    item.MenuActon = () => new NewFileViewModel(currentTab).GetNewFile();
-                else if (item.Plugin is FileOpenPlugin)
-                    item.MenuActon = () => LoadFile();
-                else if (item.Plugin is FileSavePlugin)
-                    item.MenuActon = () => SaveFile();
             }
 
         }
@@ -57,27 +53,31 @@ namespace DefaultPlugins.ViewModel
 
         public string DoCommand(MenuItem item, string SelectedText)
         {
+            string result="" ;
+
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems).First(p => p.Title == item.Header);
-
-
-            ActionParameter parameter;
-            if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
-                parameter = new ActionParameter(SelectedText);
+            if (myMenuItem.Plugin is FileNewPlugin)
+                CustomViewData.LastNewFile=  newFileViewModel.GetNewFile();
+            else if (myMenuItem.Plugin is FileOpenPlugin)
+                CustomViewData.LastLoadFile=LoadFile();
+            else if (myMenuItem.Plugin is   FileSavePlugin)  
+                SaveFile();
+            else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())                
+                result = myMenuItem.Plugin.Perform(new ActionParameter { Parameter=SelectedText } );
             else
-                parameter = myMenuItem.Plugin.Parameter;
+                result = myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter);
 
 
-            var result = myMenuItem.Plugin.Perform(parameter);
             return result;
 
         }
 
 
 
-        //done :find way to renember old path before dialog 
-        public void ScrollTo(double newValue)
+   public void ScrollTo(double newValue)
         {
-            var seeked = openPlugin.SeekData(newValue);
+              //done :find way to renember old path before dialog 
+           var seeked = openPlugin.SeekData(newValue);
             CurrenContent.Content = String.Join("\r\n", seeked);
 
         }
