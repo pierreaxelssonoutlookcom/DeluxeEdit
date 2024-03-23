@@ -1,5 +1,6 @@
 ﻿using DefaultPlugins.ViewModel;
 using DeluxeEdit.DefaultPlugins.ViewModel;
+using Model;
 using System;
 using System.Diagnostics.Tracing;
 using System.Linq;
@@ -26,8 +27,6 @@ namespace DeluxeEdit.DefaultPlugins.Views
         }
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            MainEditViewModel.CurrenContent = editViewModel.KeyDown();
-            if (MainEditViewModel.CurrenContent == null) return;
 
 
 
@@ -37,17 +36,20 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private void MainEditBox_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
         {
             editViewModel.ScrollTo(e.NewValue); 
-            MainEditBox.Text = MainEditViewModel.CurrenContent.Content;
         }
-        private void Loadfile()
+        private void EditFile()
         {
-            MainEditBox.Text = editViewModel.LoadFile().Content;
-            
-        } 
-        private void setTriggers()
+            var text = MyFiles.Current.Text as TextBox;
+            text.Text = CustomViewData.EditFile.Content;
+
+
+        }
+        private void NewFile()
         {
-            
-             
+            var text = MyFiles.Current.Text as TextBox;
+            text.Text = CustomViewData.NewFile.Content;
+
+
         }
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -69,6 +71,12 @@ namespace DeluxeEdit.DefaultPlugins.Views
        }
        private  void OVEvent(EventType type)
         {
+            if (type == EventType.LoadFile)
+                EditFile();
+            else if (type==EventType.NewFileType)
+                NewFile();
+
+
        }
 
         private void MainEditBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -106,8 +114,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (TabFiles.Items.Count <= 1) return;
-            MainEditViewModel.CurrenContent = MainEditViewModel.AllContents.First(p => p.Header == (e.Source as TabItem).Header);
-            editViewModel.ChangeTab(MainEditViewModel.CurrenContent);
+            editViewModel.ChangeTab(e.Source as TabItem);
 
         }
     }

@@ -10,6 +10,8 @@ using Shared;
 using System.Windows.Controls;
 using DeluxeEdit.DefaultPlugins;
 using MS.WindowsAPICodePack.Internal;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -32,7 +34,6 @@ namespace DefaultPlugins.ViewModel
             text.Name = name;
             text.KeyDown += Text_KeyDown;
             currentTab.Items.Add(text);
-            MyFiles.Files.Add(new MyFile { Header  =  name,  Text = text });
 
             return text;
         }
@@ -41,7 +42,17 @@ namespace DefaultPlugins.ViewModel
         {
                var result = new ContentPath { Header = "newfile.txt", Content = "" };
             MyFiles.Files.Add(new MyFile { Header = result.Header });
-           AddNewTextControlAndListen(result.Header);
+            var text=AddNewTextControlAndListen(result.Header);
+            MyFiles.Files.Add(
+               new MyFile
+               {
+                   Path = result.Path,
+                   Content = result.Content,
+                   Header = result.Header,
+                   Text = text,
+                   Tab = currentTab.Items.CurrentItem
+               });
+
 
 
             return result;

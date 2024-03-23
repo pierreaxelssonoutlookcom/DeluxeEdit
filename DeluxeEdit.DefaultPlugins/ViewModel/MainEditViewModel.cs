@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -16,9 +17,7 @@ namespace DefaultPlugins.ViewModel
         private NewFileViewModel newFileViewModel;
         private FileOpenPlugin openPlugin;
         private FileSavePlugin savePlugin;
-        public static ContentPath CurrenContent = null;
-        public static List<ContentPath> AllContents = new List<ContentPath>();
-
+        
         private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
         public object ShowM { get; internal set; }
@@ -79,7 +78,6 @@ namespace DefaultPlugins.ViewModel
         {
               //done :find way to renember old path before dialog 
            var seeked = openPlugin.SeekData(newValue);
-            CurrenContent.Content = String.Join("\r\n", seeked);
 
         }
         public TextBox AddNewTextControlAndListen(string path)
@@ -92,7 +90,6 @@ namespace DefaultPlugins.ViewModel
             text.Name = name;
             text.KeyDown += Text_KeyDown;
             currentTab.Items.Add(text);
-            MyFiles.Files.Add(new MyFile { Path = path, Text = text });
 
             return text;
         }
@@ -108,22 +105,25 @@ namespace DefaultPlugins.ViewModel
                 result.Path = action.Path;
                 result.Header = new FileInfo(result.Path).Name;
                 openPlugin.OpenEncoding = action.Encoding;
-                result.Content = openPlugin.Perform(new ActionParameter { Parameter = result.Path }); 
+                result.Content = openPlugin.Perform(new ActionParameter { Parameter = result.Path });
                 var text = AddNewTextControlAndListen(result.Header);
                 text.Text = result.Content;
-                CurrenContent = result;
-
-                AllContents.Add(result);
+                MyFiles.Files.Add(
+                    new MyFile
+                    {
+                        Path = result.Path,
+                        Content = result.Content,
+                        Header = result.Header,
+                        Text = text,
+                        Tab = currentTab.Items.CurrentItem
+                    });
             }
-            //done:fix so we can  keep track of contents and paths
             return result;
-
         }
-        public void ChangeTab(ContentPath item)
+        public void ChangeTab(TabItem  item)
         {
-            MyFiles.Current = MyFiles.Files.FirstOrDefault(p => p.Path==item.Path);
-            if (MyFiles.Current == null) 
-            CurrenContent = MainEditViewModel.AllContents.First(p => p.Path == item.Path && p.Header == item.Header);
+            MyFiles.Current = MyFiles.Files.FirstOrDefault(p => p.Header==item.Header);
+                
         }
         public ContentPath SaveFile()
         {

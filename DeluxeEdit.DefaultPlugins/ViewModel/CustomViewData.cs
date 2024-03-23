@@ -19,8 +19,8 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
 
         public static ContentPath OldLastNewFile { get; set; }
-        public static ContentPath LastNewFile { get; set; }
-        public static ContentPath LastLoadFile { get; set; }
+        public static ContentPath NewFile { get; set; }
+        public static ContentPath EditFile{ get; set; }
 
         private  bool IsNewFile { get; set; }
 
@@ -33,11 +33,11 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         }
         public void PublishNewFile(ContentPath path)
         {
-            LastNewFile = path;
+            NewFile = path;
         }
         public void PublishLoadFile(ContentPath path)
         {
-            LastLoadFile= path;
+            EditFile = path;
         }
 
 
