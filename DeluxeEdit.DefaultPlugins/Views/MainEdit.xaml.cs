@@ -60,7 +60,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
 
-           var viewData = new CustomViewData();
+           var viewData = new EventData();
             viewData.subscrile(OnEvent);
                 
        }

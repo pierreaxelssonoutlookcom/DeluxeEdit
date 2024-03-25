@@ -53,7 +53,7 @@ namespace DefaultPlugins.ViewModel
         public string DoCommand(MenuItem item, string SelectedText)
         {
             string result="" ;
-            var publisher = new CustomViewData();
+            var publisher = new EventData();
             
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems).First(p => p.Title == item.Header);
             if (myMenuItem.Plugin is FileNewPlugin)

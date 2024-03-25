@@ -6,7 +6,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
     public delegate void Cust(EventType type, ContentPath path);
 
     
-    public class CustomViewData
+    public class EventData
     {
         public event EventHandler<CustomEventArgs> RaiseEvent;
 
@@ -17,7 +17,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         private EventType? currentItem = null;
 
 
-        public CustomViewData()
+        public EventData()
         {
 
             RaiseEvent += RaiseCustomEvent;
