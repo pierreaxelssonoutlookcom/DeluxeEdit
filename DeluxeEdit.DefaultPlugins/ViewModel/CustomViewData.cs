@@ -3,17 +3,9 @@ using System;
 
 namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
-    public enum EventType { NewFile, EditFile }
     public delegate void Cust(EventType type, ContentPath path);
 
     
-    public class CustomEventArgs : EventArgs
-    {
-
-        public EventType Type { get; set; }
-
-        public ContentPath Path{ get; set; }
-    }
     public class CustomViewData
     {
         public event EventHandler<CustomEventArgs> RaiseEvent;
