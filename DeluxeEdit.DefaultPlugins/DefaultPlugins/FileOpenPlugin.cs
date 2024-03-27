@@ -62,12 +62,9 @@ namespace DefaultPlugins
         public List<string> ContentBuffer;
         public List<string> SeekData(double newScrollVatue)         
         {
-            long? seekTarget=null;
-            seekTarget=Convert.ChangeType(newScrollVatue, seekTarget.GetType()) as long?; 
-            if (seekTarget.HasValue)
-
-            reader.BaseStream.Seek(seekTarget.Value, SeekOrigin.Current);
-            var result= ReadPortion(Parameter);
+            long newPosition = Convert.ToInt64( newScrollVatue / reader.BaseStream.Length);
+            reader.BaseStream.Position = newPosition;
+            var result = ReadPortion(Parameter);
             return result;
         }
         public ConfigurationOptions Configuration { get; set; }
