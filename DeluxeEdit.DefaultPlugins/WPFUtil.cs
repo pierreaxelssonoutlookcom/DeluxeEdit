@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DeluxeEdit.DefaultPlugins
 {
@@ -26,14 +27,23 @@ namespace DeluxeEdit.DefaultPlugins
         {
             int result = -1;
             for (int i = 0; i < collection.Count; i++)
-            {
-                var header = (collection[i] as HeaderedItemsControl).Header as string;
-                if (header== text  )
+            { 
+                string header = "";
+
+                if (collection[i] is HeaderedItemsControl)
+                    header = (collection[i] as HeaderedItemsControl).Header as string;
+                else if (collection[i] is TabItem);
+                    header = (collection[i] as TabItem).Header as string;
+
+
+
+               if (header == text)  
                {
                     result = i; 
                     break;
                 }
             }
+
 
 
             return result;

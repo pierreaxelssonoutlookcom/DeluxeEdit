@@ -62,7 +62,6 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
                     newExistMenuItem.Items.Add(newItem);
                 }
 
-
             }
 
         }

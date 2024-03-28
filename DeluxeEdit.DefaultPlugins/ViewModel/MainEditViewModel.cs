@@ -24,7 +24,7 @@ namespace DefaultPlugins.ViewModel
 
         public MainEditViewModel(TabControl tab)
         {
-            currentTab = tab;
+            currentTab = tab;  
             newFileViewModel= new NewFileViewModel(tab);
             openPlugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave) as FileSavePlugin;
