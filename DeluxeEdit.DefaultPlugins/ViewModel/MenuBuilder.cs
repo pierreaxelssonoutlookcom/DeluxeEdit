@@ -17,7 +17,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         public List<CustomMenu> BuildMenu()
         {
             var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-            var result = GetMenuHeaders(plugins);
+           var result = GetMenuHeaders(plugins);
 
             foreach (var item in result) item.MenuItems.AddRange(GetMenuItems(item, plugins));
 
@@ -44,27 +44,33 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         }
 
 
-        public void ShowMenu(Menu mainMenu, List<CustomMenu> customMenus) 
+        public void ShowMenu(Menu mainMenu, List<CustomMenu> customMenus)
         {
- 
+
             foreach (var item in customMenus)
             {
 
-                int index = mainMenu.Items.IndexOfText(item.Header);
+                int index=-WPFUtil.IndexOfText(     mainMenu.Items, item.Header);
                 if (index == -1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
 
 
                 foreach (var menuItem in item.MenuItems)
-
                 {
                     MenuItem newExistMenuItem = (MenuItem)mainMenu.Items[index];
                     var newItem = new MenuItem { Header = menuItem.Title };
                     newExistMenuItem.Items.Add(newItem);
+
                 }
 
             }
 
         }
+       
+        
+        
+        
+        
+        
 
     }
 }
