@@ -20,10 +20,10 @@ namespace DeluxeEdit.DefaultPlugins
 
         public static bool TabÉxist(string header, TabControl control)
         {
-            var result = control.Items.IndexOfText(header) > -1;
+            var result = IndexOfText(control.Items, header) > -1;
             return result;
         }
-        public static int IndexOfText(this ItemCollection  collection, string text)
+        public static int IndexOfText(ItemCollection  collection, string text)
         {
             int result = -1;
 
@@ -32,9 +32,10 @@ namespace DeluxeEdit.DefaultPlugins
                 string header = "";
 
                 if (collection[i] is HeaderedItemsControl)
-                    header = (collection[i] as HeaderedItemsControl).Header as string;
+                    header = (collection[i] as HeaderedItemsControl).Header.ToString();
+
                 else if (collection[i] is TabItem);
-                    header = (collection[i] as TabItem).Header as string;
+                    header = (collection[i] as TabItem).Header.ToString();
 
 
 
