@@ -37,7 +37,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         public List<CustomMenuItem> GetMenuItems(CustomMenu item, IEnumerable<INamedActionPlugin> plugins)
         {
-            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenuItem)
+            var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenu)
                 .Select(p => new CustomMenuItem { Title = p.Configuration.ShowInMenuItem, Plugin = p })
                 .ToList();
             return result;
@@ -50,27 +50,30 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
             foreach (var item in customMenus)
             {
 
-                int index=-WPFUtil.IndexOfText(     mainMenu.Items, item.Header);
-                if (index == -1) index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
-
+                var index =-WPFUtil.IndexOfText(     mainMenu.Items, item.Header);
+                int IndexCasted = (int)index;
+                if (index.Equals( WPFUtil.Minus1))
+                {
+                    index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+                }
 
                 foreach (var menuItem in item.MenuItems)
                 {
-                    MenuItem newExistMenuItem = (MenuItem)mainMenu.Items[index];
+                    MenuItem newExistMenuItem =  mainMenu.Items[IndexCasted] as MenuItem;
                     var newItem = new MenuItem { Header = menuItem.Title };
                     newExistMenuItem.Items.Add(newItem);
 
-               }
+                }
 
             }
 
-        }
        
         
         
         
         
         
+        }
 
     }
 }

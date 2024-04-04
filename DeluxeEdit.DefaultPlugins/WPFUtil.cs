@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.Xml;
+using System.Windows.Controls;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DeluxeEdit.DefaultPlugins
@@ -6,7 +8,7 @@ namespace DeluxeEdit.DefaultPlugins
 
     public  static class WPFUtil
     {
-        
+        public const nint Minus1 = -1;
 
 
         public static void AddOrUpddateTab(string header, TabControl control)
@@ -23,33 +25,34 @@ namespace DeluxeEdit.DefaultPlugins
             var result = IndexOfText(control.Items, header) > -1;
             return result;
         }
-        public static int IndexOfText(ItemCollection  collection, string text)
+        public static nint IndexOfText(ItemCollection  collection, string text)
         {
-            int result = -1;
 
             for (int i = 0; i < collection.Count; i++)
             { 
                 string header = "";
 
                 if (collection[i] is HeaderedItemsControl)
+                {
                     header = (collection[i] as HeaderedItemsControl).Header.ToString();
-
-                else if (collection[i] is TabItem);
+                }
+                 else if (collection[i] is TabItem) 
+                {
                     header = (collection[i] as TabItem).Header.ToString();
-
+                }
 
 
                if (header == text)  
                {
-                    result = i; 
+                    return i;
                     break;
                 }
             }
 
 
 
-            return result;
-        }
+            return Minus1;
+        } 
 
     }
 }
