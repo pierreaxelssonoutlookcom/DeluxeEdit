@@ -16,7 +16,10 @@
         </Menu>
         <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"      >
             <TabItem Header="TabItem">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" >
+                    
                 <TextBox x:Name="MainEditBox" TextWrapping="NoWrap" ScrollBar.Scroll="MainEditBox_Scroll"   KeyDown="MainEditBox_KeyDown"/>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </DockPanel>

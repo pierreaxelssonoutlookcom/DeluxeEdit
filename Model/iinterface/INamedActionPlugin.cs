@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Model.Interface
 {
@@ -19,7 +20,10 @@ namespace Model.Interface
         string Titel { get; set; }
 
         ActionParameter?  Parameter { get; set; }
-        string Perform(ActionParameter parameter);
+
+
+        Task<string> Perform(ActionParameter parameter);
+
 
 
 

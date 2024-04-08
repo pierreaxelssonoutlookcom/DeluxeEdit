@@ -14,10 +14,10 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         [Fact]
         public void FileNewPluginTest()
         {
+
             var plugin = AllPlugins.InvokePlugin(PluginType.FileNew) as FileNewPlugin;
                 
-   
-
+    
             var actual = plugin.Perform(new ActionParameter());
            ;
         }

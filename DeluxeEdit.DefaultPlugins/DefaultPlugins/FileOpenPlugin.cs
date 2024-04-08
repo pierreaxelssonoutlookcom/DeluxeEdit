@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using CustomFileApiFile;
 using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
+using System.Threading.Tasks;
+using System.Windows.Shapes;
+using static System.Windows.Forms.LinkLabel;
 
 namespace DefaultPlugins
 {
@@ -60,13 +63,6 @@ namespace DefaultPlugins
         public int SortOrder { get; set; }
 
         public List<string> ContentBuffer;
-        public List<string> SeekData(double newScrollVatue)         
-        {
-            long newPosition = Convert.ToInt64( newScrollVatue / reader.BaseStream.Length);
-            reader.BaseStream.Position = newPosition;
-            var result = ReadPortion(Parameter);
-            return result;
-        }
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
 
@@ -99,35 +95,24 @@ namespace DefaultPlugins
             Version =   Version.Parse("0.1");
         }
 
-        public string Perform(ActionParameter parameter)
+        public async Task<string> Perform(ActionParameter parameter)
         {
               Parameter=parameter;
             FileSize = File.Exists(parameter.Parameter) ?   new FileInfo(parameter.Parameter).Length: 0;
 
-            if (reader == null)
-            {
-                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
-                MýStream = mmf.CreateViewStream();
-                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
-            }
 
 
-            var result = ReadAllPortions(parameter);
-
-            ContentBuffer.Clear();
-            if (ContentBuffer.Count > SystemConstants.ReadBufferSizeLines) ContentBuffer.Clear();
-
-            
-            ContentBuffer.AddRange(result);
-            return String.Join(Environment.NewLine, result);
+            var result = await  ReadAllPortions(parameter);
+            return  String.Join(Environment.NewLine, result);
         }
-        public List<string> ReadAllPortions(ActionParameter parameter)
+        public async Task<List<string>> ReadAllPortions(ActionParameter parameter)
         {
-             var lastPortion=new List<string>();
+             var result=new List<string>();
 
             while (CanReadMore)
             {
-                lastPortion=ReadPortion(parameter);
+                result.AddRange(await ReadPortion(parameter) );
+
             }
 
             if (!CanReadMore)
@@ -135,25 +120,36 @@ namespace DefaultPlugins
                 reader.Close();
                 reader = null;
             }
-            return lastPortion;
+            return result;
         }
 
-        public List<string> ReadPortion(ActionParameter parameter)
+        public async Task<List<string>> ReadPortion(ActionParameter parameter)
         {
-            //todo:how do I share file data between different plugins
+            if (reader == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                MýStream = mmf.CreateViewStream();
+                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+            }
 
+            //todo:how do I share file data between different plugins
+            int i = 0;
+            string line = String.Empty;
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
+            var lines = new List<string>();
 
-            
-
-            
-            var linesRead=  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines);
-            BytesRead += linesRead.Bytes;
-            
+            while ((line = await reader.ReadLineAsync()) != null && i < SystemConstants.ReadPortionBufferSizeLines)
+            { 
+                i++;
+                lines.Add(line);
 
 
-            return linesRead.Items;
+            }
+
+
+
+            return lines;
         }
 
     }

@@ -10,6 +10,7 @@ using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
 using CustomFileApiFile;
 using DeluxeEdit.DefaultPlugins.Views;
+using System.Threading.Tasks;
 
 namespace DefaultPlugins
 {
@@ -89,7 +90,7 @@ namespace DefaultPlugins
             Version =   Version.Parse("0.1");
         }
 
-        public string Perform(ActionParameter parameter)
+        public async Task<string> Perform(ActionParameter parameter)
         {
             return "";
           

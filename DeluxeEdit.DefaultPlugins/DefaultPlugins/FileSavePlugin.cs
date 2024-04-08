@@ -15,6 +15,7 @@ using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows.Forms;
 using System.Windows;
 using MS.WindowsAPICodePack.Internal;
+using System.Threading.Tasks;
 
 namespace DefaultPlugins
 {
@@ -95,7 +96,7 @@ namespace DefaultPlugins
             return result;
         }
 
-        public string Perform(ActionParameter parameter)
+        public async Task<string> Perform(ActionParameter parameter)
         {
             ContentBuffer = parameter.InData.Split(Environment.NewLine).ToList();
               Parameter = parameter;

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -50,7 +51,7 @@ namespace DefaultPlugins.ViewModel
 
 
 
-        public string DoCommand(MenuItem item, string SelectedText)
+        public async Task<string> DoCommand(MenuItem item, string SelectedText)
         {
             string result="" ;
             var publisher = new EventData();
@@ -59,13 +60,13 @@ namespace DefaultPlugins.ViewModel
             if (myMenuItem.Plugin is FileNewPlugin)
                 publisher.PublishNewFile(newFileViewModel.GetNewFile());
             else if (myMenuItem.Plugin is FileOpenPlugin)
-                publisher.PublishLoadFile(LoadFile());
+                publisher.PublishLoadFile(await LoadFile());
             else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
             else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
-                result = myMenuItem.Plugin.Perform(new ActionParameter { Parameter = SelectedText });
+                result = await myMenuItem.Plugin.Perform(new ActionParameter { Parameter = SelectedText });
             else
-                result = myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter);
+                result = await myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter);
 
 
             return result;
@@ -77,8 +78,7 @@ namespace DefaultPlugins.ViewModel
    public void ScrollTo(double newValue)
         {
               //done :find way to renember old path before dialog 
-           var seeked = openPlugin.SeekData(newValue);
-
+ 
         }
         public TextBox AddNewTextControlAndListen(string path)
         {
@@ -94,7 +94,7 @@ namespace DefaultPlugins.ViewModel
             return text;
         }
 
-        public ContentPath? LoadFile()
+        public async Task<ContentPath?> LoadFile()
         {
             ContentPath? result = null;
             var action = openPlugin.GuiAction(openPlugin);
@@ -105,7 +105,7 @@ namespace DefaultPlugins.ViewModel
                 result.Path = action.Path;
                 result.Header = new FileInfo(result.Path).Name;
                 openPlugin.OpenEncoding = action.Encoding;
-                result.Content = openPlugin.Perform(new ActionParameter { Parameter = result.Path });
+                result.Content  = await openPlugin.Perform(new ActionParameter { Parameter = result.Path });
                 var text = AddNewTextControlAndListen(result.Header);
                 text.Text = result.Content;
                 MyEditFiles.Files.Add(
@@ -144,7 +144,7 @@ namespace DefaultPlugins.ViewModel
             }
         }
 
-        public ContentPath? KeyDown()
+        public async Task<ContentPath?> KeyDown()
         {
             //done:cast enum from int
             ContentPath result = null;
@@ -154,7 +154,7 @@ namespace DefaultPlugins.ViewModel
                 .Count(p => System.Windows.Input.Keyboard.IsKeyDown(p));
 
             keysOkProceed = matchCount == openPlugin.Configuration.KeyCommand.Keys.Count && openPlugin.Configuration.KeyCommand.Keys.Count > 0;
-            if (keysOkProceed) result = LoadFile();
+            if (keysOkProceed) result = await LoadFile();
 
 
             return result;

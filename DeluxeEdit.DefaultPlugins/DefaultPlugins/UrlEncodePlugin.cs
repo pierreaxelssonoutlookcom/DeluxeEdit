@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Web;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DefaultPlugins
 {
@@ -49,7 +50,7 @@ namespace DefaultPlugins
 
         }
 
-        public string Perform(ActionParameter parameter)
+        public async Task<string> Perform(ActionParameter parameter)
         {
             var result = HttpUtility.UrlEncode(parameter.Parameter, Encoding.UTF8);
             return result;
