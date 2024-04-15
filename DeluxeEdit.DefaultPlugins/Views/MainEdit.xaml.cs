@@ -53,7 +53,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
             newViewModel = new NewFileViewModel(TabFiles);
             newViewModel.AddNewTextControlAndListen("newfile.txt");
             var customMenu = editViewModel.GetMenu();
-
+    
             var builder = new MenuBuilder();
 
             builder.ShowMenu(this.MainMenu, customMenu);
@@ -74,9 +74,10 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
        }
 
-        private void MainEditBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private  async void MainEditBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            var keyeddata = editViewModel.KeyDown();
+            var keyeddata =  await editViewModel.KeyDown();
+            
             if (keyeddata == null) e.Handled = false;
             else
             {
