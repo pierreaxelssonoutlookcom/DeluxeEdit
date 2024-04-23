@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace DefaultPlugins
 {
-    public class FileSaveAslugin : INamedActionPlugin
+    public class FileSaveAsPlugin : INamedActionPlugin
     {
         public bool ParameterIsSelectedText { get; set; } = false;
 
@@ -76,7 +76,7 @@ namespace DefaultPlugins
 
 
 
-        public FileSaveAslugin()
+        public FileSaveAsPlugin()
         {
             ContentBuffer = new List<string>();
             //  OpenEncoding = Encoding.UTF8;

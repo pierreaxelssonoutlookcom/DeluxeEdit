@@ -14,6 +14,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using static System.Windows.Forms.LinkLabel;
+using System.Threading;
 
 namespace DefaultPlugins
 {
@@ -109,17 +110,18 @@ namespace DefaultPlugins
         {
              var result=new List<string>();
 
-            while (CanReadMore)
-            {
-                result.AddRange(await ReadPortion(parameter) );
+                var localResult = await ReadPortion(parameter);
+                result.AddRange(localResult);
 
-            }
+                while (localResult.Count>0 )
+                {
+                    localResult = await ReadPortion(parameter);
+                    result.AddRange(localResult);
+                }
 
-            if (!CanReadMore)
-            { 
+ 
                 reader.Close();
                 reader = null;
-            }
             return result;
         }
 
