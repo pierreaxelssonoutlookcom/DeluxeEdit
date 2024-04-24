@@ -41,7 +41,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         {
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent() && item.Header == p.Configuration.ShowInMenu)
                 .Select(p => 
-                new CustomMenuItem { Title = $"{p.Configuration.ShowInMenuItem} ({p.Configuration.KeyCommand.ToString()}"    , Plugin = p })
+                new CustomMenuItem { Title = $"{p.Configuration.ShowInMenuItem} ({p.Configuration.KeyCommand.ToString()})"    , Plugin = p })
                 .ToList();
             return result;
         }
