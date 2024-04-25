@@ -12,7 +12,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         public static string TestFile2 = TempDir + "/testfile2.txt";
 
         [Fact]
-        public void FileOpenPluginTest()
+        public async void FileOpenPluginTest()
         {
             var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
 
@@ -20,12 +20,12 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
             if (File.Exists(TestFile)) File.Delete(TestFile);
             File.WriteAllText(TestFile, "ninjaåäÖ", Encoding.UTF8);
             plugin.OpenEncoding=Encoding.UTF8;
-            var actual = plugin.Perform(
+            var actual = await plugin.Perform(
                 new ActionParameter(TestFile));
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void FileOpenPluginTestSimple()
+        public async void FileOpenPluginTestSimple()
         {
             var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
 
@@ -33,7 +33,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
             if (File.Exists(TestFile2)) File.Delete(TestFile2);
             File.WriteAllText(TestFile2, "ninjaåäö");
             plugin.OpenEncoding = null;
-            var actual = plugin.Perform(
+            var actual = await plugin.Perform(
                 new ActionParameter(TestFile2));
             Assert.Equal(expected, actual);
         }

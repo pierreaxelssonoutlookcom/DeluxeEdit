@@ -135,20 +135,13 @@ namespace DefaultPlugins
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
 
+
+
             //todo:how do I share file data between different plugins
 
             if (!File.Exists(parameter.Parameter)) 
-                throw new FileNotFoundException(parameter.Parameter); 
-            var lines = new List<string>();
-
-            for (int i = 0; i>SystemConstants.ReadPortionBufferSizeLines;i++) 
-            { 
-                string line = await reader.ReadLineAsync();
-                if (line != null)
-                    lines.Add(line);
-                else
-                    break;
-            }
+                throw new FileNotFoundException(parameter.Parameter);
+            var lines = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
 
 
             return lines;

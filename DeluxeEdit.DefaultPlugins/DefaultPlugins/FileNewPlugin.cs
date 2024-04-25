@@ -91,41 +91,8 @@ namespace DefaultPlugins
             throw new NotImplementedException();
         }
 
-        public List<string> ReadAllPortions(ActionParameter parameter)
-        {
-             var lastPortion=new List<string>();
 
-            while (CanReadMore)
-            {
-                lastPortion=ReadPortion(parameter);
-            }
-
-            if (!CanReadMore)
-            { 
-                reader.Close();
-                reader = null;
-            }
-            return lastPortion;
-        }
-
-        public List<string> ReadPortion(ActionParameter parameter)
-        {
-            //todo:how do I share file data between different plugins
-
-
-            if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-
-            
-
-            
-            var linesRead=  reader.ReadLinesMax(SystemConstants.ReadPortionBufferSizeLines);
-            BytesRead += linesRead.Bytes;
-            
-
-
-            return linesRead.Items;
-        }
-
+    
     }
 
 
