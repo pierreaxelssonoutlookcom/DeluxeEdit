@@ -14,7 +14,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private MainEditViewModel editViewModel;
         private NewFileViewModel newViewModel;
 
-        public MainEdit()
+       MainEdit()
         {
             InitializeComponent();
             
@@ -93,13 +93,13 @@ namespace DeluxeEdit.DefaultPlugins.Views
         }
 
 
-        private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (e.Source is MenuItem)
             {
                 var clicked = e.Source as MenuItem;
 
-                editViewModel.DoCommand(clicked, MainEditBox.SelectedText);
+                 await editViewModel.DoCommand(clicked, MainEditBox.SelectedText);
 
             }
         }

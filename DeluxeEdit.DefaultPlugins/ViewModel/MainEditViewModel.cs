@@ -58,7 +58,8 @@ namespace DefaultPlugins.ViewModel
             string result="" ;
             var publisher = new EventData();
             
-            var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems).First(p => p.Title == item.Header);
+            var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems)
+                .Single(p => item!=null p!=null  && p.Title == item.Header);
             if (myMenuItem.Plugin is FileNewPlugin)
                 publisher.PublishNewFile(newFileViewModel.GetNewFile());
             else if (myMenuItem.Plugin is FileOpenPlugin)
