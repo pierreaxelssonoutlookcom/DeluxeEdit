@@ -13,20 +13,17 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         private MainEditViewModel editViewModel;
         private NewFileViewModel newViewModel;
-
-       MainEdit()
+        public MainEdit()
         {
             InitializeComponent();
-            
-            // temporary call
-            //currenContents =editViewModel.UpdateLoad();
-        }
 
+        }
+ 
         private void MainEditBox_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
         {
             editViewModel.ScrollTo(e.NewValue); 
         }
-        private void EditFile(ContentPath path)
+        private void EditFile(MyEditFile path)
         {
             var current = MyEditFiles.Current ?? MyEditFiles.Current.Text;
 
@@ -35,7 +32,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
 
         }
-        private void NewFile(ContentPath path)
+        private void NewFile(MyEditFile path)
 
         {
 

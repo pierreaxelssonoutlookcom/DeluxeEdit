@@ -59,7 +59,7 @@ namespace DefaultPlugins.ViewModel
             var publisher = new EventData();
             
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems)
-                .Single(p => item!=null p!=null  && p.Title == item.Header);
+                .Single(p => item!=null && p!=null  && p.Title == item.Header);
             if (myMenuItem.Plugin is FileNewPlugin)
                 publisher.PublishNewFile(newFileViewModel.GetNewFile());
             else if (myMenuItem.Plugin is FileOpenPlugin)
@@ -97,29 +97,22 @@ namespace DefaultPlugins.ViewModel
             return text;
         }
 
-        public async Task<ContentPath?> LoadFile()
+        public async Task<MyEditFile?> LoadFile()
         {
-            ContentPath? result = null;
+            MyEditFile? result = null;
             var action = openPlugin.GuiAction(openPlugin);
             //if user cancelled path is empty 
             if (action != null && action.Path.HasContent())
             {
-                result = new ContentPath();
+                result = new MyEditFile();
+
                 result.Path = action.Path;
                 result.Header = new FileInfo(result.Path).Name;
                 openPlugin.OpenEncoding = action.Encoding;
                 result.Content  = await openPlugin.Perform(new ActionParameter { Parameter = result.Path });
                 var text = AddNewTextControlAndSubscribe(result.Header);
                 text.Text = result.Content;
-                MyEditFiles.Add(
-                    new MyEditFile
-                    {
-                        Path = result.Path,
-                        Content = result.Content,
-                        Header = result.Header,
-                        Text = text,
-                        Tab = currentTab.Items.CurrentItem
-                    });
+                MyEditFiles.Add(result);
             }
             return result;
         }
@@ -150,10 +143,10 @@ namespace DefaultPlugins.ViewModel
             }
         }
 
-        public async Task<ContentPath?> KeyDown()
+        public async Task<MyEditFile?> KeyDown()
         {
             //done:cast enum from int
-            ContentPath? result = null;
+            MyEditFile ? result = null;
             bool keysOkProceed = false;
             var matchCount = openPlugin.Configuration.KeyCommand.Keys
                 .Cast<System.Windows.Input.Key>()

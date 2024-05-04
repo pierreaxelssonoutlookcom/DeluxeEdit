@@ -38,22 +38,14 @@ namespace DefaultPlugins.ViewModel
             return text;
         }
 
-        public ContentPath GetNewFile()
+        public MyEditFile GetNewFile()
         {
-               var result = new ContentPath { Header = "newfile.txt", Content = "" };
+               var result = new MyEditFile { Header = "newfile.txt", Content = "", IsNewFile=true };
+
             MyEditFiles.Files.Add(new MyEditFile { Header = result.Header });
             var text=AddNewTextControlAndSubscribe (result.Header);
-            MyEditFiles.Add(
-               new MyEditFile
-               {
-                   Path = result.Path,
-                   Content = result.Content,
-                   Header = result.Header,
-                   Text = text,
-                   Tab = currentTab.Items.CurrentItem,
-                   IsNewFile = true
-               });
-
+            MyEditFiles.Add(result); 
+               
 
 
             return result;
@@ -71,10 +63,10 @@ namespace DefaultPlugins.ViewModel
                 e.Handled = true;
             }
         }
-        public ContentPath? KeyDown()
+        public MyEditFile? KeyDown()
         {
             //done:cast enum from int
-            ContentPath result = null;
+            MyEditFile result = null;
             bool keysOkProceed = false;
             var matchCount = plugin.Configuration.KeyCommand.Keys
                 .Cast<System.Windows.Input.Key>()

@@ -10,8 +10,8 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
     {
         public event EventHandler<CustomEventArgs> RaiseEvent;
 
-        public ContentPath NewFile { get; set; }
-        public ContentPath EditFile { get; set; }
+        public MyEditFile NewFile { get; set; }
+        public MyEditFile EditFile { get; set; }
 
 
         private EventType? currentItem = null;
@@ -41,7 +41,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         
          
  
-         public void PublishNewFile(ContentPath path)
+         public void PublishNewFile(MyEditFile path)
         {
             if (path == null) return; 
              
@@ -49,7 +49,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
             NewFile = path;
             RaiseCustomEvent(null, new CustomEventArgs { Type=EventType.NewFile,  Path=path  }   );
         }
-        public void PublishLoadFile(ContentPath path)
+        public void PublishLoadFile(MyEditFile path)
         {
 
             if (path == null) return;

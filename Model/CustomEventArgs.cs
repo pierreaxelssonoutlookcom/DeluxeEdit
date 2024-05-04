@@ -9,7 +9,7 @@ namespace Model
 
         public EventType Type { get; set; }
 
-        public ContentPath? Path { get; set; } = null;
+        public MyEditFile? Path { get; set; } = null;
     }
 }
 
