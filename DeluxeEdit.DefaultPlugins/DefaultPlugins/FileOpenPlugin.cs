@@ -17,13 +17,6 @@ namespace DefaultPlugins
 {
     public class FileOpenPlugin : INamedActionPlugin
     {
-        public  static FileOpenPlugin CastNative(INamedActionPlugin item)
-        {
-            if (item is FileOpenPlugin)
-                return item as FileOpenPlugin;
-            else
-                return null;
-        }
 
         public bool ParameterIsSelectedText { get; set; } = false;
 
@@ -42,7 +35,6 @@ namespace DefaultPlugins
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
-        public Stream InputStream { get; set; }
 
         private MemoryMappedViewStream MýStream;
         private StreamReader? reader;
@@ -55,6 +47,7 @@ namespace DefaultPlugins
         public List<string> ContentBuffer;
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
+
 
 
 
@@ -99,6 +92,13 @@ namespace DefaultPlugins
             Configuration.ShowInMenuItem = "Open"; ;
             Configuration.KeyCommand.Keys =  new List<Key> { Key.LeftCtrl, Key.O };
             Version =   Version.Parse(VersionString);
+        }
+        public static FileOpenPlugin CastNative(INamedActionPlugin item)
+        {
+            if (item is FileOpenPlugin)
+                return item as FileOpenPlugin;
+            else
+                return null;
         }
 
         public async Task<string> Perform(ActionParameter parameter)

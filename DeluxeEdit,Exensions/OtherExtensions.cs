@@ -16,14 +16,13 @@ namespace Extensions
 
         public static PluginFile ParseNugetFileName(this string path)
         {
-            //DefaultPlugins.0.0.1.nupkg
             var result = new PluginFile();
             result.LocalPath = path;
 
             var index = StringExtenssions.IndexOfDigit(path);
             var lastIndex = StringExtenssions.LastIndexOfDigit(path);
             result.Name = Path.GetFileNameWithoutExtension(new FileInfo(path).Name);
-            if (index.HasValue && index.Value > -1)
+            if (index.HasValue && lastIndex.HasValue)
             {
                 result.Version = Version.Parse(StringExtenssions.SubstringPos(path, index.Value, lastIndex.Value));
                 result.Name= Path.GetFileNameWithoutExtension(StringExtenssions.SubstringPos(path, 0, index.Value-2));
@@ -61,20 +60,18 @@ namespace Extensions
         /// <param name="buffer"></param>
         /// <param name="maxLines"></param>
         /// <returns></returns>
-        public static long WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
+        public static async  Task WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
         {
             long oldPos=writer.BaseStream.Position;
             var removals = new List<string>();
 
             foreach (var item in buffer.Take(maxLines).Select(p=>p.ToString()))
             {
-                writer.WriteLine(item);
-                removals.Add(item);
+                await writer.WriteLineAsync(item);
             }
-                         
-            removals.ForEach(p => buffer.Remove(p));
-            
-            return writer.BaseStream.Position - oldPos;
+
+
+            return;
             
 
         }

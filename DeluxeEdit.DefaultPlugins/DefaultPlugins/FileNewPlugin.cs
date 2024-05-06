@@ -30,23 +30,30 @@ namespace DefaultPlugins
 
 
         //todo; we might have to implement setcontext for plugins   
-
+       
         public bool Enabled { get; set; }
-        public Stream InputStream { get; set; }
 
-        private MemoryMappedViewStream MýStream;
-        private StreamReader? reader;
         public bool AsReaOnly { get; set; }
         public Encoding? OpenEncoding { get; set; }
         public string Id { get; set; } = "FileNewPlugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
-        public List<string> ContentBuffer;
-        public ConfigurationOptions Configuration { get; set; }
+        public List<string> ContentBuffer { get; set; } = new List<string>();
+        public ConfigurationOptions Configuration { get; set; }= new ConfigurationOptions();
         public string Path { get; set; } = "";
 
+        private  StringReader reader;
 
+ 
+
+        public FileNewPlugin()
+        { 
+            Configuration.ShowInMenu = "File";
+            Configuration.ShowInMenuItem = "New"; 
+            Configuration.KeyCommand.Keys =  new List<Key> { Key.LeftCtrl, Key.N };
+            Version = Version.Parse(VersionString);
+        }
         public object CreateControl(bool showToo)
         {
             var result = new MainEdit();
@@ -56,33 +63,23 @@ namespace DefaultPlugins
 
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
-            string oldDir =@"c:\";
+            string oldDir = @"c:\";
 
             if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            var dialog= new DeluxeFileDialog();
-            var result=dialog.ShowFileOpenDialog(oldDir);
-            return null;
+            var dialog = new DeluxeFileDialog();
+            var result = dialog.ShowFileOpenDialog(oldDir);
+            return result;
         }
 
 
-        public bool CanReadMore { get { return reader.BaseStream.CanRead; } }
-                
 
- 
 
-        public FileNewPlugin()
-        { 
-            ContentBuffer = new List<string>(); 
-          //  OpenEncoding = Encoding.UTF8; m 
-            Configuration = new ConfigurationOptions();
-            Configuration.ShowInMenu = "File";
-            Configuration.ShowInMenuItem = "New"; 
-            Configuration.KeyCommand.Keys =  new List<Key> { Key.LeftCtrl, Key.N };
-            Version = Version.Parse(VersionString);
-        }
 
         public async Task<string> Perform(ActionParameter parameter)
         {
+
+            reader = new StringReader("");
+            await reader.ReadToEndAsync();
             return "";
           
         }

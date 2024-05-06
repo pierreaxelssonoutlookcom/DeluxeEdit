@@ -15,7 +15,7 @@ namespace DeluxeEdit
             InitializeComponent();
             //todo:add usercontols dynamically
 
-            var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen) as FileOpenPlugin;
+            var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen);
             Content= plugin.CreateControl(false);
 
 

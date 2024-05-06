@@ -127,13 +127,12 @@ namespace DefaultPlugins
             
         }
 
-        public void WritePortion(ActionParameter parameter)
+        public async void WritePortion(ActionParameter parameter)
         {
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-            long bytes= writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
-            BytesWritten += bytes;
-            writer.Flush();
+            await writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
+            await writer.FlushAsync();
 
         }
 

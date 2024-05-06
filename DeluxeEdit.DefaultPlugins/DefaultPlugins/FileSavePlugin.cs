@@ -23,23 +23,6 @@ namespace DefaultPlugins
     {
         public bool ParameterIsSelectedText { get; set; } = false;
 
-        public object CreateControl(bool showToo)
-        {
-            object view = new MainEdit();
-            Window win = null;
-            var result = view;
-            if (showToo)
-            {
-                win = new Window();
-                result = win;
-
-                win.Content = view;
-                win.Show();
-
-            }
-
-            return result;
-        }
 
 
 
@@ -88,6 +71,33 @@ namespace DefaultPlugins
             Configuration.KeyCommand.Keys = new List<Key> { Key.LeftCtrl, Key.S };
             Version = Version.Parse(VersionString);
         }
+        public object CreateControl(bool showToo)
+        {
+            object view = new MainEdit();
+            Window win = null;
+            var result = view;
+            if (showToo)
+            {
+                win = new Window();
+                result = win;
+
+                win.Content = view;
+                win.Show();
+
+            }
+
+            return result;
+        }
+
+        public static FileSavePlugin CastNative(INamedActionPlugin item)
+        {
+            if (item is FileSavePlugin && item != null)
+                return item as FileSavePlugin;
+            else
+                return null;
+
+
+        }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
             string oldDir = @"c:\";
@@ -133,13 +143,12 @@ namespace DefaultPlugins
             
         }
 
-        public void WritePortion(ActionParameter parameter)
+        public async void WritePortion(ActionParameter parameter)
         {
 
             if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
-            long bytes= writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
-            BytesWritten += bytes;
-            writer.Flush();
+            await writer.WriteLinesMax(ContentBuffer, SystemConstants.ReadPortionBufferSizeLines);
+            await writer.FlushAsync();
 
         }
 
