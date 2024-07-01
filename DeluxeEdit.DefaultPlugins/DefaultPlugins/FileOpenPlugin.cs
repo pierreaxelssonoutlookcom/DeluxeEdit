@@ -107,6 +107,7 @@ namespace DefaultPlugins
 
             if (Parameter != null)
             {
+
                 FileSize = File.Exists(Parameter.Parameter) ? new FileInfo(Parameter.Parameter).Length : 0;
 
 
