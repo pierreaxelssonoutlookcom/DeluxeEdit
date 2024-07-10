@@ -6,44 +6,31 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using Shared;
 
 namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
 
     public class FileBufferManager
     {
-        private Stack<string> MyMuffer { get; set; }
+        private List<string> MemoryBuffer { get; set; }
         public FileBufferManager()
         {
-            MyMuffer = new Stack<string>();
+            MemoryBuffer = new List<string>();
         }
         public async void ClearMemoryBuffer()
         {
-            MyMuffer.Clear();
+            MemoryBuffer.Clear();
 
-        }
-        public void ScrollTo(double newValue)
-        { 
-        }
-        public  string PopBuffer(FileOpenPlugin plugin, MyEditFile file)
-        {
-           var result= MyMuffer.Pop();
-            return result;
         }
         public async void ReadBufeePush(FileOpenPlugin plugin, MyEditFile file)
-        {
+        { 
             plugin.Parameter = new ActionParameter(file.Path);
-
-            (await plugin.Perform()).ToList().ForEach(p => MyMuffer.Push(p));
-
-
-
-
-            ;
-
-
-
-
+            MemoryBuffer.AddRange((await plugin.Perform()).ToList());
+            var excess = MemoryBuffer.Where(x => x != null && MemoryBuffer.Count > SystemConstants.ReadBufferSizeLines ).ToList();
+            excess.ForEach(x => { MemoryBuffer.Remove(x); });
+            
+            
         }
          
         public async void WriteRPortion(List<string> data,FileSavePlugin plugin, MyEditFile file)
@@ -64,8 +51,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         public async void AppenBuffer(IEnumerable<string> data, MyEditFile file)
         {
-            File.AppendAllLines(file.Path 
-   , data);
+            File.AppendAllLines(file.Path, data);
         }
         
 
