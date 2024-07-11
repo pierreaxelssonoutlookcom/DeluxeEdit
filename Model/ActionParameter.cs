@@ -9,6 +9,7 @@ namespace Model
         public ActionParameter()
         {
             Parameter = "";
+            InData = new List<string>();
         }
         public ActionParameter(string parameter, List<string> indata)
         {

@@ -46,7 +46,6 @@ namespace DefaultPlugins
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
-        public List<string> ContentBuffer;
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
 
@@ -86,7 +85,6 @@ namespace DefaultPlugins
 
         public FileOpenPlugin()
         {
-            ContentBuffer = new List<string>(); 
           //  OpenEncoding = Encoding.UTF8; m 
             Configuration = new ConfigurationOptions();
             Configuration.ShowInMenu = "File";
@@ -111,8 +109,9 @@ namespace DefaultPlugins
                 FileSize = File.Exists(Parameter.Parameter) ? new FileInfo(Parameter.Parameter).Length : 0;
 
 
+
                  
-                result = await ReadPortion(Parameter);
+                result = await ReadPortion();
             }
             return result;
         }
@@ -122,30 +121,12 @@ namespace DefaultPlugins
             string result =String.Join(Environment.NewLine, Perform());
             return result;
         }
-        public async Task<List<string>> ReadAllPortions(ActionParameter parameter)
-        { 
-             var result=new List<string>();
 
-                var localResult = await ReadPortion(parameter);
-                result.AddRange(localResult);
-
-                while (localResult.Count>0 )
-                {
-                    localResult = await ReadPortion(parameter);
-                    result.AddRange(localResult);
-                }
-
- 
-                reader.Close();
-                reader = null;
-            return result;
-        }
-
-        public async Task<List<string>> ReadPortion(ActionParameter parameter)
+        public async Task<List<string>> ReadPortion()
         {
             if (reader == null)
             {
-                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 MýStream = mmf.CreateViewStream();
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
@@ -154,11 +135,12 @@ namespace DefaultPlugins
 
             //todo:how do I share file data between different plugins
 
-            if (!File.Exists(parameter.Parameter)) 
-                throw new FileNotFoundException(parameter.Parameter);
+            if (!File.Exists(Parameter.Parameter))
+                throw new FileNotFoundException(Parameter.Parameter);
+
             var lines = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
 
-
+            Parameter.InData= lines;
             return lines;
 
 

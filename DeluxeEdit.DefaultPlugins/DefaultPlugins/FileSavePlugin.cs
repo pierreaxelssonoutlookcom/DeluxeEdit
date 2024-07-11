@@ -42,7 +42,7 @@ namespace DefaultPlugins
 
         public bool Enabled { get; set; }
         //done:make dynamic
-        public bool CanWriteMore { get { return FileSize != 0 && BytesWritten < FileSize && ContentBuffer.Count > 0; } }
+      
 
 
 
@@ -54,7 +54,6 @@ namespace DefaultPlugins
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
-        public List<string> ContentBuffer;
 
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
@@ -63,7 +62,6 @@ namespace DefaultPlugins
 
         public FileSavePlugin()
         {
-            ContentBuffer = new List<string>();
             //  OpenEncoding = Encoding.UTF8;
             Configuration = new ConfigurationOptions();
             Configuration.ShowInMenu = "File";
@@ -132,22 +130,6 @@ namespace DefaultPlugins
             return "";
 
         }
-        public  async void WritesAllPortions()
-        {
-       
-            while (CanWriteMore)
-            {
-               WritePortion();
-            }
-
-            if (!CanWriteMore)
-            {
-                writer.Close();
-                writer = null;
-            }
-            
-        }
-
         public async void WritePortion()
         {
 

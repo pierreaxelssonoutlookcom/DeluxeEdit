@@ -121,18 +121,19 @@ namespace DefaultPlugins.ViewModel
             MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header==item.Header);
                 
         }
-        public  async void  SaveFile()
+        public async void SaveFile()
         {
             var text = MyEditFiles.Current.Text as TextBox;
             if (text != null)
             {
-                var result = new ContentPath { Path = MyEditFiles.Current.Path, Content = text.Text };
-                 await savePlugin.Perform(new ActionParameter { Parameter = result.Path, InData = result.Content });
+
+                var split = text.Text.Split(Environment.NewLine).ToList();
+                await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, split));
             }
- 
+
         }
         private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
+       {
             var keyeddata = KeyDown();
             if (keyeddata == null) e.Handled = false;
             else

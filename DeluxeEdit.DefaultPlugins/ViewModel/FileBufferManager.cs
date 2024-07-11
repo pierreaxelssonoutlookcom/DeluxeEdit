@@ -23,7 +23,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
             MemoryBuffer.Clear();
 
         }
-        public async void ReadBufeePush(FileOpenPlugin plugin, MyEditFile file)
+        public async void ReadToBufee(FileOpenPlugin plugin, MyEditFile file)
         { 
             plugin.Parameter = new ActionParameter(file.Path);
             MemoryBuffer.AddRange((await plugin.Perform()).ToList());
