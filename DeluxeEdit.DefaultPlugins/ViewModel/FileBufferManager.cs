@@ -27,7 +27,13 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         { 
             plugin.Parameter = new ActionParameter(file.Path);
             MemoryBuffer.AddRange((await plugin.Perform()).ToList());
-            var excess = MemoryBuffer.Where(x => x != null && MemoryBuffer.Count > SystemConstants.ReadBufferSizeLines ).ToList();
+            var excess = MemoryBuffer.Where(x => x != null && MemoryBuffer.Count > SystemConstants.ReadBufferSizeLines)
+               .Select(x => x).ToList();
+                
+                
+                
+                
+                
             excess.ForEach(x => { MemoryBuffer.Remove(x); });
             
             
