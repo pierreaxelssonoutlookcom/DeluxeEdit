@@ -20,7 +20,7 @@
         <TabControl x:Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged" Width="100"      >
                 <TabItem Header="TabItem">
 
-                <TextBox x:Name="MainEditBox"          HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="Wrap"   ScrollBar.Scroll="MainEditBox_Scroll"   KeyDown="MainEditBox_KeyDown"/>
+                <TextBox x:Name="MainEditBox"       AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollBar.Scroll="MainEditBox_Scroll"   KeyDown="MainEditBox_KeyDown"/>
                 </TabItem>
             <Button/>
         </TabControl>
