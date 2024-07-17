@@ -21,10 +21,6 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         }
 
-        private void MainEditBox_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
-        {
-            editViewModel.ScrollTo(e.NewValue); 
-        }
         private void EditFile(MyEditFile path)
         {
             var current = MyEditFiles.Current ?? MyEditFiles.Current.Text;
@@ -111,6 +107,18 @@ namespace DeluxeEdit.DefaultPlugins.Views
             if (TabFiles.Items.Count <= 1) return;
             editViewModel.ChangeTab(TabFiles.SelectedItem as TabItem);
 
+
+        }
+
+        private void MainEditBox_Scroll_1(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
+
+
+        private void MainEditBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            editViewModel.ScrollTo(e.VerticalOffset);
 
         }
     }
