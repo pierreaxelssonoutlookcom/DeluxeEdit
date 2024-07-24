@@ -60,18 +60,19 @@ namespace Extensions
         /// <param name="buffer"></param>
         /// <param name="maxLines"></param>
         /// <returns></returns>
-        public static async  Task WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
+        public static async  Task<bool> WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
         {
-            long oldPos=writer.BaseStream.Position;
-            var removals = new List<string>();
 
+            var result = false;
             foreach (var item in buffer.Take(maxLines).Select(p=>p.ToString()))
             {
                 await writer.WriteLineAsync(item);
+                result = true;
+
             }
 
 
-            return;
+            return result ;
             
 
         }

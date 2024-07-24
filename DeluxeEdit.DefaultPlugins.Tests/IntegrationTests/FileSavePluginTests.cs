@@ -12,7 +12,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         public static string TestFile2 = TempDir + "/testsave.txt";
 
         [Fact]
-        public void FileSavePluginTest()
+        public async void FileSavePluginTest()
         {
             var plugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs) as FileSavePlugin;
 
@@ -21,7 +21,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
             File.WriteAllText(TestFile, "ninjaåäÖ", Encoding.UTF8);
 
             plugin.OpenEncoding=Encoding.UTF8;
-             plugin.Perform(
+             await plugin.Perform(
                 new ActionParameter(TestFile, "ninjaåäÖ"));
             
             

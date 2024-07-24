@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Model
  {
@@ -11,13 +13,19 @@ namespace Model
             Parameter = "";
             InData = new List<string>();
         }
+        public ActionParameter(string parameter, string indata)
+        {
+            Parameter = parameter;
+            InData = indata.Split(Environment.NewLine).ToList();
+        }
         public ActionParameter(string parameter, List<string> indata)
         {
             Parameter = parameter;
             InData = indata;
         }
-        public ActionParameter(string parameter)
+        public ActionParameter(string? parameter)
         {
-            Parameter = parameter;       }
+
+            if (parameter!=null) Parameter = parameter;       }
     }
 }

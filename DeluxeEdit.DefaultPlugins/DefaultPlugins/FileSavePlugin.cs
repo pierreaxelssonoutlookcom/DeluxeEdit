@@ -107,7 +107,9 @@ namespace DefaultPlugins
         }
         public async Task<IEnumerable<string>> Perform()
         {
+            Perform(Parameter);
             return null;
+       
         }
 
 
@@ -123,20 +125,25 @@ namespace DefaultPlugins
                 writer = OpenEncoding == null ?  new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
             }
 
-            WritePortion();
+             WriteAllPortion();
                 
                
 
             return "";
 
         }
-        public async void WritePortion()
+        public async void WriteAllPortion()
+        {
+            while (await WritePortion()) ;
+
+        }
+        public async Task<bool>  WritePortion()
         {
 
             if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
-            await writer.WriteLinesMax(Parameter.InData, SystemConstants.ReadPortionBufferSizeLines);
+            bool result=await writer.WriteLinesMax(Parameter.InData, SystemConstants.ReadPortionBufferSizeLines);
             await writer.FlushAsync();
-
+            return result;
         }
 
     }

@@ -118,12 +118,37 @@ namespace DefaultPlugins
 
         public async Task<string> Perform(ActionParameter parameter)
         {
+            if (parameter == null) throw new ArgumentNullException();
+     
             string result =String.Join(Environment.NewLine, Perform());
             return result;
         }
 
+        public async Task<List<string>> ReadAllPortion()
+        {
+            var result = new List<string>();
+            var total = new List<string>();
+
+            if (reader == null)
+            {
+
+                    
+                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
+                MýStream = mmf.CreateViewStream();
+                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+            }
+            while( (result= await ReadPortion()) !=null)
+
+            {
+                total.AddRange(result); 
+            }
+            return total;
+        }
         public async Task<List<string>> ReadPortion()
         {
+            if (Parameter == null) throw new ArgumentNullException();
+
+
             if (reader == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);

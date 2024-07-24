@@ -39,15 +39,15 @@ namespace DefaultPlugins
             var result= InvokePlugin(myType);
             return result;
         }
-        public static INamedActionPlugin InvokePlugin(string type)
+        public static INamedActionPlugin? InvokePlugin(string type)
         {
             INamedActionPlugin? result = null;
             Type? matchedType = PluginManager.SourceFiles.SelectMany(p => p.MatchingTypes)
             .SingleOrDefault(p => p.ToString() == type);
             if (matchedType != null)
             {
-                object objecctResult = Activator.CreateInstance(matchedType);
-                if (objecctResult is INamedActionPlugin) result = objecctResult as INamedActionPlugin;
+                object? objecctResult = Activator.CreateInstance(matchedType);
+                if (objecctResult!=null  && objecctResult is INamedActionPlugin) result = objecctResult as INamedActionPlugin;
             }
             return result;
 ;        }
