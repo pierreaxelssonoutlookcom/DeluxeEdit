@@ -45,8 +45,15 @@ namespace Extensions
                 string line = await reader.ReadLineAsync();
                 if (line != null)
                 {
-                    int index = line.IndexOf('\0');
-                    var resultLine = new String(line.ToCharArray(), 0, index);
+                    var index = line.IndexOf('\0');
+                    string resultLine;
+
+
+                    if (index >= 0)
+                         resultLine = new String(line.ToCharArray(), 0, index);
+                    else
+                        resultLine = line;
+
                     result.Add(resultLine);
                 }
 

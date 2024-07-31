@@ -21,7 +21,7 @@
             <TabItem Header="TabItem">
 
                 <StackPanel Orientation="Vertical">
-                    <ProgressBar x:Name="progressBar" />
+                    <ProgressBar x:Name="progressBar"  Width="50"/>
 
                     <TextBox x:Name="MainEditBox"  AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollViewer.ScrollChanged="MainEditBox_ScrollChanged"   KeyDown="MainEditBox_KeyDown" />
                     <Button Content="Button" Click="Button_Click"/>

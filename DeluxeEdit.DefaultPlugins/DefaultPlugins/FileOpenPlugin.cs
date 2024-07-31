@@ -120,6 +120,7 @@ namespace DefaultPlugins
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progresss)
         { 
             if (parameter == null) throw new ArgumentNullException();
+            Parameter= parameter;
             List<string> result = new List<string>();
 
             FileSize = File.Exists(parameter.Parameter) ? new FileInfo(parameter.Parameter).Length : 0;

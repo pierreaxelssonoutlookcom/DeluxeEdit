@@ -107,7 +107,7 @@ namespace DefaultPlugins.ViewModel
             return text;
         }
 
-        public async Task<MyEditFile?> LoadFile()
+        public async  Task<MyEditFile?> LoadFile()
         {
              var progress = new Progress<long>(value => prog.Value = value);
 
