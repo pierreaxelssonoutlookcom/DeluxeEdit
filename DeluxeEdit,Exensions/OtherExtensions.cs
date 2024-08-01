@@ -39,7 +39,7 @@ namespace Extensions
         public async static Task<List<string>> ReadLinesMax(this StreamReader reader, int maxLines)
         {
 
-            var result = new List<string>();
+            List<string> result = null;
             for (int i = 0; i < maxLines; i++)
             {
                 string line = await reader.ReadLineAsync();
@@ -53,12 +53,13 @@ namespace Extensions
                          resultLine = new String(line.ToCharArray(), 0, index);
                     else
                         resultLine = line;
-
+                    if (result == null) result = new List<string>();
                     result.Add(resultLine);
                 }
 
             }
             return result;
+
         }
         /// <summary>
         /// Returns bytes written, removes lines written
@@ -68,8 +69,7 @@ namespace Extensions
         /// <param name="maxLines"></param>
         /// <returns></returns>
         public static async  Task<bool> WriteLinesMax(this StreamWriter writer, List<string> buffer, int maxLines)
-        {
-
+        { 
             var result = false;
             foreach (var item in buffer.Take(maxLines).Select(p=>p.ToString()))
             {

@@ -104,8 +104,7 @@ namespace DefaultPlugins
         {
             List<string> result= new List<string>();
 
-            if (Parameter != null)
-            {
+            if (Parameter != null)            {
 
                 FileSize = File.Exists(Parameter.Parameter) ? new FileInfo(Parameter.Parameter).Length : 0;
 
@@ -156,14 +155,14 @@ namespace DefaultPlugins
         {
             if (Parameter == null) throw new ArgumentNullException();
 
-
+            List<string> result=null;
             if (reader == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 MýStream = mmf.CreateViewStream();
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
-
+           
 
 
             //todo:how do I share file data between different plugins
@@ -171,12 +170,11 @@ namespace DefaultPlugins
             if (!File.Exists(Parameter.Parameter))
                 throw new FileNotFoundException(Parameter.Parameter);
 
-            var lines = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
+            result  = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
+            var lineCount =result != null ? result.Count : 0;
+            progress.Report(lineCount);
 
-            progress.Report(lines.Count);
-
-            Parameter.InData= lines;    
-            return lines;
+            return result;
 
 
 

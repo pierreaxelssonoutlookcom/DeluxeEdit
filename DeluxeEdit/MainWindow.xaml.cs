@@ -12,6 +12,7 @@ namespace DeluxeEdit
 
        public MainWindow()
         {
+            
             InitializeComponent();
             //todo:add usercontols dynamically
 
