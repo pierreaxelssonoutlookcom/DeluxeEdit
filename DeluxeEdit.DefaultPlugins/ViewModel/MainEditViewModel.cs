@@ -91,7 +91,7 @@ namespace DefaultPlugins.ViewModel
 
         }
 
-        public ComboControl AddNewTextControlAndSubscribe(string path)
+        public ComboControl AddMyContols(string path)
         {
             var result = new ComboControl();
             var name = new FileInfo(path).Name;
@@ -109,12 +109,12 @@ namespace DefaultPlugins.ViewModel
             result.Panel.Orientation = Orientation.Vertical; ;
             result.Panel.Children.Add(result.ProgressBar);
             result.Panel.Children.Add(result.Text);
-            WPFUtil.AddOrUpddateTab(name, currentTab);
-            currentTab.Items.Add(result.Panel);
-            return result;
+            WPFUtil.AddOrUpddateTab(name, currentTab, result.Panel) ;
+            // currentTab.Items.Add(resul
 
+            return result; 
+ 
         }
-
         public async Task<MyEditFile?> LoadFile()
         {
             var progress = new Progress<long>(value => prog.Value = value);
@@ -130,15 +130,16 @@ namespace DefaultPlugins.ViewModel
                 result.Header = new FileInfo(result.Path).Name;
                 openPlugin.OpenEncoding = action.Encoding;
                 result.Content = await openPlugin.Perform(new ActionParameter(result.Path), progress);
-                var combo = AddNewTextControlAndSubscribe(result.Header);
+                var combo = AddMyContols(result.Header);
                 combo.Text.Text = result.Content;
                 MyEditFiles.Add(result);
             }
             return result;
         }
+
         public void ChangeTab(TabItem item)
         {
-            MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == item.Header);
+            //MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == item.Header);
 
         }
         public async void SaveFile()

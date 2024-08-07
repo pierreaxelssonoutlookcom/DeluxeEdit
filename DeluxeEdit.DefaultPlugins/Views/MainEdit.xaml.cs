@@ -7,7 +7,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 {
     /// <summary>
     /// Interaction logic for test.xaml
-    /// </summary>
+    /// </summary> 
     public partial class MainEdit: UserControl
     {
 
@@ -45,7 +45,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
         }
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            newViewModel.AddNewTextControlAndSubscribe("newfile.txt");
+           // newViewModel.AddNewTextControlAndSubscribe("newfile.txt");
             var customMenu = editViewModel.GetMenu();
     
             var builder = new MenuBuilder();
@@ -65,7 +65,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
             else if (e.Type ==EventType.NewFile)
                 NewFile(e.Path);
 
-
+            
        }
 
         private  async void MainEditBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -77,7 +77,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
             {
                 MainEditBox.Text = keyeddata.Content;
 
-             WPFUtil.AddOrUpddateTab(keyeddata.Header, TabFiles);
+             //WPFUtil.AddOrUpddateTab(keyeddata.Header, TabFiles);
                 e.Handled = true;
             }
 
@@ -104,7 +104,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TabFiles.Items.Count <= 1) return;
+        //    if (TabFiles.Items.Count <= 1) return;
             editViewModel.ChangeTab(TabFiles.SelectedItem as TabItem);
 
 
@@ -131,6 +131,15 @@ namespace DeluxeEdit.DefaultPlugins.Views
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
              var data = await editViewModel.LoadFile();
+            
+            
+            
+            
+            
+            
+            
+            
+            
             MainEditBox.Text = data.Content;
 //
         }

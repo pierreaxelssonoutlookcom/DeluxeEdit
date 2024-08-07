@@ -12,6 +12,7 @@ using DeluxeEdit.DefaultPlugins;
 using MS.WindowsAPICodePack.Internal;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using DefaultPlugins.Model;
 
 namespace DefaultPlugins.ViewModel
 {
@@ -25,26 +26,43 @@ namespace DefaultPlugins.ViewModel
             plugin = AllPlugins.InvokePlugin(PluginType.FileNew);
             currentTab = tab;
         }
-        public TextBox AddNewTextControlAndSubscribe(string filename)
+
+        public ComboControl AddMyContols(string filename)
         {
+            var result = new ComboControl();
 
-            WPFUtil.AddOrUpddateTab(filename, currentTab);
+            result.Text = new TextBox();
 
-            var text = new TextBox();
-            text.Name = Path.GetFileNameWithoutExtension(filename);
-            text.KeyDown += Text_KeyDown;
-            currentTab.Items.Add(text);
+            result.Text.Name = filename.Replace(".", "");
+            result.Text.AcceptsReturn = true;
+            result.Text.KeyDown += Text_KeyDown;
 
-            return text;
+            result.ProgressBar = new ProgressBar();
+            result.ProgressBar.Name = "progress" + filename.Replace(".", "");
+            result.Panel = new StackPanel();
+            result.Panel.Name = "panel" + filename.Replace(".", "");
+            result.Panel.Orientation = Orientation.Vertical; ;
+            result.Panel.Children.Add(result.ProgressBar);
+            result.Panel.Children.Add(result.Text);
+            WPFUtil.AddOrUpddateTab(filename, currentTab, result.Panel);
+            // currentTab.Items.Add(resul
+
+            return result;
+
         }
+
+
+
+
 
         public MyEditFile GetNewFile()
         {
                var result = new MyEditFile { Header = "newfile.txt", Content = "", IsNewFile=true };
-
+            var combos= AddMyContols("newfile.txt");
             MyEditFiles.Files.Add(new MyEditFile { Header = result.Header });
-            var text=AddNewTextControlAndSubscribe (result.Header);
-            MyEditFiles.Add(result); 
+            result.Text = combos.Text;
+
+            MyEditFiles.Add(result);
                
 
 

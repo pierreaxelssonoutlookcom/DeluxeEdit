@@ -11,14 +11,27 @@ namespace DeluxeEdit.DefaultPlugins
         public const nint Minus1 = -1;
 
 
-        public static void AddOrUpddateTab(string header, TabControl control)
+        public static void AddOrUpddateTab(string header, TabControl control, object contentControl)
         {
-            if (WPFUtil.TabÉxist(header, control) == false)
+            TabItem item;
+            var index = IndexOfText(control.Items, header);
+            if (index.HasValue && control.Items[index.Value] is TabItem)
             {
-                var item = new TabItem { Header = header };
-                control.Items.Add(item);
+                item = control.Items[index.Value] as TabItem;
+                
+
+                
             }
+            else
+            {
+                item = new TabItem();
+                control.Items.Add(item);
+
+            }
+            item.Header= header;
+            item.Content= contentControl;
         }
+
 
         public static bool TabÉxist(string header, TabControl control)
         {
