@@ -7,6 +7,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="DeluxeEdit.DefaultPlugins.Views.MainEdit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth= "800" Loaded="UserControl_Loaded">
+    
     <DockPanel Margin="0,-1,0,1">
         <Menu x:Name="MainMenu" DockPanel.Dock="Top" Height="100">
 
@@ -17,21 +18,23 @@
 
 
         </Menu>
+        <StatusBar Name="Status" VerticalAlignment="Bottom">
+            <StatusBarItem>
+                <TextBlock>Status:</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
         <TabControl x:Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"     >
-            <TabItem Header="TabItem">
-
-                <StackPanel Orientation="Vertical">
-                    <ProgressBar x:Name="progressBar"  Width="50"/>
-
-                    <TextBox x:Name="MainEditBox"  AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollViewer.ScrollChanged="MainEditBox_ScrollChanged"   KeyDown="MainEditBox_KeyDown" />
-                    <Button Content="Button" Click="Button_Click"/>
-                </StackPanel>
+            <TabItem Header="TabItem"/>
 
 
-            </TabItem>    
-                       
-            
             <Button/>
+            <StackPanel Orientation="Vertical" Width="794">
+                <ProgressBar x:Name="progressBar"  Width="50"/>
+
+                <TextBox x:Name="MainEditBox"  AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollViewer.ScrollChanged="MainEditBox_ScrollChanged"   KeyDown="MainEditBox_KeyDown" />
+                <Button Content="Button" Click="Button_Click"/>
+            </StackPanel>
         </TabControl>
     </DockPanel>
 </UserControl>

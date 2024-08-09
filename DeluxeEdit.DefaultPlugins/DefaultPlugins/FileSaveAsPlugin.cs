@@ -22,7 +22,8 @@ namespace DefaultPlugins
 {
     public class FileSaveAsPlugin : FileSavePlugin
     {
-        public bool ParameterIsSelectedText { get; set; } = false;
+        public new bool ParameterIsSelectedText { get; set; } = true;
+
 
         public object CreateControl(bool showToo)
         {
@@ -65,8 +66,7 @@ namespace DefaultPlugins
         private StreamWriter? writer;
 
         public bool AsReaOnly { get; set; }
-        public Encoding? OpenEncoding { get; set; }
-        public string Id { get; set; } = "FileSaveAslugin";
+        public Encoding? OpenEncoding { get; set; } = null;        public string Id { get; set; } = "FileSaveAslugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 

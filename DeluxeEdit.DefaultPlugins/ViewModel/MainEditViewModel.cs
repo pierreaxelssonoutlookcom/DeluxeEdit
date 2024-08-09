@@ -9,7 +9,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media.Animation;
+using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -19,6 +23,7 @@ namespace DefaultPlugins.ViewModel
     {
         private ProgressBar prog;
         private TabControl currentTab;
+        private StatusBar myStatus;
         private NewFileViewModel newFileViewModel;
         private FileOpenPlugin openPlugin;
         private INamedActionPlugin savePlugin;
@@ -27,10 +32,11 @@ namespace DefaultPlugins.ViewModel
 
         public object ShowM { get; internal set; }
 
-        public MainEditViewModel(TabControl tab, ProgressBar prog)
+        public MainEditViewModel(TabControl tab, ProgressBar prog, StatusBar status  )
         {
             this.prog = prog;
             currentTab = tab;
+            myStatus = status;
             newFileViewModel = new NewFileViewModel(tab);
             openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
@@ -101,20 +107,31 @@ namespace DefaultPlugins.ViewModel
             result.Text.Name = name.Replace(".", "");
             result.Text.AcceptsReturn = true;
             result.Text.KeyDown += Text_KeyDown;
+            prog.ValueChanged += ProgressBar_ValueChanged;
 
-            result.ProgressBar = new ProgressBar();
-            result.ProgressBar.Name = "progress" + name.Replace(".", "");
+
             result.Panel = new StackPanel();
             result.Panel.Name = "panel" + name.Replace(".", "");
-            result.Panel.Orientation = Orientation.Vertical; ;
+            result.Panel.Orientation = Orientation.Vertical; 
             result.Panel.Children.Add(result.ProgressBar);
             result.Panel.Children.Add(result.Text);
             WPFUtil.AddOrUpddateTab(name, currentTab, result.Panel) ;
-            // currentTab.Items.Add(resul
+            // currentTab.Items.Add(resu
 
             return result; 
  
         }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var bar = (sender as ProgressBar);
+            Duration duration = new Duration(TimeSpan.FromSeconds(20));
+            var myDoubleAnimation = new DoubleAnimation();
+
+            bar.BeginAnimation(ProgressBar.ValueProperty, myDoubleAnimation);
+           // e.NewValue
+        }
+
         public async Task<MyEditFile?> LoadFile()
         {
 

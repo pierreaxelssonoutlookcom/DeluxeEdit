@@ -3,6 +3,7 @@ using DeluxeEdit.DefaultPlugins.ViewModel;
 using Model;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 namespace DeluxeEdit.DefaultPlugins.Views
 {
     /// <summary>
@@ -16,7 +17,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, progressBar );
+            editViewModel = new MainEditViewModel(TabFiles, progressBar, Status );
             newViewModel = new NewFileViewModel(TabFiles);
 
         }
@@ -140,8 +141,9 @@ namespace DeluxeEdit.DefaultPlugins.Views
             
             
             
-            MainEditBox.Text = data.Content;
+    //        MainEditBox.Text = data.Content;
 //
+
         }
     }
 

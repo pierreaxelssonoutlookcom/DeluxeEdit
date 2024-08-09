@@ -23,7 +23,7 @@ namespace DefaultPlugins
 {
     public class FileSavePlugin : INamedActionPlugin
     {
-        public bool ParameterIsSelectedText { get; set; } = false;
+        public  bool  ParameterIsSelectedText { get; set; } = false;
 
 
 
