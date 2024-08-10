@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Reflection.Metadata;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace DefaultPlugins
 {
@@ -46,10 +47,22 @@ namespace DefaultPlugins
         public string Id { get; set; } = "FileOpenPlugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
-
+            
         public ConfigurationOptions Configuration { get; set; }
         public string Path { get; set; } = "";
+        public long GetFileLeLength(ActionParameter parameter)
+         {
+            if (reader == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                MýStream = mmf.CreateViewStream();
+                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+            }
+            long result = MýStream.Length;
+            return result;
 
+
+        }
 
 
 
@@ -136,9 +149,6 @@ namespace DefaultPlugins
 
             if (reader == null)
             {
-
-
-                    
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 MýStream = mmf.CreateViewStream();
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
@@ -163,6 +173,7 @@ return total;
                 MýStream = mmf.CreateViewStream();
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
+
            
 
 
@@ -174,7 +185,7 @@ return total;
             result  = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
             var lineCount =result != null ? result.Count : 0;
             if (progress != null)
-                progress.Report(lineCount);
+                progress.Report(MýStream.Position);
            
 
 

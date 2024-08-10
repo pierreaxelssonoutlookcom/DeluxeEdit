@@ -17,7 +17,8 @@ namespace DeluxeEdit.DefaultPlugins.Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, progressBar, Status );
+            editViewModel = new MainEditViewModel(TabFiles, Progress, ProgressStatus);
+                
             newViewModel = new NewFileViewModel(TabFiles);
 
         }

@@ -23,6 +23,7 @@ namespace DefaultPlugins.ViewModel
     {
         private ProgressBar prog;
         private TabControl currentTab;
+        private TextBlock myProgressStatus;
         private StatusBar myStatus;
         private NewFileViewModel newFileViewModel;
         private FileOpenPlugin openPlugin;
@@ -32,11 +33,12 @@ namespace DefaultPlugins.ViewModel
 
         public object ShowM { get; internal set; }
 
-        public MainEditViewModel(TabControl tab, ProgressBar prog, StatusBar status  )
+        public MainEditViewModel(TabControl tab, ProgressBar prog, TextBlock   progressStatus  )
         {
             this.prog = prog;
             currentTab = tab;
-            myStatus = status;
+            myProgressStatus = progressStatus;
+
             newFileViewModel = new NewFileViewModel(tab);
             openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
