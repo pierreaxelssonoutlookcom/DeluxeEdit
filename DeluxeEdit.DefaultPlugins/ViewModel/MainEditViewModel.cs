@@ -75,7 +75,7 @@ namespace DefaultPlugins.ViewModel
             if (myMenuItem.Plugin is FileNewPlugin)
                 publisher.PublishNewFile(newFileViewModel.GetNewFile());
             else if (myMenuItem.Plugin is FileOpenPlugin)
-                publisher.PublishLoadFile(await LoadFile());
+                publisher.PublishEditFile(await LoadFile());
             else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
             else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
