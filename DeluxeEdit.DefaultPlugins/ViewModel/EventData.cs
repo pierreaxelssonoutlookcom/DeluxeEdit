@@ -45,9 +45,9 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
          
  
-         public void PublishNewFile(MyEditFile path)
+         public void PublishNewFile(MyEditFile data)
         {
-            if (path == null) return;
+            if (data == null) return;
 
             CurrentType = EventType.NewFile;
             
@@ -56,10 +56,10 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
                 CheckToRaiseEvent();
            
         }
-            public void PublishEditFile(MyEditFile path)
+            public void PublishEditFile(MyEditFile data)
             {
 
-                if (path == null) return;
+                if (data==null) return;
 
                 CurrentType = EventType.EditFile; ;
 
