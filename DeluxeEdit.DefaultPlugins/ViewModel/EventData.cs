@@ -22,7 +22,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
             if (CurrentType.HasValue && EditFile != null)
             {
                 if (OldEditFile != EditFile || OldType!=CurrentType)
-                    Changed.Invoke(this, new CustomEventArgs { Type = CurrentType.Value, Data = EditFile });
+
 
 
                 OldType = CurrentType;
@@ -50,10 +50,12 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
             if (data == null) return;
 
             CurrentType = EventType.NewFile;
-            
-          
+            EditFile = data;
 
-                CheckToRaiseEvent();
+
+
+
+            CheckToRaiseEvent();
            
         }
             public void PublishEditFile(MyEditFile data)
@@ -62,6 +64,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
                 if (data==null) return;
 
                 CurrentType = EventType.EditFile; ;
+                EditFile = data;
 
                 CheckToRaiseEvent();
 
