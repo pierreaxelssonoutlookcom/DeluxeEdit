@@ -48,15 +48,6 @@ namespace DefaultPlugins.ViewModel
         {
             return MainMenu;
         }
-        private void SetMenuActions(List<CustomMenu> menu)
-        {
-            var allItems = menu.SelectMany(p => p.MenuItems);
-            foreach (var item in allItems)
-            {
-
-            }
-
-        }
         public void SetViewData(CustomMenuItem item)
         {
 
@@ -75,8 +66,10 @@ namespace DefaultPlugins.ViewModel
             if (myMenuItem.Plugin is FileNewPlugin)
                 publisher.PublishNewFile(newFileViewModel.GetNewFile());
             else if (myMenuItem.Plugin is FileOpenPlugin)
-                publisher.PublishEditFile(await LoadFile());
-            else if (myMenuItem.Plugin is FileSavePlugin)
+            {
+                var data = await LoadFile();
+               publisher.PublishEditFile(data);
+        }else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
             else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
                 result = await myMenuItem.Plugin.Perform(new ActionParameter { Parameter = SelectedText },
@@ -161,7 +154,7 @@ namespace DefaultPlugins.ViewModel
 
         public void ChangeTab(TabItem item)
         {
-            //MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == item.Header);
+            MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == item.Header);
 
         }
         public async void SaveFile()

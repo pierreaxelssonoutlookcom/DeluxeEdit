@@ -16,6 +16,7 @@ using System.Reflection.Metadata;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Windows.Documents;
 
 namespace DefaultPlugins
 {
@@ -107,25 +108,15 @@ namespace DefaultPlugins
             Version =   Version.Parse(VersionString);
         }
         public static FileOpenPlugin CastNative(INamedActionPlugin item)
-        {
+        { 
             if (item is FileOpenPlugin)
                 return item as FileOpenPlugin;
             else
                 return null;
         }
-        public  async Task<IEnumerable<string>> Perform(IProgress<long> progresss)
+        public async Task<IEnumerable<string>> Perform(IProgress<long> progresss)
         {
-            List<string> result= new List<string>();
-
-            if (Parameter != null)            {
-
-                FileSize = File.Exists(Parameter.Parameter) ? new FileInfo(Parameter.Parameter).Length : 0;
-
-
-
-                 
-                result = await ReadAllPortion(progresss);
-            }
+            var result = await ReadAllPortion(progresss);
             return result;
         }
 
@@ -133,9 +124,6 @@ namespace DefaultPlugins
         { 
             if (parameter == null) throw new ArgumentNullException();
             Parameter= parameter;
-            List<string> result = new List<string>();
-
-            FileSize = File.Exists(parameter.Parameter) ? new FileInfo(parameter.Parameter).Length : 0;
 
             var lines = await ReadAllPortion(progresss);         
            return String.Join(Environment.NewLine, lines);
@@ -166,7 +154,6 @@ return total;
         {
             if (Parameter == null) throw new ArgumentNullException();
 
-            List<string> result=null;
             if (reader == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
@@ -174,21 +161,17 @@ return total;
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
 
-           
+
 
 
             //todo:how do I share file data between different plugins
+            if (Parameter == null) throw new ArgumentNullException();
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
 
-            if (!File.Exists(Parameter.Parameter))
-                throw new FileNotFoundException(Parameter.Parameter);
-
-            result  = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
+            var result = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
             var lineCount =result != null ? result.Count : 0;
             if (progress != null)
                 progress.Report(MýStream.Position);
-           
-
-
 
 
             return result;

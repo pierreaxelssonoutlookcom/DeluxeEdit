@@ -8,42 +8,81 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
     {
         public delegate void Cust(EventType type, ContentPath path);
         public event EventHandler<CustomEventArgs> Changed;
-       public MyEditFile? EditFile { get; set; }
-       public MyEditFile? OldEditFile { get; set; }
+        private MyEditFile editFile;
+        private EventType currentType;
+        private bool TypeChanged;
+        private bool EditFilehanged;
+        public MyEditFile EditFile
+        {
+            get
+            {
+                return editFile;
+            }
+            set
+            {
+                if (value != editFile)
+                {
+                    editFile = value;
+                    EditFilehanged = true;
 
 
-        private EventType? CurrentType = null;
-        private EventType? OldType = null;
-        
-        
-        
+                    CheckToRaiseEvent();
+
+                }
+            }
+        }
+
+
+
+        public EventType CurrentType
+        {
+            get
+            {
+                return currentType;
+            }
+            set
+            {
+                if (value != currentType)
+                {
+                    currentType = value;
+                    TypeChanged = true;
+
+                    CheckToRaiseEvent();
+
+                }
+            }
+        }
+
+
+
+
+
         public void CheckToRaiseEvent()
         {
-            if (CurrentType.HasValue && EditFile != null)
+            if (EditFilehanged && TypeChanged)
             {
-                if (OldEditFile != EditFile || OldType!=CurrentType)
-                    Changed.Invoke(this, new CustomEventArgs { Type = CurrentType.Value, Data = EditFile });
 
-                OldType = CurrentType;
-                OldEditFile = EditFile;
+                Changed.Invoke(this, new CustomEventArgs { Type = CurrentType, Data = EditFile });
+
             }
-        }        
-            
+
+        }
+
         public EventData()
         {
 
-     
-                Changed += EventData_Changed; 
+
+            Changed += EventData_Changed;
         }
 
         private void EventData_Changed(object? sender, CustomEventArgs e)
         {
-            throw new NotImplementedException();
+            CheckToRaiseEvent();
         }
 
-         
- 
-         public void PublishNewFile(MyEditFile data)
+
+
+        public void PublishNewFile(MyEditFile data)
         {
             if (data == null) return;
 
@@ -54,31 +93,27 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
 
             CheckToRaiseEvent();
-           
+
         }
-            public void PublishEditFile(MyEditFile data)
-            {
+        public void PublishEditFile(MyEditFile data)
+        {
 
-                if (data==null) return;
+            if (data == null) return;
 
-                CurrentType = EventType.EditFile; ;
-                EditFile = data;
+            CurrentType = EventType.EditFile; ;
+            EditFile = data;
 
-                CheckToRaiseEvent();
+            CheckToRaiseEvent();
 
-            }
-
-
+        }
 
 
 
 
-                public void subscrile(EventHandler<CustomEventArgs> handler)
+        public void subscrile(EventHandler<CustomEventArgs> handler)
         {
             Changed += handler;
         }
 
-  
-        
     }
 }
