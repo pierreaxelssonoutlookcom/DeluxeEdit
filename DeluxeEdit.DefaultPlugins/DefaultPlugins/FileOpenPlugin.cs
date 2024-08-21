@@ -169,7 +169,7 @@ return total;
             if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
 
             var result = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
-            var lineCount =result != null ? result.Count : 0;
+            
             if (progress != null)
                 progress.Report(MýStream.Position);
 

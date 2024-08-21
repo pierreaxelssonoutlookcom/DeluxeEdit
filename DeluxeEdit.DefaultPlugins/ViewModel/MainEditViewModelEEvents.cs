@@ -23,8 +23,8 @@ namespace DefaultPlugins.ViewModel
         {
             if (!lastFileLength.HasValue) return;
 
-            var procent = (e.NewValue / lastFileLength.Value) *100;
-            progressText.Text = $"{procent}%%";
+            var percent = e.NewValue;
+            progressText.Text = $"{percent}%%";
             
         }
         private void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

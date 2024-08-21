@@ -29,20 +29,23 @@
 
 
         </StatusBar>
+        <StackPanel x:Name="OuterPanel" Orientation="Vertical">
 
-        <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"     >
-            <TabItem Header="TabItem">
-
-
-                <StackPanel Orientation="Vertical" Width="794">
-                    <Button Content="Button" Click="Button_Click"/>
+            <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"     >
+                <TabItem Header="TabItem">
 
 
-                    <TextBox x:Name="MainEditBox"  AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollViewer.ScrollChanged="MainEditBox_ScrollChanged"   KeyDown="MainEditBox_KeyDown" />
-                </StackPanel>
-            </TabItem>
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Button" Click="Button_Click"/>
 
-        </TabControl>
+
+                        <TextBox x:Name="MainEditBox"  AcceptsReturn="True"   HorizontalScrollBarVisibility="Auto"    VerticalScrollBarVisibility="Visible" TextWrapping="NoWrap"   ScrollViewer.ScrollChanged="MainEditBox_ScrollChanged"   KeyDown="MainEditBox_KeyDown" />
+                    </StackPanel>
+                </TabItem>
+
+            </TabControl>
+            
+        </StackPanel>
         <ProgressBar x:Name="Progress"  />
 
     </DockPanel>
