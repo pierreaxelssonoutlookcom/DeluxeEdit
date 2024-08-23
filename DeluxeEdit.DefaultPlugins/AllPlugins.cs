@@ -47,7 +47,8 @@ namespace DefaultPlugins
             if (matchedType != null)
             {
                 object? objecctResult = Activator.CreateInstance(matchedType);
-                if (objecctResult!=null  && objecctResult is INamedActionPlugin) result = objecctResult as INamedActionPlugin;
+                if (objecctResult!=null  && objecctResult is INamedActionPlugin) 
+                    result = objecctResult as INamedActionPlugin;
             }
             return result;
 ;        }

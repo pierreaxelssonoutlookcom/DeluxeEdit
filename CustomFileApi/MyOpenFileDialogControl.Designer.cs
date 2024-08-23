@@ -85,7 +85,7 @@ namespace CustomFileApiFile
             FileDlgOkCaption = "Open";
             ImeMode = System.Windows.Forms.ImeMode.NoControl;
             Name = "MyOpenFileDialogControl";
-            Size = new System.Drawing.Size(270, 588);
+            Size = new System.Drawing.Size(271, 588);
             EventClosingDialog += MyOpenFileDialogControl_ClosingDialog;
             Load += MyOpenFileDialogControl_Load;
             HelpRequested += MyOpenFileDialogControl_HelpRequested;

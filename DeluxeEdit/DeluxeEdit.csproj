@@ -8,9 +8,6 @@
 	<Version>0.0.1</Version>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y   C:\gitroot\personal\DeluxeEdit\DeluxeEdit\bin\Debug\net7.0-windows\DeluxeEdit.DefaultPlugins.dll &quot;C:\Program Files\DeluxeEdit\plugins\&quot;" />
-  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
