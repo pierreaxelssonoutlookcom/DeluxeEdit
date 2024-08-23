@@ -10,26 +10,37 @@ namespace CustomFileApiFile
 {
      public class DeluxeFileDialog
     {
-        public EncodingPath? ShowFileOpenDialog(string? initDir=null)
+        public EncodingPath? ShowFileOpenDialog(string? initDir = null)
         {
-            EncodingPath? result=null;
+            EncodingPath? result = null;
             using var dialog = new MyOpenFileDialogControl(initDir);
             var dummyForm = new Form();
-            var dialogResult=dialog.ShowDialog(dummyForm);
+            var dialogResult = dialog.ShowDialog(dummyForm);
 
-            if (dialogResult == DialogResult.OK) 
+            if (dialogResult == DialogResult.OK)
             {
                 result = new EncodingPath { Path = dialog.MSDialog.FileName };
-                result.Encoding = dialog.WantedEncoding != null ? (Encoding?)(Encoding.GetEncoding(dialog.WantedEncoding)): null; 
+                result.Encoding = dialog.WantedEncoding != null ? (Encoding?)(Encoding.GetEncoding(dialog.WantedEncoding)) : null;
             }
-            
+
             return result;
 
         }
-
-        public EncodingPath ShowFileSaveDialog(string oldDir)
+        public EncodingPath? ShowFileSaveDialog(string? initDir = null)
         {
-            throw new NotImplementedException();
+            EncodingPath? result = null;
+            using var dialog = new MySaveDialogControl(initDir);
+            var dummyForm = new Form();
+            var dialogResult = dialog.ShowDialog(dummyForm);
+
+            if (dialogResult == DialogResult.OK)
+            {
+                result = new EncodingPath { Path = dialog.MSDialog.FileName };
+                result.Encoding = dialog.WantedEncoding != null ? (Encoding?)(Encoding.GetEncoding(dialog.WantedEncoding)) : null;
+            }
+
+            return result;
+
         }
     }
 }

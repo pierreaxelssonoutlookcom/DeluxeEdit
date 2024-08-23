@@ -12,11 +12,6 @@ using CustomFileApiFile;
 using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
 using System.Threading.Tasks;
-using System.Reflection.Metadata;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Windows.Documents;
 
 namespace DefaultPlugins
 {

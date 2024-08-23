@@ -12,12 +12,6 @@ using CustomFileApiFile;
 using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
 using System.Threading.Tasks;
-using System.Reflection.Metadata;
-using System.Data.Common;
-using System.Windows.Media.Imaging;
-using System.Diagnostics;
-using System.Windows.Controls;
-
 namespace DefaultPlugins
 {
     public class FileSaveAsPlugin : FileSavePlugin
