@@ -12,13 +12,14 @@ namespace Shared
 {
     public class PluginManager
     {
-        private static string pluginPath;
+        private static string pluginPath { get; set; } = "C:\\gitroot\\personal\\DeluxeEdit\\DeluxeEdit\\bin\\Debug\\net8.0-windows";
+        private static string pluginFieExpression { get; set; } = "*Plugins*.dll";
+
         public static List<INamedActionPlugin> Instances = new List<INamedActionPlugin>();
         public static List<PluginFile> SourceFiles = new List<PluginFile>();
 
         static PluginManager()
         {
-            pluginPath = "C:\\gitroot\\personal\\DeluxeEdit\\DeluxeEdit\\bin\\Debug\\net8.0-windows";
 //            pluginPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
             LoadFiles();
 
@@ -41,7 +42,7 @@ namespace Shared
         }
         public static List<PluginFile> LoadFiles()
         {
-            var result = Directory.GetFiles(pluginPath, "*lugins*.dll")
+            var result = Directory.GetFiles(pluginPath, pluginFieExpression)
                 .Select(p => LoadPluginFile(p))
                 .ToList();
 
