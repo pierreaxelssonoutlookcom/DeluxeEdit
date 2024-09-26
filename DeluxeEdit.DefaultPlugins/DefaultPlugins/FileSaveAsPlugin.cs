@@ -98,12 +98,14 @@ namespace DefaultPlugins
         }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
-            string oldDir = @"c:\";
 
-            if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            _: var dialog = new DeluxeFileDialog();
-            var result = dialog.ShowFileSaveDialog(oldDir);
-            return result;
+            string oldDir = @"c:\";
+            if (Parameter!= null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+            :var dialog = new DeluxeFileDialog()
+
+
+              EncodingPath? result = dialog.ShowFileSaveDialog(oldDir);
+      return result;
         }
         public async Task<IEnumerable<string>> Perform(IProgress<long> progress)
         {
