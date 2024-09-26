@@ -17,22 +17,49 @@ namespace CustomFileApiFile.FileDlgExtenders
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            Encoding = new System.Windows.Forms.Label();
+            colorDialog1 = new System.Windows.Forms.ColorDialog();
+            cmbEncoding = new System.Windows.Forms.ComboBox();
+            SuspendLayout();
+            // 
+            // Encoding
+            // 
+            Encoding.AutoSize = true;
+            Encoding.Location = new System.Drawing.Point(0, 0);
+            Encoding.Name = "Encoding";
+            Encoding.Size = new System.Drawing.Size(86, 25);
+            Encoding.TabIndex = 0;
+            Encoding.Text = "Encoding";
+            // 
+            // cmbEncoding
+            // 
+            cmbEncoding.FormattingEnabled = true;
+            cmbEncoding.Location = new System.Drawing.Point(91, 8);
+            cmbEncoding.Name = "cmbEncoding";
+            cmbEncoding.Size = new System.Drawing.Size(182, 33);
+            cmbEncoding.TabIndex = 1;
             // 
             // FileDialogControlBase
             // 
-            this.Name = "FileDialogControlBase";
-            this.Size = new System.Drawing.Size(555, 385);
-            this.ResumeLayout(false);
-
+            Controls.Add(cmbEncoding);
+            Controls.Add(Encoding);
+            Name = "FileDialogControlBase";
+            Size = new System.Drawing.Size(555, 385);
+            Load += FileDialogControlBase_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
+
+        private System.Windows.Forms.Label Encoding;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ComboBox cmbEncoding;
 
         #endregion
 
 
         //protected System.Windows.Forms.OpenFileDialog _dlgOpen;
 
-
+        
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CustomFileApiFile;
+using CustomFileApiFile.FileDlgExtenders;
 using Model;
 using System.Text;
 using System.Windows.Forms;
@@ -11,7 +12,7 @@ namespace CustomFileDialogs
         public EncodingPath? ShowFileOpenDialog(string? initDir = null)
         {
             EncodingPath? result = null;
-            using var dialog = new MyOpenFileDialogControl(initDir);
+            using var dialog = new FileDialogControlBase(initDir);
             var dummyForm = new Form();
             var dialogResult = dialog.ShowDialog(dummyForm);
 
@@ -27,7 +28,7 @@ namespace CustomFileDialogs
         public EncodingPath? ShowFileSaveDialog(string? initDir = null)
         {
             EncodingPath? result = null;
-            using var dialog = new MySaveDialogControl(initDir);
+            using var dialog = new FileDialogControlBase(initDir);
             var dummyForm = new Form();
             var dialogResult = dialog.ShowDialog(dummyForm);
 

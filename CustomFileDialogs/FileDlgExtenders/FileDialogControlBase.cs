@@ -37,6 +37,10 @@ namespace CustomFileApiFile.FileDlgExtenders
 
     public partial class FileDialogControlBase : UserControl//, IMessageFilter
     {
+        public string? WantedEncoding {
+            get { return cmbEncoding.SelectedText; }
+        }
+
         #region Delegates
         public delegate void PathChangedEventHandler(IWin32Window sender, string filePath);
         public delegate void FilterChangedEventHandler(IWin32Window sender, int index);
@@ -213,7 +217,7 @@ namespace CustomFileApiFile.FileDlgExtenders
 
         [Category("FileDialogExtenders")]
         [DefaultValue("All files (*.*)|*.*")]
-        public string FileDlgFilter= "All files(*.*)|*.*";
+        public string FileDlgFilter = "All files(*.*)|*.*";
 
         [Category("FileDialogExtenders")]
         [DefaultValue(1)]
@@ -284,9 +288,9 @@ namespace CustomFileApiFile.FileDlgExtenders
                     MSDialog.Disposed += new EventHandler(FileDialogControlBase_DialogDisposed);
                     MSDialog.HelpRequest += new EventHandler(FileDialogControlBase_HelpRequest);
                     FileDlgEnableOkBtn = _EnableOkBtn;//that's design time value
-                    NativeMethods.SetWindowText(new HandleRef(_dlgWrapper,_dlgWrapper.Handle), _Caption);
+                    NativeMethods.SetWindowText(new HandleRef(_dlgWrapper, _dlgWrapper.Handle), _Caption);
                     //will work only for open dialog, save dialog will be overriden internally by windows
-                    NativeMethods.SetWindowText(new HandleRef(this,_hOKButton), _OKCaption);//SetDlgItemText fails too 
+                    NativeMethods.SetWindowText(new HandleRef(this, _hOKButton), _OKCaption);//SetDlgItemText fails too 
                     //bool res = NativeMethods.SetDlgItemText(NativeMethods.GetParent(Handle), (int)ControlsId.ButtonOk, FileDlgOkCaption);
                 }
             }
@@ -348,10 +352,10 @@ namespace CustomFileApiFile.FileDlgExtenders
                     #endregion
                 }
             }
-            catch 
+            catch
             {
             }
-        } 
+        }
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -405,7 +409,7 @@ namespace CustomFileApiFile.FileDlgExtenders
                 EventFilterChanged(sender, index);
         }
 
-        
+
 
 
         #endregion
@@ -432,7 +436,14 @@ namespace CustomFileApiFile.FileDlgExtenders
             MSDialog.ShowHelp = _ShowHelp;
             _hasRunInitMSDialog = true;
         }
+        public FileDialogControlBase(string? initialDirectory = null)
+            {
+                FileDlgInitialDirectory = !String.IsNullOrEmpty( initialDirectory) ? initialDirectory : "";
+                InitializeComponent();
+                if (cmbEncoding != null) cmbEncoding.Items.AddRange(System.Text.Encoding.GetEncodings().Select(p => p.Name).ToArray());
+            }
 
+        
         public DialogResult ShowDialog(IWin32Window owner)
         {
             DialogResult returnDialogResult = DialogResult.Cancel;
@@ -444,7 +455,7 @@ namespace CustomFileApiFile.FileDlgExtenders
                 owner = wr;
             }
             OriginalCtrlSize = this.Size;
-            _MSdialog = (FileDlgType == FileDialogType.OpenFileDlg)?new OpenFileDialog()as FileDialog:new SaveFileDialog() as FileDialog;
+            _MSdialog = (FileDlgType == FileDialogType.OpenFileDlg) ? new OpenFileDialog() as FileDialog : new SaveFileDialog() as FileDialog;
             _dlgWrapper = new WholeDialogWrapper(this);
             OnPrepareMSDialog();
             if (!_hasRunInitMSDialog)
@@ -468,7 +479,7 @@ namespace CustomFileApiFile.FileDlgExtenders
             return returnDialogResult;
         }
 
-        internal DialogResult ShowDialogExt(FileDialog fdlg,IWin32Window owner)
+        internal DialogResult ShowDialogExt(FileDialog fdlg, IWin32Window owner)
         {
             DialogResult returnDialogResult = DialogResult.Cancel;
             if (this.IsDisposed)
@@ -479,9 +490,9 @@ namespace CustomFileApiFile.FileDlgExtenders
                 owner = wr;
             }
             OriginalCtrlSize = this.Size;
-            MSDialog = fdlg;               
+            MSDialog = fdlg;
             _dlgWrapper = new WholeDialogWrapper(this);
-            
+
             try
             {
                 System.Reflection.PropertyInfo AutoUpgradeInfo = MSDialog.GetType().GetProperty("AutoUpgradeEnabled");
@@ -542,6 +553,16 @@ namespace CustomFileApiFile.FileDlgExtenders
             private IntPtr _hwnd;
         }
         #endregion
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FileDialogControlBase_Load(object sender, EventArgs e)
+        {
+
+        }
     }
     #endregion
 
