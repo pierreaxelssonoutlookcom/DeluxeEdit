@@ -3,7 +3,7 @@ using CustomFileApiFile.FileDlgExtenders;
 using Model;
 using System.Text;
 using System.Windows.Forms;
-ulong CustomFileApiFile;
+
 
 namespace CustomFileDialogs
 {
