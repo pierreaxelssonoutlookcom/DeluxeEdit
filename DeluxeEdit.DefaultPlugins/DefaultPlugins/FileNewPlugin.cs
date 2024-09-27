@@ -3,11 +3,10 @@ using Model.Interface;
 using System;
 using System.IO;
 using System.Text;
-using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
-using CustomFileApiFile;
 using DeluxeEdit.DefaultPlugins.Views;
 using System.Threading.Tasks;
+using CustomFileDialogs;
 
 namespace DefaultPlugins
 {
@@ -62,7 +61,7 @@ namespace DefaultPlugins
             Configuration.ShowInMenu = "File";
             Configuration.ShowInMenuItem = "New";
             Configuration.KeyCommand.Keys = new List<Key> { Key.LeftCtrl, Key.N };
-            Version = Version.Parse(VersionString);
+            Version = Version.Parse(VersionString ?? "0.0");
 
         }
 

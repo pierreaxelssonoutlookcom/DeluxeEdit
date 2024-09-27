@@ -17,7 +17,7 @@ namespace Model.Interface
         bool Enabled { get; set; }
         Version Version { get; set; }
 
-        public string VersionString { get; set; }
+         string VersionString { get; set; }
 
 
         string Id { get; set; }

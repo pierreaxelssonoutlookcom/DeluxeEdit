@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
 using Extensions;
 using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
@@ -23,18 +22,18 @@ namespace DefaultPlugins
 
 
 
-        public string VersionString { get; set; } = "0.2";
+        public  string VersionString { get; set; } = "0.2";
 
         public Version Version { get; set; }
 
         public long FileSize { get; set; }
         public long BytesWritten { get; set; }
 
-        public ActionParameter? Parameter { get; set; }
+        public ActionParameter Parameter { get; set; }
 
 
 
-        public Stream InputStream { get; set; }
+        public Stream? InputStream { get; set; } = null;
         //todo; we might have to implement setcontext for plugins   
 
         public bool Enabled { get; set; }
@@ -61,7 +60,7 @@ namespace DefaultPlugins
             Configuration.ShowInMenu = "File";
             Configuration.ShowInMenuItem = "Save As";
             Configuration.KeyCommand.Keys = new List<Key> {  Key.LeftShift, Key.LeftCtrl, Key.S };
-            Version = Version.Parse(VersionString);
+            Version.Parse(VersionString );
 
         }
 
@@ -87,25 +86,17 @@ namespace DefaultPlugins
             return result;
         }
 
-        public static FileSavePlugin CastNative(INamedActionPlugin item)
-        {
-            if (item is FileSavePlugin && item != null)
-                return item as FileSavePlugin;
-            else
-                return null;
-
-
-        }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
 
             string oldDir = @"c:\";
-            if (Parameter!= null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            :var dialog = new DeluxeFileDialog()
+            if (Parameter!=null)
+                oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+            var   dialog = new DeluxeFileDialog();
 
 
-              EncodingPath? result = dialog.ShowFileSaveDialog(oldDir);
-      return result;
+            var result = dialog.ShowFileSaveDialog(oldDir);
+            return result;
         }
         public async Task<IEnumerable<string>> Perform(IProgress<long> progress)
         {
