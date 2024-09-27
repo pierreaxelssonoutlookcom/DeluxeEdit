@@ -12,6 +12,7 @@ using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
 using System.Threading.Tasks;
 using CustomFileDialogs;
+using System.Reflection.Metadata;
 
 namespace DefaultPlugins
 {
@@ -24,19 +25,17 @@ namespace DefaultPlugins
 
         public  string VersionString { get; set; } = "0.2";
 
-        public Version Version { get; set; }
+        public Version Version { get; set; }= new Version();
 
-        public long FileSize { get; set; }
-        public long BytesWritten { get; set; }
-
-        public ActionParameter Parameter { get; set; }
+ 
+        public ActionParameter? Parameter { get; set; } = new ActionParameter(); 
 
 
 
         public Stream? InputStream { get; set; } = null;
         //todo; we might have to implement setcontext for plugins   
 
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } 
         //done:make dynamic
 
 
@@ -60,7 +59,7 @@ namespace DefaultPlugins
             Configuration.ShowInMenu = "File";
             Configuration.ShowInMenuItem = "Save As";
             Configuration.KeyCommand.Keys = new List<Key> {  Key.LeftShift, Key.LeftCtrl, Key.S };
-            Version.Parse(VersionString );
+            Version=Version.Parse(VersionString ?? "0.0" );
 
         }
 
@@ -71,7 +70,7 @@ namespace DefaultPlugins
         public object CreateControl(bool showToo)
         {
             object view = new MainEdit();
-            Window win = null;
+            Window? win = null;
             var result = view;
             if (showToo)
             {
@@ -91,7 +90,7 @@ namespace DefaultPlugins
 
             string oldDir = @"c:\";
             if (Parameter!=null)
-                oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+                oldDir= new DirectoryInfo(Parameter.Parameter).FullName;
             var   dialog = new DeluxeFileDialog();
 
 
@@ -100,7 +99,8 @@ namespace DefaultPlugins
         }
         public async Task<IEnumerable<string>> Perform(IProgress<long> progress)
         {
-            FileSize = File.Exists(Parameter.Parameter) ? new FileInfo(Parameter.Parameter).Length : 0;
+            if (Parameter == null) throw new ArgumentNullException(); 
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
 
             if (writer == null)
             {
@@ -110,16 +110,18 @@ namespace DefaultPlugins
             }
 
             WritesAllPortions(progress);
-            return null;
-
+            var result = new List<string>();
+            return result;
         }
 
 
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progress)
         {
-            Parameter = parameter;
-            FileSize = File.Exists(parameter.Parameter) ? new FileInfo(parameter.Parameter).Length : 0;
+            if (parameter == null) throw new ArgumentNullException();
 
+            Parameter = parameter;
+            if (!File.Exists(parameter.Parameter)) throw new FileNotFoundException(parameter.Parameter);
+             
             if (writer == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
@@ -130,14 +132,18 @@ namespace DefaultPlugins
             WritesAllPortions(progress);
 
 
-
-            return "";
-
+            return String.Empty;
         }
         public void WritesAllPortions(IProgress<long> progresss)
         {
+            if (Parameter == null) throw new ArgumentNullException();
+
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+            if (writer == null) { }
             if (writer == null)
             {
+                if (Parameter == null) throw new ArgumentNullException();
+
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 InputStream = mmf.CreateViewStream();
                 writer = OpenEncoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
@@ -146,17 +152,22 @@ namespace DefaultPlugins
             {
                 var batch = Parameter.InData.Take(SystemConstants.ReadPortionBufferSizeLines).ToList();
                 WritePortion(batch, progresss);
-
-            }
+}
 
 
 
         }
 
 
-        public async void WritePortion(List<string> indata, IProgress<long> progress
-            )
+        public async void WritePortion(List<string> indata, IProgress<long> progress)
         {
+            if (Parameter == null) throw new ArgumentNullException();
+
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+
+
+
+
             if (writer == null)
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
@@ -165,7 +176,6 @@ namespace DefaultPlugins
             }
 
 
-            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
             int lineCount = await writer.WriteLinesMax(indata, SystemConstants.ReadPortionBufferSizeLines);
             if (progress != null) progress.Report(lineCount);
 
