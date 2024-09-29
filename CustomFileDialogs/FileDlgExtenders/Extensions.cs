@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Microsoft.Win32;
 
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
     public static class Extensions
     {

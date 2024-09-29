@@ -31,7 +31,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
 
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
     public partial class FileDialogControlBase
     {

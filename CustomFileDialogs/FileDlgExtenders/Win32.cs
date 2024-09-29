@@ -23,7 +23,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
     internal static class NativeMethods
     {

@@ -24,7 +24,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
     #region SWP_Flags
     [Flags]

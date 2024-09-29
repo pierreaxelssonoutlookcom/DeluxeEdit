@@ -19,19 +19,11 @@
 //  PURPOSE. IT CAN BE DISTRIBUTED FREE OF CHARGE AS LONG AS THIS HEADER 
 //  REMAINS UNCHANGED.
 
-using System;
-using System.IO;
-using System.Text;
-using System.Data;
-using System.Drawing;
-using System.Threading;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Drawing.Drawing2D;
-
-namespace CustomFileApiFile.FileDlgExtenders
+using System.Windows.Forms;
+namespace CustomFileApiFile
 {
     #region Base class
 

@@ -1,4 +1,4 @@
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
     public partial class FileDialogControlBase
     {

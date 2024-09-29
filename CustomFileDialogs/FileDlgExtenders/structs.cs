@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace CustomFileApiFile.FileDlgExtenders
+namespace CustomFileApiFile
 {
 	#region WINDOWINFO
 
