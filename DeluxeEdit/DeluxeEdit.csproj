@@ -6,17 +6,19 @@
     <Nullable>enable</Nullable>
 	  <UseWPF>true</UseWPF>
 	<Version>0.0.1</Version>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
+
+
+	  <PackageReference Include="NuGet.Packaging" Version="6.9.1" />
+	  <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
+
+	  <ProjectReference Include="..\DeluxeEdit.DefaultPlugins\DeluxeEdit.DefaultPlugins.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

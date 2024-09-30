@@ -6,7 +6,6 @@ using System.Text;
 using System.Collections.Generic;
 using DeluxeEdit.DefaultPlugins.Views;
 using System.Threading.Tasks;
-using CustomFileDialogs;
 
 namespace DefaultPlugins
 {

@@ -30,7 +30,6 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
-using CustomFileDialogs;
 
 namespace CustomFileApiFile
 {

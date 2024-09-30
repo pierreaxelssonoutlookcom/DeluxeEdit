@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // and how to customise this process see: https://aka.ms/assembly-info-properties
 
 
-// Setting ComVisible to false makes the types in this assembly not visible     to COM
+// Setting ComVisible to false makes the types in this assembly not visible to COM
 // components.  If you need to access a type in this assembly from COM, set the ComVisible
 // attribute to true on that type.
 
@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 
-[assembly: Guid("f94d509a-48ff-4b6c-b8f2-118eaf30b8ac")]
+[assembly: Guid("514f558f-ae73-4318-9bb6-8000c9d6492b")]

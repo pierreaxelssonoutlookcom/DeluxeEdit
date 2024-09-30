@@ -1,13 +1,11 @@
-﻿using CustomFileApiFile;
-using CustomFileApiFile.FileDlgExtenders;
-using Model;
+﻿using Model;
 using System.Text;
 using System.Windows.Forms;
 
 
-namespace CustomFileDialogs
+namespace CustomFileApiFile
 {
-     public class DeluxeFileDialog
+    public class DeluxeFileDialog
     {
         public EncodingPath? ShowFileOpenDialog(string? initDir = null)
         {
@@ -39,7 +37,4 @@ namespace CustomFileDialogs
             }
 
             return result;
-
-        }
-    }
-}
+        } }}

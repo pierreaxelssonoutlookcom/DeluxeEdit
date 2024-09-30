@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-// In SDK-style projects such as this one, several assembly attributes that were historically
+// In SDK-style projects such as this one, several assembly attributes that were historissssssscally
 // defined in this file are now automatically added during build and populated with
 // values defined in project properties. For details of which attributes are included
 // and how to customise this process see: https://aka.ms/assembly-info-properties
@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 
-[assembly: Guid("42349000-54ca-49f8-bf76-8a7da1ae1cab")]
+[assembly: Guid("402d5d81-ad5b-4983-8178-2df455ff99d3")]

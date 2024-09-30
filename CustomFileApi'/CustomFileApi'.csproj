@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
+    <Folder Include="Properties - Copy %282%29\" />
   </ItemGroup>
 
 </Project>
