@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace DefaultPlugins.ViewModel
@@ -28,7 +27,7 @@ namespace DefaultPlugins.ViewModel
         public object ShowM { get; internal set; }
         private long? lastFileLength;
 
-        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock   progressText,TextBlock statusText)
+        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
         {
             this.progressBar = bar;
             tabFiles = tab;
@@ -38,7 +37,23 @@ namespace DefaultPlugins.ViewModel
             newFileViewModel = new NewFileViewModel(tab);
             openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
+
+            var viewData = new EventData();
+            viewData.subscrile(OnEvent);
+
         }
+
+        public void NewFile()
+        {
+            var file = newFileViewModel.GetNewFile();
+
+
+            file.Text.Text = file.Content;
+
+
+
+        }
+
 
         public List<CustomMenu> GetMenu()
         {
@@ -60,12 +75,13 @@ namespace DefaultPlugins.ViewModel
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems)
                 .Single(p => item != null && p != null && p.Title == item.Header);
             if (myMenuItem.Plugin is FileNewPlugin)
-                publisher.PublishNewFile(newFileViewModel.GetNewFile());
+                NewFile();
             else if (myMenuItem.Plugin is FileOpenPlugin)
             {
                 var data = await LoadFile();
-               publisher.PublishEditFile(data);
-        }else if (myMenuItem.Plugin is FileSavePlugin)
+                publisher.PublishEditFile(data);
+            }
+            else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
             else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
                 result = await myMenuItem.Plugin.Perform(new ActionParameter { Parameter = SelectedText },
@@ -103,25 +119,25 @@ namespace DefaultPlugins.ViewModel
 
             result.Panel = new StackPanel();
             result.Panel.Name = "panel" + name.Replace(".", "");
-            result.Panel.Orientation = Orientation.Vertical; 
+            result.Panel.Orientation = Orientation.Vertical;
             result.Panel.Children.Add(result.Text);
-            WPFUtil.AddOrUpddateTab(name, tabFiles, result.Panel) ;
+            WPFUtil.AddOrUpddateTab(name, tabFiles, result.Panel);
             // currentTab.Items.Add(resu
 
-            return result; 
- 
+            return result;
+
         }
 
 
         public async Task<MyEditFile?> LoadFile()
         {
-           
+
             MyEditFile? result = null;
             var action = openPlugin.GuiAction(openPlugin);
             //if user cancelled path is empty 
             if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
 
-            statusText.Text = $" File: {action.Path}";        
+            statusText.Text = $" File: {action.Path}";
             result = new MyEditFile();
 
             result.Path = action.Path;
@@ -132,18 +148,18 @@ namespace DefaultPlugins.ViewModel
             var parameter = new ActionParameter(result.Path);
 
 
-;
+            ;
 
 
 
 
 
-             lastFileLength= openPlugin.GetFileLeLength(parameter);
+            lastFileLength = openPlugin.GetFileLeLength(parameter);
             result.Content = await openPlugin.Perform(parameter, progress);
 
             combo.Text.Text = result.Content;
             MyEditFiles.Add(result);
-            
+
             return result;
         }
 

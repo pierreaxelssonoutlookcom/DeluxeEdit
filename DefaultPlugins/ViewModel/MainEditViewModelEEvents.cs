@@ -19,6 +19,16 @@ namespace DefaultPlugins.ViewModel
 {
     public partial class MainEditViewModel
     {
+        private void OnEvent(object sender, CustomEventArgs e)
+        {
+            if (e.Type == EventType.EditFile)
+                LoadFile();
+            else if (e.Type == EventType.NewFile)
+                NewFile();
+
+
+        }
+
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!lastFileLength.HasValue) return;

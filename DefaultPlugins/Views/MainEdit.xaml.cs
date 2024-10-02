@@ -23,29 +23,6 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         }
 
-        private void EditFile(MyEditFile path)
-        {
-            var current = MyEditFiles.Current ?? MyEditFiles.Current.Text;
-
-            var text =  current as TextBox;
-            text.Text = path.Content;
-
-
-
-        }
-        private void NewFile(MyEditFile path)
-
-        {
-
-            var current = MyEditFiles.Current ?? MyEditFiles.Current.Text;
-
-
-            var text = current  as TextBox;
-            text.Text = path.Content;
-
-
-
-        }
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
            // newViewModel.AddNewTextControlAndSubscr
@@ -57,18 +34,7 @@ namespace DeluxeEdit.DefaultPlugins.Views
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
 
-           var viewData = new EventData();
-            viewData.subscrile(OnEvent);
                 
-       }
-       private  void OnEvent(object sender, CustomEventArgs  e)
-        {
-            if (e.Type == EventType.EditFile)
-                EditFile(e.Data);
-            else if (e.Type ==EventType.NewFile)
-                NewFile(e.Data);
-
-            
        }
 
         private  async void MainEditBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
