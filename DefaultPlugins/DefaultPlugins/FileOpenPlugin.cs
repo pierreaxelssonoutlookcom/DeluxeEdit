@@ -61,7 +61,7 @@ namespace DefaultPlugins
         {
             string oldDir =@"c:\";
 
-            if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+            //if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
             var dialog= new DeluxeFileDialog();
             var result=dialog.ShowFileOpenDialog(oldDir);
             return result;
