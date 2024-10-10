@@ -9,7 +9,7 @@ namespace CustomFileApiFile
         public EncodingPath? ShowFileOpenDialog(string? initDir = null)
         {
             EncodingPath? result = null;
-            using var dialog = new FileDialogControlBase(initDir) { FileDlgType = FileDialogType.SaveFileDlg };
+            using var dialog = new FileDialogControlBase(initDir) { FileDlgType = FileDialogType.OpenFileDlg};
             var dummyForm = new Form();
             var dialogResult = dialog.ShowDialog(dummyForm);
 
