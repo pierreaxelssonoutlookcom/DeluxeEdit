@@ -30,7 +30,12 @@ namespace CustomFileApiFile
 
     public partial class FileDialogControlBase : UserControl//, IMessageFilter
     {
-        public string DialogText = "Open";
+        public string DialogTitle 
+        {  get 
+            {
+                return FileDlgType == FileDialogType.OpenFileDlg ? "Open" : "Save";
+            }  
+        }
         public string SelectButtonText = "OK";
 
         public string? WantedEncoding {
