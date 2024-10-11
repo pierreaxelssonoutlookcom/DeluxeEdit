@@ -7,6 +7,10 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using CustomFileApiFile;
+using Shared;
+using System.IO.MemoryMappedFiles;
+using System.Linq;
+using Extensions;
 
 namespace DefaultPlugins
 {
@@ -16,7 +20,7 @@ namespace DefaultPlugins
         public bool ParameterIsSelectedText { get; set; } = false;
 
 
-        public Version Version { get; set; }
+        public Version Version { get; set; } = new Version();
         public string VersionString { get; set; } = "0.2";
 
 
@@ -32,12 +36,13 @@ namespace DefaultPlugins
         public string Id { get; set; } = "FileNewPlugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
+        public Stream? InputStream { get; set; } = null;
 
         public List<string> ContentBuffer { get; set; } = new List<string>();
         public ConfigurationOptions Configuration { get; set; }= new ConfigurationOptions();
         public string Path { get; set; } = "";
 
-        private  StringReader reader;
+        private  StreamWriter writer;
 
  
 
@@ -70,9 +75,60 @@ namespace DefaultPlugins
 
         public async Task<IEnumerable<string>> Perform(IProgress<long> progress)
         {
-            return null;
+            WritesAllPortions(progress);
+            return new List<string>();
+
+
         }
 
+        public void WritesAllPortions(IProgress<long> progress)
+        {
+            if (Parameter == null) throw new ArgumentNullException();
+
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+            if (writer == null) { }
+            if (writer == null)
+            {
+                if (Parameter == null) throw new ArgumentNullException();
+
+                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
+                InputStream = mmf.CreateViewStream();
+                writer = OpenEncoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
+            }
+            for (int i = 0; i < Parameter.InData.Count / SystemConstants.ReadPortionBufferSizeLines; i++)
+            {
+                var batch = Parameter.InData.Take(SystemConstants.ReadPortionBufferSizeLines).ToList();
+                WritePortion(batch, progress);
+            }
+
+
+
+        }
+
+
+        public async void WritePortion(List<string> indata, IProgress<long> progress)
+        {
+            if (Parameter == null) throw new ArgumentNullException();
+
+            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+
+
+
+
+            if (writer == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
+                InputStream = mmf.CreateViewStream();
+                writer = OpenEncoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
+            }
+
+
+            int lineCount = await writer.WriteLinesMax(indata, SystemConstants.ReadPortionBufferSizeLines);
+            if (progress != null) progress.Report(lineCount);
+
+            await writer.FlushAsync();
+
+        }
 
 
 
@@ -80,12 +136,8 @@ namespace DefaultPlugins
 
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progress)
         {
-            return String.Empty;
-        }
-
-        public string MenuAction(ActionParameter parameter)
-        {
-            throw new NotImplementedException();
+            WritesAllPortions(progress);
+            return String.Empty; 
         }
 
 
