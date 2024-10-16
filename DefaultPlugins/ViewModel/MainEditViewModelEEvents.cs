@@ -54,14 +54,27 @@ namespace DefaultPlugins.ViewModel
             //done:cast enum from int
             MyEditFile? result = null;
             bool keysOkProceed = false;
-            var matchCount = openPlugin.Configuration.KeyCommand.Keys
-                .Cast<System.Windows.Input.Key>()
-                .Count(p => System.Windows.Input.Keyboard.IsKeyDown(p));
+            foreach (var plugin in relevantPlugins)
+            {
+                var matchCount = plugin.Configuration.KeyCommand.Keys
+                    .Cast<System.Windows.Input.Key>()
+                    .Count(p => System.Windows.Input.Keyboard.IsKeyDown(p));
 
-            keysOkProceed = matchCount == openPlugin.Configuration.KeyCommand.Keys.Count && openPlugin.Configuration.KeyCommand.Keys.Count > 0;
-            if (keysOkProceed) result = await LoadFile();
+                keysOkProceed = matchCount == plugin.Configuration.KeyCommand.Keys.Count && openPlugin.Configuration.KeyCommand.Keys.Count > 0;
+                if (keysOkProceed)
+                {
+                    if (plugin is FileOpenPlugin)
+                        result = await LoadFile();
+                    else if (plugin is FileSavePlugin)
+                        SaveFile();
+                    else if (plugin is FileSaveAsPlugin  )
+                        SaveAsFile();
+                    else if (plugin is FileNewPlugin)
+                        NewFile();
 
+                }
 
+            }
             return result;
         }
 

@@ -4,6 +4,7 @@ using DeluxeEdit.DefaultPlugins.ViewModel;
 using Extensions;
 using Model;
 using Model.Interface;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,12 +21,15 @@ namespace DefaultPlugins.ViewModel
         private TextBlock progressText, statusText;
         private NewFileViewModel newFileViewModel;
         private FileOpenPlugin openPlugin;
+        private INamedActionPlugin saveAsPlugin;
         private INamedActionPlugin savePlugin;
 
         private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
+
         public object ShowM { get; internal set; }
         private long? lastFileLength;
+        private List<INamedActionPlugin> relevantPlugins;
 
         public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
         {
@@ -33,14 +37,28 @@ namespace DefaultPlugins.ViewModel
             tabFiles = tab;
             this.progressText = progressText;
             this.statusText = statusText;
-
+            tab.KeyDown += Tab_KeyDown1; ;
             newFileViewModel = new NewFileViewModel(tab);
             openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
-            savePlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
+            saveAsPlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
+            savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave);
 
             var viewData = new EventData();
-            viewData.subscrile(OnEvent);
 
+            viewData.subscrile(OnEvent);
+            relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
+                .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
+
+        }
+
+        private void Tab_KeyDown1(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            KeyDown();
+        }
+
+        private void Tab_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void NewFile()
@@ -54,11 +72,14 @@ namespace DefaultPlugins.ViewModel
 
         }
 
-
+        /*
         public List<CustomMenu> GetMenu()
         {
             return MainMenu;
+            *
         }
+        */
+
         public void SetViewData(CustomMenuItem item)
         {
 
@@ -170,7 +191,7 @@ namespace DefaultPlugins.ViewModel
         }
         public async void SaveFile()
         {
-            var text = MyEditFiles.Current.Text as TextBox;
+            var text = MyEditFiles.Current.Text;
             if (text != null)
             {
 
@@ -181,15 +202,17 @@ namespace DefaultPlugins.ViewModel
         }
         public async void SaveAsFile()
         {
-            var text = MyEditFiles.Current.Text as TextBox;
-            if (text != null)
-            {
+            var action = openPlugin.GuiAction(openPlugin);
+            //if user cancelled pat
+            //h is empty 
+            if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
+            var text = MyEditFiles.Current.Text;
 
-                var split = text.Text.Split(Environment.NewLine).ToList();
-                await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, split), null);
-            }
+            var split = text.Text.Split(Environment.NewLine).ToList();
+            await saveAsPlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, text.Text), null);
 
-        }
+
+        } 
     }
 }
 
