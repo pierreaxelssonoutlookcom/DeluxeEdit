@@ -26,7 +26,6 @@ namespace DefaultPlugins.ViewModel
         private FileOpenPlugin openPlugin;
         private INamedActionPlugin saveAsPlugin;
         private INamedActionPlugin savePlugin;
-
         private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
 
@@ -45,7 +44,6 @@ namespace DefaultPlugins.ViewModel
             openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
             saveAsPlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
             savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave);
-
             var viewData = new EventData();
 
             viewData.subscrile(OnEvent);
@@ -69,7 +67,7 @@ namespace DefaultPlugins.ViewModel
             var file = newFileViewModel.GetNewFile();
             MyEditFiles.Add(file);
             AddMyContols(file.Path);
-            //WPFUtil.AddOrUpddateTab(name, tabFiles, result.Panel);
+//            WPFUtil.AddOrUpddateTab(name, tabFiles, re);
 
 
 
@@ -78,15 +76,6 @@ namespace DefaultPlugins.ViewModel
 
 
         }
-
-        public void SetViewData(CustomMenuItem item)
-        {
-
-        }
-
-
-
-
         public async Task<string> DoCommand(MenuItem item, string SelectedText)
         {
             string result = "";
@@ -113,9 +102,6 @@ namespace DefaultPlugins.ViewModel
             return result;
 
         }
-
-
-
         public void ScrollTo(double newValue)
         {
             //done :find way to renember old path before dialog 
@@ -124,28 +110,30 @@ namespace DefaultPlugins.ViewModel
 
         }
 
-        public ComboControl AddMyContols(string path)
+        public TextBox AddMyContols(string path)
         {
-            var result = new ComboControl();
             bool isNewFle=!File.Exists(path);
             var name = isNewFle ? path :  new FileInfo(path).Name ;
 
-            result.Text = new TextBox();
+            var text = new TextBox();
 
-            result.Text.Name = name.Replace(".", "");
-            result.Text.AcceptsReturn = true;
-            result.Text.KeyDown += Text_KeyDown;
+            text.Name = name.Replace(".", "");
+            text.AcceptsReturn = true;
+            text.KeyDown += Text_KeyDown;
+
             progressBar.ValueChanged += ProgressBar_ValueChanged;
 
-
+            /*
             result.Panel = new StackPanel();
             result.Panel.Name = "panel" + name.Replace(".", "");
             result.Panel.Orientation = Orientation.Vertical;
+
             result.Panel.Children.Add(result.Text);
-            WPFUtil.AddOrUpddateTab(name, tabFiles, result.Panel);
+            */
+            WPFUtil.AddOrUpddateTab(name, tabFiles, text);
             // currentTab.Items.Add(resu
 
-            return result;
+            return text;
 
         }
 
@@ -164,7 +152,7 @@ namespace DefaultPlugins.ViewModel
             result.Path = action.Path;
             result.Header = new FileInfo(result.Path).Name;
             openPlugin.OpenEncoding = action.Encoding;
-            var combo = AddMyContols(result.Header);
+            var text=AddMyContols(result.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(result.Path);
 
@@ -178,7 +166,7 @@ namespace DefaultPlugins.ViewModel
             lastFileLength = openPlugin.GetFileLeLength(parameter);
             result.Content = await openPlugin.Perform(parameter, progress);
 
-            combo.Text.Text = result.Content;
+            text.Text = result.Content;
             MyEditFiles.Add(result);
 
             return result;

@@ -46,7 +46,7 @@
             </TabControl>
             
         </StackPanel>
-        <ProgressBar x:Name="Progress"  />
+        <ProgressBar x:Name="Progress" Height="1" Width="100"  />
 
     </DockPanel>
 </UserControl>
