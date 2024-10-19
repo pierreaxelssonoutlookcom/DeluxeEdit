@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace DefaultPlugins
 {
-    public class FileOpenPlugin : INamedActionPlugin
+    public class HexPluugin : INamedActionPlugin
     {
 
         public bool ParameterIsSelectedText { get; set; } = false;
@@ -24,29 +24,46 @@ namespace DefaultPlugins
         public string VersionString { get; set; } = "0.2";
 
 
-        public ActionParameter? Parameter { get; set; } = new ActionParameter();
+        public long FileSize { get; set; }
+        public long BytesRead { get; set; }
+
+        public ActionParameter? Parameter { get; set; } =new ActionParameter();
 
         public bool Enabled { get; set; }
 
-        private MemoryMappedViewStream? MýStream = null;
+        private MemoryMappedViewStream MýStream;
         private StreamReader? reader;
         public bool AsReaOnly { get; set; }
         public Encoding? OpenEncoding { get; set; }
         public string Id { get; set; } = "FileOpenPlugin";
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
-
+            
         public ConfigurationOptions Configuration { get; set; } = new ConfigurationOptions();
-        public string Path { get; set; } = "";
-        
-  
+       public string Path { get; set; } = "";
+        public long GetFileLeLength(ActionParameter parameter)
+         {
+            if (reader == null)
+            {
+                using var mmf = MemoryMappedFile.CreateFromFile(parameter.Parameter);
+                MýStream = mmf.CreateViewStream();
+                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+            }
+            long result = MýStream.Length;
+            return result;
+
+
+        }
+
+
+
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
-            string oldDir = @"c:\";
+            string oldDir =@"c:\";
 
             //if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
-            var dialog = new DeluxeFileDialog();
-            var result = dialog.ShowFileOpenDialog(oldDir);
+            var dialog= new DeluxeFileDialog();
+            var result=dialog.ShowFileOpenDialog(oldDir);
             return result;
         }
 
@@ -77,12 +94,16 @@ namespace DefaultPlugins
             Configuration.KeyCommand.Keys = new List<Key> { Key.LeftCtrl, Key.O };
             Version = Version.Parse(VersionString);
         }
-        public FileOpenPlugin()
+        public HexPluugin()
         {
-            SetConfig(); 
+            SetConfig();        }
+        public static FileOpenPlugin CastNative(INamedActionPlugin item)
+        { 
+            if (item is FileOpenPlugin)
+                return item as FileOpenPlugin;
+            else
+                return null;
         }
-    
-
         public async Task<IEnumerable<string>> Perform(IProgress<long> progress)
         {
             var result = await ReadAllPortion(progress);
@@ -101,8 +122,6 @@ namespace DefaultPlugins
 
         public async Task<List<string>> ReadAllPortion(IProgress<long> progress ) 
         {
-            if (Parameter == null) throw new ArgumentNullException();
-
             var result = new List<string>();
             var total = new List<string>();
 
@@ -112,9 +131,8 @@ namespace DefaultPlugins
                 MýStream = mmf.CreateViewStream();
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
-            if (MýStream == null) throw new ArgumentNullException();
-
-
+           
+            
             while ((result = await ReadPortion(progress )) != null)
 
             {
@@ -122,7 +140,7 @@ namespace DefaultPlugins
             }
 return total;
         }
-        public async Task<List<string>?> ReadPortion(IProgress<long> progress)
+        public async Task<List<string>> ReadPortion(IProgress<long> progress)
         {
             if (Parameter == null) throw new ArgumentNullException();
 
@@ -133,8 +151,6 @@ return total;
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
 
-            if (MýStream == null) throw new ArgumentNullException();
-
 
 
 
@@ -144,7 +160,7 @@ return total;
 
             var result = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
             
-            if (progress != null )
+            if (progress != null)
                 progress.Report(MýStream.Position);
 
 

@@ -1,18 +1,16 @@
 ﻿using Model.Interface;
 using Model;
-using System;
-
-using Extensions;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using Shared;
 using System.Windows.Controls;
-using DeluxeEdit.DefaultPlugins;
-using MS.WindowsAPICodePack.Internal;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
-using DefaultPlugins.Model;
+
+
+
+
+
+
+
+
+
+
 
 namespace DefaultPlugins.ViewModel
 {
@@ -23,7 +21,7 @@ namespace DefaultPlugins.ViewModel
 
         public NewFileViewModel(TabControl tab)
         {
-            plugin = AllPlugins.InvokePlugin(PluginType.FileNew);
+            plugin = AllPlugins.InvokePlugin<FileNewPlugin>(PluginType.FileNew);
             currentTab = tab;
         }
 

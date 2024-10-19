@@ -27,11 +27,11 @@
 	<ItemGroup>
 	  <Compile Include="AssemblyInfo1.cs" />
 	  <Compile Include="DefaultPlugins\FileNewPlugin.cs" />
+	  <Compile Include="DefaultPlugins\HexPluugin.cs" />
 	  <Compile Include="DefaultPlugins\FileSaveAsPlugin.cs" />
 	  <Compile Include="DefaultPlugins\FileSavePlugin.cs" />
 	  <Compile Include="AllPlugins.cs" />
 	  <Compile Include="MainWindow.xaml.cs" />
-	  <Compile Include="DefaultPlugins\Model\ComboControl.cs" />
 	  <Compile Include="DefaultPlugins\FileOpenPlugin.cs" />
 	  <Compile Include="DefaultPlugins\UrlDecodePlugin.cs" />
 	  <Compile Include="DefaultPlugins\UrlEncodePlugin.cs" />

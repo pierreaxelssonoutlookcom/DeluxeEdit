@@ -1,13 +1,14 @@
 ﻿using Model.Interface;
 using Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Extensions ;
+using Extensions;
 using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
+using Exensions.Util;
+using System.Reflection.Metadata;
+using System;
 
 namespace DeluxeEdit.DefaultPlugins.ViewModel
 {
@@ -17,9 +18,9 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
         public List<CustomMenu> BuildMenu()
         {
             var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-           var result = GetMenuHeaders(plugins);
+            var result = GetMenuHeaders(plugins);
 
-            foreach (var item in result) 
+            foreach (var item in result)
                 item.MenuItems.AddRange(
                     GetMenuItemsForHeader(item.Header, plugins));
 
@@ -30,7 +31,7 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
         {
-            
+
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
                 .Select(p => p.Configuration.ShowInMenu).Distinct()
             .Select(p => new CustomMenu { Header = p }).ToList();
@@ -53,32 +54,41 @@ namespace DeluxeEdit.DefaultPlugins.ViewModel
 
         public void ShowMenu(Menu mainMenu, List<CustomMenu> customMenus)
         {
+            if (mainMenu == null) throw new ArgumentNullException();
 
             foreach (var item in customMenus)
             {
+                int? index = null;
+                if (mainMenu != null)
+                    index = -WPFUtil.IndexOfText(mainMenu.Items, item.Header);
 
-                var index =-WPFUtil.IndexOfText(     mainMenu.Items, item.Header);
-                if (index==  null )
+                int intindex = int.MinValue;
+                if (index == null && mainMenu != null)
                 {
                     index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+                    intindex = index.Value;
                 }
+                else if (index.HasValue)
+                    intindex = index.Value;
+
+
 
                 foreach (var menuItem in item.MenuItems)
                 {
-                    MenuItem newExistMenuItem =  mainMenu.Items[index.Value] as MenuItem;
+                    MenuItem? newExistMenuItem = mainMenu != null && intindex <= mainMenu.Items.Count && mainMenu.Items[intindex] is MenuItem ? mainMenu.Items[intindex] as MenuItem : new MenuItem();
                     var newItem = new MenuItem { Header = menuItem.Title };
-                    newExistMenuItem.Items.Add(newItem);
+                    if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
 
                 }
 
             }
 
-       
-        
-        
-        
-        
-        
+
+
+
+
+
+
         }
 
     }

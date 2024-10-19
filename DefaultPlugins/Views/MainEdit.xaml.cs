@@ -91,7 +91,6 @@ namespace DeluxeEdit.DefaultPlugins.Views
 
         private void MainEditBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            editViewModel.ScrollTo(e.VerticalOffset);
                 
              
 

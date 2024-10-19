@@ -1,18 +1,8 @@
-﻿using DefaultPlugins.Model;
-using DeluxeEdit.DefaultPlugins;
-using DeluxeEdit.DefaultPlugins.ViewModel;
-using Extensions;
-using Model;
-using Model.Interface;
+﻿using Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Animation;
-
 
 
 namespace DefaultPlugins.ViewModel

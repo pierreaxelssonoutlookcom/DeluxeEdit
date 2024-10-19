@@ -1,11 +1,8 @@
-﻿using DefaultPlugins.Model;
-using DeluxeEdit.DefaultPlugins;
-using DeluxeEdit.DefaultPlugins.ViewModel;
+﻿using DeluxeEdit.DefaultPlugins.ViewModel;
 using Exensions.Util;
 using Extensions;
 using Model;
 using Model.Interface;
-using MS.WindowsAPICodePack.Internal;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -41,9 +38,9 @@ namespace DefaultPlugins.ViewModel
             this.statusText = statusText;
             tab.KeyDown += Tab_KeyDown1; ;
             newFileViewModel = new NewFileViewModel(tab);
-            openPlugin = FileOpenPlugin.CastNative(AllPlugins.InvokePlugin(PluginType.FileOpen));
-            saveAsPlugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
-            savePlugin = AllPlugins.InvokePlugin(PluginType.FileSave);
+            openPlugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
+            saveAsPlugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
+            savePlugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
             var viewData = new EventData();
 
             viewData.subscrile(OnEvent);
@@ -163,7 +160,7 @@ namespace DefaultPlugins.ViewModel
 
 
 
-            lastFileLength = openPlugin.GetFileLeLength(parameter);
+//            lastFileLength = openPlugin.GetFileLeLength(parameter);
             result.Content = await openPlugin.Perform(parameter, progress);
 
             text.Text = result.Content;
