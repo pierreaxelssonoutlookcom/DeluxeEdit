@@ -1,11 +1,9 @@
 ﻿using Model.Interface;
 using System;
 using System.Collections.Generic;
-using DefaultPlugins;
 using Model;
 using Shared;
 using System.Linq;
-using System.Windows.Controls;
 
 namespace DefaultPlugins
 {
@@ -45,7 +43,7 @@ namespace DefaultPlugins
             var result = InvokePlugin<T>(myType);
             return result;
         }
-        public static T InvokePlugin<T>(string type) where T : class
+        public static T? InvokePlugin<T>(string type) where T : class
         {
             T? result = default;
             Type? matchedType = PluginManager.SourceFiles.SelectMany(p => p.MatchingTypes)
@@ -63,11 +61,13 @@ namespace DefaultPlugins
         {
             var obj = PluginManager.CreateObject(type);
             T? result = default(T);
-
-            if (obj != null && obj is T)
-                result = obj as T;
-
+            if (obj != null)
+            {
+                if (obj is T)
+                    result= obj as T;
+            }
             return result;
+
         }
 
 
@@ -93,7 +93,7 @@ namespace DefaultPlugins
             var result = InvokePlugin(item.MyType);
             return result;
         }
-        public static INamedActionPlugin InvokePlugin(string type)
+        public static INamedActionPlugin? InvokePlugin(string type)
         {
             INamedActionPlugin? result = null;
             Type? matchedType = PluginManager.SourceFiles.SelectMany(p => p.MatchingTypes)

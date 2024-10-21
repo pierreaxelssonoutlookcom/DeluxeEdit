@@ -14,7 +14,7 @@ namespace DefaultPlugins
         public bool ParameterIsSelectedText { get; set; } = true;
 
 
-        public Version Version { get; set; }
+        public Version Version { get; set; }= new Version();
 
 
         public string VersionString { get; set; } = "0.2";
@@ -46,7 +46,7 @@ namespace DefaultPlugins
         {
             Configuration.ShowInMenu = "Plugins";
             Configuration.ShowInMenuItem = "UrlEncode";
-            Version = Version.Parse(VersionString);
+            Version = new Version(VersionString);
 
         }
 

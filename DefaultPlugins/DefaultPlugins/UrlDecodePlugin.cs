@@ -46,9 +46,8 @@ namespace DefaultPlugins
 
         }
         public void SetConfig()
-        { 
-                Version = Version.Parse(VersionString ?? "0.0");
-
+        {
+            Version = new Version(VersionString);
             Configuration.ShowInMenu = "Plugins";
             Configuration.ShowInMenuItem = "UrlDecode";
 
