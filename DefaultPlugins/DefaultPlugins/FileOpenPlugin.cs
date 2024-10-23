@@ -11,6 +11,8 @@ using Shared;
 using Extensions;
 using CustomFileApiFile;
 using System.Windows;
+using System.Linq;
+using NuGet.Packaging;
 
 namespace DefaultPlugins
 {
@@ -103,7 +105,6 @@ namespace DefaultPlugins
         {
             if (Parameter == null) throw new ArgumentNullException();
 
-            var result = new List<string>();
             var total = new List<string>();
 
             if (reader == null)
@@ -115,12 +116,17 @@ namespace DefaultPlugins
             if (MýStream == null) throw new ArgumentNullException();
 
 
-            while ((result = await ReadPortion(progress )) != null)
-
+            long fileSize = new FileInfo(Parameter.Parameter).Length;
+            for (int i = 0; i < fileSize / SystemConstants.ReadBufferSizeBytes + 1; i++)
             {
-                total.AddRange(result); 
+                var result = await ReadPortion(progress);
+                if (result != null)
+                    total.AddRange(result);
+
             }
-return total;
+
+            
+        return total;
         }
         public async Task<List<string>?> ReadPortion(IProgress<long> progress)
         {
@@ -142,8 +148,15 @@ return total;
             if (Parameter == null) throw new ArgumentNullException();
             if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
 
-            var result = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
-            
+            var buffer = new char[SystemConstants.ReadBufferSizeBytes];
+            var readCount = await reader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+            var blockRead=new string(buffer.Take(readCount).ToArray());
+            var result = blockRead.Split(Environment.NewLine).ToList();
+
+
+            //     var result =  await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
+
             if (progress != null )
                 progress.Report(MýStream.Position);
 
