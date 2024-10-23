@@ -104,8 +104,8 @@ namespace DefaultPlugins
         public async Task<List<string>> ReadAllPortion(IProgress<long> progress)
         {
             if (Parameter == null) throw new ArgumentNullException();
+            if (File.Exists(Parameter.Parameter) == false) throw new FileNotFoundException(Parameter.Parameter);
 
-            var result = new List<string>();
             var total = new List<string>();
 
             if (reader == null)
@@ -117,18 +117,22 @@ namespace DefaultPlugins
                 reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
             }
             if (MýStream == null) throw new ArgumentNullException();
-           
 
-            while ((result = await ReadPortion(progress)) != null)
-
+            long fileSize = new FileInfo(Parameter.Parameter).Length;
+            for (int i = 0; i < fileSize/ SystemConstants.ReadBufferSizeBytes+1; i++)
             {
-                total.AddRange(result);
+                var result = await ReadPortion(progress);
+                if (result != null)
+                    total.AddRange(result);
+
             }
             return total;
         }
         public async Task<List<string>?> ReadPortion(IProgress<long> progress)
         {
             if (Parameter == null) throw new ArgumentNullException();
+           
+            if (File.Exists(Parameter.Parameter) == false) throw new FileNotFoundException(Parameter.Parameter);
 
             if (reader == null)
             {
@@ -141,18 +145,21 @@ namespace DefaultPlugins
 
             var oldBuffer = new byte[SystemConstants.ReadBufferSizeBytes];
             var readCount = await MýStream.ReadAsync(oldBuffer);
-            var buffer = new byte[readCount];
-            oldBuffer.CopyTo(buffer, 0);
+            var buffer = oldBuffer.Take(readCount).ToArray();
+
             var result = new List<string>();
             var sb= new StringBuilder();
-            foreach (byte b in buffer) sb.AppendFormat("{0:x2}", b);
-            result.Add (sb.ToString());
+            foreach (byte b in buffer)
+            {
+               if (b == '\0') break;
+                           
+                sb.AppendFormat("{0:x2}", b);
+            }
+            
+           result.Add (sb.ToString());
 
             //todo:how do I share file data between different plugins
-
-        //    var result = await reader.ReadLinesMax(SystemConstants.ReadBufferSizeLines);
-            
-              if (progress != null)
+            if (progress != null)
                 progress.Report(MýStream.Position);
 
 
@@ -163,5 +170,5 @@ namespace DefaultPlugins
 
         }
 
-    }
+ }
 }

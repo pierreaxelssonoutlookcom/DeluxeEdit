@@ -28,7 +28,7 @@ namespace DefaultPlugins
                     myType = typeof(FileSavePlugin);
                     break;
                 case PluginType.FileSaveAs:
-                    myType = typeof(FileSavePlugin);
+                    myType = typeof(FileSaveAsPlugin);
                     break;
                 case PluginType.FileNew:
                     myType = typeof(FileNewPlugin);
@@ -125,7 +125,7 @@ namespace DefaultPlugins
                     myType = typeof(FileSavePlugin);
                     break;
                 case PluginType.FileSaveAs:
-                    myType = typeof(FileSavePlugin);
+                    myType = typeof(FileSaveAsPlugin);
                     break;
                 case PluginType.FileNew:
                     myType = typeof(FileNewPlugin);

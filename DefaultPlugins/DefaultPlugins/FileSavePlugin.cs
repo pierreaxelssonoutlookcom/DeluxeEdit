@@ -103,6 +103,7 @@ namespace DefaultPlugins
 
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progress)
         {
+            Parameter=parameter;
             var result = await Task.FromResult(new List<string> { });
 
             WritesAllPortions(progress);

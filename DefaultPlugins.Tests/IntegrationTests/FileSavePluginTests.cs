@@ -15,7 +15,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         [Fact]
         public async void FileSavePluginTest()
         {
-            var plugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileOpen);
+            var plugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
 
             var expected = "ninjaåäÖ\r\n";
             File.AppendAllLines(TestFile,new List<string> { "ninjaåäÖ" },  Encoding.UTF8);
@@ -38,31 +38,33 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 
   
         }
+
         [Fact]
-         public async void FileSavePluginTestSimple()
+        public async void FileSaveAsPluginTest()
         {
-            var plugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileOpen);
+            var plugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
 
-            var expected = "ninja" + Environment.NewLine;
-            File.AppendAllLines(TestFile, new List<string> { "ninja" }, Encoding.UTF8);
+            var expected = "ninjaåäÖ\r\n";
+            File.AppendAllLines(TestFile, new List<string> { "ninjaåäÖ" }, Encoding.UTF8);
 
-            // if (File.Exists(TestFile2)) File.Delete(TestFile2);
+            plugin.OpenEncoding = Encoding.UTF8;
+            await plugin.Perform(
 
-            plugin.OpenEncoding = null;
-            await  plugin.Perform(
-               new ActionParameter(TestFile, "ninja"),null);
+               new ActionParameter(TestFile, "ninjaåäÖ")
+              , null);
+
             File.Copy(TestFile, TestFile2, true);
 
 
 
-            var actual = File.ReadAllText(TestFile2);
+            var actual = File.ReadAllText(TestFile2, Encoding.UTF8);
+
             File.Delete(TestFile);
             File.Delete(TestFile2);
-
             Assert.Equal(expected, actual);
 
-        }
 
+        }
 
 
 
