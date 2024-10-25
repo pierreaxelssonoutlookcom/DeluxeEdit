@@ -19,7 +19,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiNew\CustomFileApi.csproj" />
     <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
+    <ProjectReference Include="..\Exensions\Exensions.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>

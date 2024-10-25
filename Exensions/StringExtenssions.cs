@@ -1,6 +1,3 @@
-using Model;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -9,14 +6,6 @@ namespace Extensions
 
     public static class StringExtenssions
     {
-        public static PluginItem CreatePluginItem(this string path, Type item)
-        {
-            var result = new PluginItem();
-            result.DerivedSourcePath = path;
-            result.Id = item.ToString();
-            result.Version = item.Assembly.GetName().Version;
-            return result;
-        }
 
         public static string SubstringPos(this string s, int startIndex, int lastIndex)
         {

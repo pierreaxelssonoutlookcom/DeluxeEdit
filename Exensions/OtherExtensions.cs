@@ -1,18 +1,10 @@
-﻿using Extensions.Model;
-using Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.IO;
 
 namespace Extensions
 {
     public static class OtherExtensions
     {
+        /*
 
         public static PluginFile ParseNugetFileName(this string path)
         {
@@ -30,6 +22,7 @@ namespace Extensions
 
             return result;
         }
+        /*
         /// <summary>
         /// Also returns bytes writtten
         /// </summary>
@@ -38,7 +31,6 @@ namespace Extensions
         /// <returns></returns>
         public async static Task<List<string>?> ReadLinesMax(this StreamReader reader, int maxLines)
         {
-
             List<string>? result = null;
             for (int i = 0; i < maxLines; i++)
             {
@@ -63,6 +55,8 @@ namespace Extensions
             return result;
 
         }
+        */
+
         /// <summary>
         /// Returns bytes written, removes lines written
         /// </summaryR

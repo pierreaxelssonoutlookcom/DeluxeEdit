@@ -23,14 +23,21 @@ namespace Shared
 
         }
 
+        public static PluginItem CreatePluginItem( string path, Type item)
+        {
+            var result = new PluginItem();
+            result.DerivedSourcePath = path;
+            result.Id = item.ToString();
+            result.Version = item.Assembly.GetName().Version;
+            return result;
+        }
 
         public static List<PluginItem> GetPluginsLocal()
         {
             var files = PluginManager.LoadFiles();
             var result = new List<PluginItem>();
             foreach (var f in files)
-            {
-                var items = f.MatchingTypes.Select(p => f.LocalPath.CreatePluginItem(p)).ToList();
+            {                var items = f.MatchingTypes.Select(p => CreatePluginItem(f.LocalPath, p)).ToList();
 
                 result.AddRange(items);
             }
