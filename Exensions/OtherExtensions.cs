@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using Model;
+using System.IO;
 
 namespace Extensions
 {
     public static class OtherExtensions
     {
-        /*
+    
 
         public static PluginFile ParseNugetFileName(this string path)
         {

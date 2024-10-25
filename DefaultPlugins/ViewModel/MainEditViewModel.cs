@@ -36,7 +36,6 @@ namespace ViewModel
             tabFiles = tab;
             this.progressText = progressText;
             this.statusText = statusText;
-            tab.KeyDown += Tab_KeyDown1; ;
             newFileViewModel = new NewFileViewModel(tab);
             openPlugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
             saveAsPlugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
@@ -49,15 +48,6 @@ namespace ViewModel
 
         }
 
-        private void Tab_KeyDown1(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            KeyDown();
-        }
-
-        private void Tab_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         public void NewFile()
         {

@@ -1,11 +1,9 @@
 ﻿using DeluxeEdit.Extensions;
 using Model;
 using Model.Interface;
-using System;
-using System.Collections.Generic;
+using Exensions;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace Shared
@@ -18,26 +16,19 @@ namespace Shared
 
         static PluginManager()
         {
-//            pluginPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
+            //            pluginPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
             LoadFiles();
 
         }
 
-        public static PluginItem CreatePluginItem( string path, Type item)
-        {
-            var result = new PluginItem();
-            result.DerivedSourcePath = path;
-            result.Id = item.ToString();
-            result.Version = item.Assembly.GetName().Version;
-            return result;
-        }
 
         public static List<PluginItem> GetPluginsLocal()
         {
             var files = PluginManager.LoadFiles();
             var result = new List<PluginItem>();
             foreach (var f in files)
-            {                var items = f.MatchingTypes.Select(p => CreatePluginItem(f.LocalPath, p)).ToList();
+            {
+                var items = f.MatchingTypes.Select(p => f.LocalPath.CreatePluginItem(p)).ToList();
 
                 result.AddRange(items);
             }
@@ -46,23 +37,23 @@ namespace Shared
         }
         public static List<PluginFile> LoadFiles()
         {
-//            var path=Path.GetFullPath(pluginPath);
+            //            var path=Path.GetFullPath(pluginPath);
             var pos = pluginPath.LastIndexOf("\\");
             if (pos == -1) throw new Exception();
             var expression = pluginPath.Substring(pos + 1); ;
             var path = pluginPath.SubstringPos(0, pos);
 
-            
-                var result = Directory.GetFiles(path, expression)
-                .Select(p => LoadPluginFile(p))
-                .ToList();
+
+            var result = Directory.GetFiles(path, expression)
+            .Select(p => LoadPluginFile(p))
+            .ToList();
 
             return result;
         }
 
 
- 
-        public  static INamedActionPlugin CreateObject(Type t)
+
+        public static INamedActionPlugin CreateObject(Type t)
         {
             object? item = Activator.CreateInstance(t);
             var newItemCasted = item is INamedActionPlugin ? item as INamedActionPlugin : null; ;
@@ -73,7 +64,13 @@ namespace Shared
             return newItemCasted;
         }
 
- 
+        public static void UnLoadPluginFile(string path)
+        {
+
+            throw new NotImplementedException(); 
+        }
+       
+
 
 
         public static PluginFile LoadPluginFile(string path)
@@ -101,15 +98,5 @@ namespace Shared
             }
             return ourSource;
         }
-        public static void UnLoadPluginFile(string path)
-        {
-             
-            
-            if (AppDomain.CurrentDomain != null)
-            {
-                AppDomain.Unload(AppDomain.CurrentDomain);
-
-            }
-        }
-    }                                                               
+    }
 }
