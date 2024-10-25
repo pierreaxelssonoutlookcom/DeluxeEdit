@@ -10,7 +10,7 @@ using Exensions.Util;
 using System.Reflection.Metadata;
 using System;
 
-namespace DeluxeEdit.DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public class MenuBuilder
     {

@@ -1,4 +1,4 @@
-﻿using DeluxeEdit.DefaultPlugins.ViewModel;
+﻿using DefaultPlugins;
 using Exensions.Util;
 using Extensions;
 using Model;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Linq;
 
-namespace DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public partial class MainEditViewModel
     {

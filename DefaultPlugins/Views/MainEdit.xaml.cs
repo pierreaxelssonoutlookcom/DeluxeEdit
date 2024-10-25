@@ -1,10 +1,9 @@
-﻿using DefaultPlugins.ViewModel;
-using DeluxeEdit.DefaultPlugins.ViewModel;
-using Model;
+﻿using Model;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-namespace DeluxeEdit.DefaultPlugins.Views
+using ViewModel;
+
+namespace Views
 {
     /// <summary>
     /// Interaction logic for test.xaml

@@ -1,8 +1,7 @@
 ﻿using Model;
 using System;
-using System.CodeDom;
 
-namespace DeluxeEdit.DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public class EventData
     {

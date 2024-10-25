@@ -17,6 +17,8 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         {
 
 
+        
+            
             var plugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
 
             var expected = "ninjaåäÖ";

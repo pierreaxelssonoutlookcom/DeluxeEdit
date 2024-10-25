@@ -1,8 +1,8 @@
-﻿using DefaultPlugins.ViewModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using ViewModel;
 
-namespace DeluxeEdit.DefaultPlugins.Views
+namespace Views
 {
     /// <summary>
     /// Interaction logic for Plugins.xaml

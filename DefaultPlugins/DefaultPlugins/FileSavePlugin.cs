@@ -8,10 +8,8 @@ using System.Text;
 using Extensions;
 using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
-using DeluxeEdit.DefaultPlugins.Views;
 using System.Windows;
 using System.Threading.Tasks;
-using System.Reflection.Metadata;
 using CustomFileApiFile;
 
 namespace DefaultPlugins
@@ -64,20 +62,7 @@ namespace DefaultPlugins
         }
         public object CreateControl(bool showToo)
         {
-            object view = new MainEdit();
-            Window? win = null;
-            var result = view;
-            if (showToo)
-            {
-                win = new Window();
-                result = win;
-
-                win.Content = view;
-                win.Show();
-
-            }
-
-            return result;
+            return new object();
         }
 
         public EncodingPath? GuiAction(INamedActionPlugin instance)

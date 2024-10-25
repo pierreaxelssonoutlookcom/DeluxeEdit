@@ -1,6 +1,6 @@
 ﻿using Model;
 using Model.Interface;
-using DeluxeEdit.DefaultPlugins.Views;
+using Views;
 using System;
 using System.IO.MemoryMappedFiles;
 using System.IO;

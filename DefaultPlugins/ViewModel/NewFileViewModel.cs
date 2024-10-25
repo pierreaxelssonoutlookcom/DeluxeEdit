@@ -1,6 +1,7 @@
 ﻿using Model.Interface;
 using Model;
 using System.Windows.Controls;
+using DefaultPlugins;
 
 
 
@@ -12,7 +13,7 @@ using System.Windows.Controls;
 
 
 
-namespace DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public class NewFileViewModel
     {

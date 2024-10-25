@@ -1,11 +1,12 @@
-﻿using Model;
+﻿using DefaultPlugins;
+using Model;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
 
-namespace DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public partial class MainEditViewModel
     {

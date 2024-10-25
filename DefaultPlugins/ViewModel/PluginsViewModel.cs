@@ -3,7 +3,7 @@ using Shared;
 using System;
 using System.Collections.Generic;
 
-namespace DefaultPlugins.ViewModel
+namespace ViewModel
 {
     public class PluginsViewModel
     {

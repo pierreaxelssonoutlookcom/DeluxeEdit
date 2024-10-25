@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DefaultPlugins.Views
+namespace Views
 {
     /// <summary>
     /// Interaction logic for Hex.xaml
