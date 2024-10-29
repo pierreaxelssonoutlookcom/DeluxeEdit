@@ -5,13 +5,13 @@ namespace ViewModel
 {
     public class EventData
     {
-        public delegate void Cust(EventType type, ContentPath path);
+        public delegate void Cust(EventType type, MyEditFile path);
         public event EventHandler<CustomEventArgs> Changed;
-        private MyEditFile editFile;
+        private MyEditFile? editFile = null;
         private EventType currentType;
         private bool TypeChanged;
         private bool EditFilehanged;
-        public MyEditFile EditFile
+        public MyEditFile? EditFile
         {
             get
             {
@@ -61,7 +61,7 @@ namespace ViewModel
             if (EditFilehanged && TypeChanged)
             {
 
-                Changed.Invoke(this, new CustomEventArgs { Type = CurrentType, Data = EditFile });
+                Changed.Invoke(null, new CustomEventArgs { Type = CurrentType, Data = EditFile });
 
             }
 
@@ -109,9 +109,10 @@ namespace ViewModel
 
 
 
-        public void subscrile(EventHandler<CustomEventArgs> handler)
+        public void Subscibe(EventHandler<CustomEventArgs> handler)
         {
-            Changed += handler;
+            if (handler!=null) 
+                Changed += handler;
         }
 
     }

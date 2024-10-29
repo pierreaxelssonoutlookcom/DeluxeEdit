@@ -10,7 +10,7 @@ namespace ViewModel
 {
     public partial class MainEditViewModel
     {
-        private async  void OnEvent(object sender, CustomEventArgs e)
+        private async  void OnEvent(object? snder, CustomEventArgs e)
         {
             if (e.Type == EventType.EditFile)
                 await LoadFile();
@@ -22,7 +22,7 @@ namespace ViewModel
 
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (!lastFileLength.HasValue) return;
+         //   if (!lastFileLength.HasValue) return;
 
             var percent = e.NewValue;
             progressText.Text = $"{percent}%%";

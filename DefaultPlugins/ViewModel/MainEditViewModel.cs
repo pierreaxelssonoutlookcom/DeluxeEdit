@@ -26,8 +26,6 @@ namespace ViewModel
         private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
 
-        public object ShowM { get; internal set; }
-        private long? lastFileLength;
         private List<INamedActionPlugin> relevantPlugins;
 
         public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
@@ -42,7 +40,7 @@ namespace ViewModel
             savePlugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
             var viewData = new EventData();
 
-            viewData.subscrile(OnEvent);
+            viewData.Subscibe(OnEvent);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
@@ -58,7 +56,7 @@ namespace ViewModel
 
 
 
-            file.Text.Text = file.Content;
+          if (file!=null && file.Text!=null) file.Text.Text = file.Content;
 
 
 
@@ -66,24 +64,26 @@ namespace ViewModel
         public async Task<string> DoCommand(MenuItem item, string SelectedText)
         {
             string result = "";
+            var header=item!=null && item.Header!=null ? item.Header.ToString() : String.Empty;
             var publisher = new EventData();
+            var progress = new Progress<long>(value => progressBar.Value = value);
 
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems)
-                .Single(p => item != null && p != null && p.Title == item.Header);
+                .Single(p => p != null && p.Title!=null && p.Title ==header);
             if (myMenuItem.Plugin is FileNewPlugin)
                 NewFile();
             else if (myMenuItem.Plugin is FileOpenPlugin)
             {
                 var data = await LoadFile();
+                if (data != null)
                 publisher.PublishEditFile(data);
             }
             else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
-            else if (myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
-                result = await myMenuItem.Plugin.Perform(new ActionParameter { Parameter = SelectedText },
-                    null);
-            else
-                result = await myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter, null);
+            else if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
+                result = await myMenuItem.Plugin.Perform(new ActionParameter(SelectedText), progress);
+            else if (myMenuItem!=null && myMenuItem.Plugin!=null && myMenuItem.Plugin.Parameter != null)
+                result = await myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter, progress);
 
 
             return result;
@@ -162,22 +162,25 @@ namespace ViewModel
         public void ChangeTab(TabItem item)
         {
             if (item == null) throw new NullReferenceException();
+            var header = item != null && item.Header != null ? item.Header.ToString() : String.Empty;
 
-            MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == item.Header);
+            MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == header                       );
 
         }
         public async void SaveFile()
         {
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
-         
+            var progress = new Progress<long>(value => progressBar.Value = value);
 
-            await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), null);
+
+            await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
 
         }
         public async void SaveAsFile()
         {
 
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text==null) throw new NullReferenceException();
+            var progress = new Progress<long>(value => progressBar.Value = value);
 
 
             var action = openPlugin.GuiAction(openPlugin);
@@ -185,7 +188,7 @@ namespace ViewModel
             //h is empty 
             if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
 
-            await saveAsPlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), null);
+            await saveAsPlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
 
 
         } 
