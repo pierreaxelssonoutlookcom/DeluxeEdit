@@ -49,8 +49,8 @@ namespace ViewModel
         {
             var file = newFileViewModel.GetNewFile();
             MyEditFiles.Add(file);
-            AddMyContols(file.Path);
-//            WPFUtil.AddOrUpddateTab(name, tabFiles, re);
+            var text=AddMyContols(file.Path);
+            WPFUtil.AddOrUpddateTab(file.Header, tabFiles,text);
 
 
 
@@ -78,6 +78,8 @@ namespace ViewModel
             }
             else if (myMenuItem.Plugin is FileSavePlugin)
                 SaveFile();
+            else if (myMenuItem.Plugin is FileSaveAsPlugin)
+                SaveAsFile();
             else if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
                 result = await myMenuItem.Plugin.Perform(new ActionParameter(SelectedText), progress);
             else if (myMenuItem!=null && myMenuItem.Plugin!=null && myMenuItem.Plugin.Parameter != null)
@@ -168,10 +170,13 @@ namespace ViewModel
         public async void SaveFile()
         {
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
+            
             var progress = new Progress<long>(value => progressBar.Value = value);
-
-
-            await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
+            bool fileExist = File.Exists(MyEditFiles.Current.Path);
+            if (fileExist)
+                await savePlugin.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
+            else
+                 SaveAsFile();
 
         }
         public async void SaveAsFile()
