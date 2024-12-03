@@ -1,5 +1,4 @@
-﻿using Model.Interface;
-using Model;
+﻿using Model;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;

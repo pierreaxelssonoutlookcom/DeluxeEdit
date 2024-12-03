@@ -7,22 +7,25 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
     public class UrlEncodeTests
     {
         [Fact]
-        public async void UrlEncodeTest()
+        public async Task UrlEncodeTest()
         {
             var plugin = AllPlugins.InvokePlugin(PluginType.UrlEncode);
             var expected = "Hej+p%c3%a5+dig";
-            var actual = await plugin.Perform(
-                new ActionParameter("Hej på dig"), null);
+            string actual = String.Empty;
+               actual = await plugin.Perform(
+                new ActionParameter("Hej på dig"), new Progress<long>());
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public async void UrlEncodeTestSimple()
+        public async Task UrlEncodeTestSimple()
         {
-            var plugin = AllPlugins.InvokePlugin(PluginType.UrlEncode) as UrlEncodePlugin;
+            var plugin = AllPlugins.InvokePlugin(PluginType.UrlEncode);
             var expected = "Ninja";
-            var actual =  await plugin.Perform(
-                new ActionParameter("Ninja"), null);
+            string actual=String.Empty;
+            
+            actual =  await plugin.Perform(
+                new ActionParameter("Ninja"), new Progress<long>());
             Assert.Equal(expected, actual);
         }
 

@@ -19,11 +19,9 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 
             var expected = "ninjaåäÖ\r\n";
             File.AppendAllLines(TestFile,new List<string> { "ninjaåäÖ" },  Encoding.UTF8);
-
-            plugin.OpenEncoding=Encoding.UTF8;
             await plugin.Perform(
 
-               new ActionParameter(TestFile, "ninjaåäÖ")
+               new ActionParameter(TestFile, "ninjaåäÖ", Encoding.UTF8)
               , null );
 
             File.Copy(TestFile, TestFile2, true);
@@ -40,17 +38,16 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         }
 
         [Fact]
-        public async void FileSaveAsPluginTest()
+        public async Task FileSaveAsPluginTest()
         {
             var plugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
 
             var expected = "ninjaåäÖ\r\n";
             File.AppendAllLines(TestFile, new List<string> { "ninjaåäÖ" }, Encoding.UTF8);
 
-            plugin.OpenEncoding = Encoding.UTF8;
             await plugin.Perform(
 
-               new ActionParameter(TestFile, "ninjaåäÖ")
+               new ActionParameter(TestFile, "ninjaåäÖ", Encoding.UTF8)
               , null);
 
             File.Copy(TestFile, TestFile2, true);

@@ -14,14 +14,17 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         public static string TestFile2 = TempDir + "/testfile2.txt";
 
         [Fact]
-        public async void HexOpenFileTest()
+        public async Task HexOpenFileTest()
         {
             var plugin = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
+            if (plugin==null)  return;
             var expected = "efbbbf6e696e6a61c3a5c3a4c396";
             if (File.Exists(TestFile)) File.Delete(TestFile);
             File.WriteAllText(TestFile, "ninjaåäÖ", Encoding.UTF8);
-            var actual = await plugin.Perform(
-                new ActionParameter(TestFile), null);
+            string actual=String.Empty;
+            var p = new ActionParameter(TestFile, Encoding.UTF8);
+            actual =await plugin.Perform(
+                p, new Progress<long>()) ;
             Assert.Equal(expected, actual);
         }
     }

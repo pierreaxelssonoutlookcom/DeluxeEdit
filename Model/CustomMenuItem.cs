@@ -1,8 +1,4 @@
-﻿
-using Model.Interface;
-using System;
-
-namespace Model
+﻿namespace Model
 {
 
     public class CustomMenuItem

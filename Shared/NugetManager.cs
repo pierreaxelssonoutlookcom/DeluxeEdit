@@ -1,11 +1,10 @@
 ﻿using Model;
-using Model.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using  DeluxeEdit.Extensions;
+using Extensions;
 using System.Reflection;
 using System.IO.Packaging;
 using NuGet.Packaging;

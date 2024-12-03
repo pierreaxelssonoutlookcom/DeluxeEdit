@@ -108,13 +108,13 @@ namespace CustomFileApiFile
 
         #region Properties
         static uint _originalDlgHeight, _originalDlgWidth;
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal static uint OriginalDlgWidth
         {
             get { return FileDialogControlBase._originalDlgWidth; }
             set { FileDialogControlBase._originalDlgWidth = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal static uint OriginalDlgHeight
         {
             get { return FileDialogControlBase._originalDlgHeight; }
@@ -128,6 +128,7 @@ namespace CustomFileApiFile
         }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public FileDialog MSDialog
         {
             set { _MSdialog = value; }
@@ -150,6 +151,7 @@ namespace CustomFileApiFile
         }
 
         Size _OriginalCtrlSize;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal Size OriginalCtrlSize
         {
             get { return _OriginalCtrlSize; }

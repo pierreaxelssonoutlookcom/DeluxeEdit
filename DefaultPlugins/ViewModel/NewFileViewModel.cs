@@ -1,17 +1,6 @@
-﻿using Model.Interface;
-using Model;
+﻿using Model;
 using System.Windows.Controls;
 using DefaultPlugins;
-
-
-
-
-
-
-
-
-
-
 
 namespace ViewModel
 {

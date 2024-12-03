@@ -1,7 +1,5 @@
-﻿using DeluxeEdit.Extensions;
+﻿using Extensions;
 using Model;
-using Model.Interface;
-using Exensions;
 using System.Data;
 using System.IO;
 using System.Reflection;

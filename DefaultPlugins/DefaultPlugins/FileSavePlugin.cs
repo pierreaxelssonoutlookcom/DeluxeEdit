@@ -32,7 +32,6 @@ namespace DefaultPlugins
         private StreamWriter? writer;
 
         public bool AsReaOnly { get; set; }
-        public Encoding? OpenEncoding { get; set; }
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
@@ -87,14 +86,13 @@ namespace DefaultPlugins
             if (Parameter == null) throw new ArgumentNullException();
 
             if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
-            if (writer == null) { }
             if (writer == null)
             {
                 if (Parameter == null) throw new ArgumentNullException();
 
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 InputStream = mmf.CreateViewStream();
-                writer = OpenEncoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
+                writer = Parameter.Encoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, Parameter.Encoding);
             }
             for (int i = 0; i < Parameter.InData.Count / SystemConstants.ReadPortionBufferSizeLines; i++)
             {
@@ -120,7 +118,7 @@ namespace DefaultPlugins
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 InputStream = mmf.CreateViewStream();
-                writer = OpenEncoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, OpenEncoding);
+                writer = Parameter.Encoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, Parameter.Encoding);
             }
 
 

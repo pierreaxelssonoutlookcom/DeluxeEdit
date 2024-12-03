@@ -31,7 +31,7 @@ namespace DefaultPlugins
         private MemoryMappedViewStream? MýStream = null;
         private StreamReader? reader;
         public bool AsReaOnly { get; set; }
-        public Encoding? OpenEncoding { get; set; }
+    //    public Encoding? OpenEncoding { get; set; }
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
 
@@ -104,14 +104,7 @@ namespace DefaultPlugins
 
             var total = new List<string>();
 
-            if (reader == null)
-            {
-                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
-                MýStream = mmf.CreateViewStream();
-                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
-            }
-            if (MýStream == null) throw new ArgumentNullException();
-
+ 
 
             long fileSize = new FileInfo(Parameter.Parameter).Length;
             for (int i = 0; i <= fileSize / SystemConstants.ReadBufferSizeBytes; i++)
@@ -133,7 +126,7 @@ namespace DefaultPlugins
             {
                 using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
                 MýStream = mmf.CreateViewStream();
-                reader = OpenEncoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, OpenEncoding);
+                reader = Parameter.Encoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, Parameter.Encoding);
             }
 
             if (MýStream == null) throw new ArgumentNullException();

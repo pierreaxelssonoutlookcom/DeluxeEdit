@@ -151,7 +151,7 @@ namespace DefaultPlugins
             {
                if (b == '\0') break;
                            
-                sb.AppendFormat(" {0:x2}", b);
+                sb.AppendFormat("{0:x2}", b);
             }
             
            result.Add (sb.ToString());

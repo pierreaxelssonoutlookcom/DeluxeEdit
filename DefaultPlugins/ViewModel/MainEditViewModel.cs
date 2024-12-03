@@ -100,7 +100,7 @@ namespace ViewModel
  
             statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
             
-               hexPlugin.OpenEncoding = MyEditFiles.Current.Encoding;
+            hexPlugin.OpenEncoding = MyEditFiles.Current.Encoding;
             var text = AddMyContols(MyEditFiles.Current.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(MyEditFiles.Current.Path);
@@ -154,12 +154,12 @@ namespace ViewModel
 
             result.Path = action.Path;
             result.Header = new FileInfo(result.Path).Name;
-            openPlugin.OpenEncoding = action.Encoding;
+            var parameter = new ActionParameter(result.Path);
+            parameter.Encoding=action.Encoding;
             result.Encoding = action.Encoding;
             var text=AddMyContols(result.Header);
-            var progress = new Progress<long>(value => progressBar.Value = value);
-            var parameter = new ActionParameter(result.Path);
-
+            var progress =          new Progress<long>(value => progressBar.Value = value);
+            
 
 //            lastFileLength = openPlugin.GetFileLeLength(parameter);
             result.Content = await openPlugin.Perform(parameter, progress);

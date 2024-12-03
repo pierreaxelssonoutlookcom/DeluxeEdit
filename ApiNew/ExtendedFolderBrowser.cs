@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Security;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace FolderBrowser
 {
@@ -228,10 +229,12 @@ namespace FolderBrowser
 				}
 			}
 
-			/// <summary>
-			/// 
-			/// </summary>
-			public string Description
+            /// <summary>
+            /// 
+            /// </summary>
+
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public string Description
 			{
 				get
 				{
