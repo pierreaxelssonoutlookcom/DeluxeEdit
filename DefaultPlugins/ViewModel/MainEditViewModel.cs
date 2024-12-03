@@ -21,6 +21,7 @@ namespace ViewModel
         private FileOpenPlugin openPlugin;
         private INamedActionPlugin saveAsPlugin;
         private INamedActionPlugin savePlugin;
+        private HexPlugin hexPlugin;
         private static List<CustomMenu> MainMenu = new MenuBuilder().BuildMenu();
 
 
@@ -36,6 +37,7 @@ namespace ViewModel
             openPlugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
             saveAsPlugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
             savePlugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
+            hexPlugin  = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
             var viewData = new EventData();
 
             viewData.Subscibe(OnEvent);
@@ -81,6 +83,8 @@ namespace ViewModel
                 SaveFile();
             else if (myMenuItem.Plugin is FileSaveAsPlugin)
                 SaveAsFile();
+            else if (myMenuItem.Plugin is HexPlugin)
+                HexView();
             else if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
                 result = await myMenuItem.Plugin.Perform(new ActionParameter(SelectedText), progress);
             else if (myMenuItem!=null && myMenuItem.Plugin!=null && myMenuItem.Plugin.Parameter != null)
@@ -90,9 +94,28 @@ namespace ViewModel
             return result;
 
         }
+        public async void HexView()
+        {
+            if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
+ 
+            statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
+            
+               hexPlugin.OpenEncoding = MyEditFiles.Current.Encoding;
+            var text = AddMyContols(MyEditFiles.Current.Header);
+            var progress = new Progress<long>(value => progressBar.Value = value);
+            var parameter = new ActionParameter(MyEditFiles.Current.Path);
+
+            
+            //            lastFileLength = openPlugin.GetFileLeLength(parameter);
+            var hexOutput = await hexPlugin.Perform(parameter, progress);
+            text.IsReadOnly = true;
+
+            text.Text = hexOutput.ToString();
+        }
+
         public void ScrollTo(double newValue)
         {
-            //done :find way to renember old path before dialog 
+            //do,ne :find way to renember old path before dialog 
 
 
 
@@ -111,15 +134,7 @@ namespace ViewModel
 
             progressBar.ValueChanged += ProgressBar_ValueChanged;
 
-            /*
-            result.Panel = new StackPanel();
-            result.Panel.Name = "panel" + name.Replace(".", "");
-            result.Panel.Orientation = Orientation.Vertical;
-
-            result.Panel.Children.Add(result.Text);
-            */
             WPFUtil.AddOrUpddateTab(name, tabFiles, text);
-            // currentTab.Items.Add(resu
 
             return text;
 
@@ -140,15 +155,10 @@ namespace ViewModel
             result.Path = action.Path;
             result.Header = new FileInfo(result.Path).Name;
             openPlugin.OpenEncoding = action.Encoding;
+            result.Encoding = action.Encoding;
             var text=AddMyContols(result.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(result.Path);
-
-
-            ;
-
-
-
 
 
 //            lastFileLength = openPlugin.GetFileLeLength(parameter);

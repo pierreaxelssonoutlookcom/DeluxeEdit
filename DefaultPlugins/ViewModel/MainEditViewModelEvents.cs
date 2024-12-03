@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 
 namespace ViewModel
@@ -62,6 +63,9 @@ namespace ViewModel
                         SaveAsFile();
                     else if (plugin is FileNewPlugin)
                         NewFile();
+                    else if (plugin is HexPlugin)
+                        HexView();
+
 
                 }
 

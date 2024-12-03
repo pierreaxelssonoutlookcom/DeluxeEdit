@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Shared;
 using System.Windows;
 using System.Linq;
+using CustomFileApiFile;
 
 namespace DefaultPlugins
 {
@@ -29,7 +30,7 @@ namespace DefaultPlugins
 
         private MemoryMappedViewStream? MýStream = null;
         private StreamReader? reader;
-        public bool AsReaOnly { get; set; }
+        public bool AsReaOnly { get; set; }=true;
         public Encoding? OpenEncoding { get; set; }
         public string Titel { get; set; } = "";
         public int SortOrder { get; set; }
@@ -41,14 +42,19 @@ namespace DefaultPlugins
 
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
-            throw new NotImplementedException();
+            string oldDir = @"c:\";
+
+            //if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
+            var dialog = new DeluxeFileDialog();
+            var result = dialog.ShowFileOpenDialog(oldDir);
+            return result;
         }
 
 
 
         public object CreateControl(bool showToo)
         {
-            object view = new Hex();
+            object view = new MainEdit();
             var result = view;
             if (showToo)
             {
@@ -67,7 +73,7 @@ namespace DefaultPlugins
         public void SetConfig()
         {
             Configuration.ShowInMenu = "File";
-            Configuration.ShowInMenuItem = "Hex"; ;
+            Configuration.ShowInMenuItem = "Hex View"; ;
             Configuration.KeyCommand.Keys = new List<Key> { Key.LeftCtrl, Key.O };
             Version = Version.Parse(VersionString);
         }
@@ -145,7 +151,7 @@ namespace DefaultPlugins
             {
                if (b == '\0') break;
                            
-                sb.AppendFormat("{0:x2}", b);
+                sb.AppendFormat(" {0:x2}", b);
             }
             
            result.Add (sb.ToString());

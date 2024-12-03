@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Controls;
 namespace Model
 {
   public class MyEditFile: IEquatable<MyEditFile>
     {
         public string BufferPath { get { return Path+".buff"; } }
+        public Encoding? Encoding { get; set; }
+
         public string Path { get; set; } = "";
         public string Content { get; set; } = "";
         public string Header { get; set; } = "";
