@@ -52,6 +52,7 @@ namespace DefaultPlugins
 
 
 
+
         public object CreateControl(bool showToo)
         {
             object view = new MainEdit();
@@ -147,15 +148,26 @@ namespace DefaultPlugins
 
             var result = new List<string>();
             var sb= new StringBuilder();
+
             foreach (byte b in buffer)
             {
-               if (b == '\0') break;
-                           
+                if (b == SystemConstants.NullCharacter) break;
                 sb.AppendFormat("{0:x2}", b);
             }
-            
-           result.Add (sb.ToString());
 
+            string myOutput = sb.ToString();
+             var sbIndent=new StringBuilder();
+            for (int i = 0; i < myOutput.Length; i++)
+            {
+                if (i %  8==1) 
+                    sbIndent.Append(" ");
+         
+                sbIndent.Append(myOutput[i]);
+           }
+            myOutput= sbIndent.ToString().ToUpper().TrimStart().TrimEnd();
+
+
+            result.Add(myOutput);
             //todo:how do I share file data between different plugins
             if (progress != null)
                 progress.Report(MýStream.Position);

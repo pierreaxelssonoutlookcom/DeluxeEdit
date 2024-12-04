@@ -53,7 +53,7 @@
 	  <ProjectReference Include="..\ApiNew\CustomFileApi.csproj" />
 	  <ProjectReference Include="..\Exensions\Exensions.csproj" />
 	  <ProjectReference Include="..\Model\Model.csproj" />
-	  <ProjectReference Include="..\Shared\Shared.csproj" />
+	  <ProjectReference Include="..\Shared2\Shared.csproj" />
 	</ItemGroup>
 
 </Project>

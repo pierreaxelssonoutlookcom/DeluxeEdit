@@ -70,7 +70,7 @@ namespace DefaultPlugins
         }
 
 
-        public static T InvokePluginz<T>(PluginItem item) where T : class
+        public static T InvokePlugins<T>(PluginItem item) where T : class
         {
             var result = InvokePlugin<T>(item.MyType);
             return result;

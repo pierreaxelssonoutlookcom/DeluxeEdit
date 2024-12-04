@@ -1,4 +1,4 @@
-﻿using Model;
+﻿/*using Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -117,15 +117,15 @@ namespace Shared
 
             return ourSource;
             */
-    /*
-    public static void UnLoadPluginFile(string path)
+/*
+public static void UnLoadPluginFile(string path)
+{
+    var match = SourceFiles.FirstOrDefault(p => String.Equals(path, p.LocalPath, StringComparison.CurrentCultureIgnoreCase));
+    if (match != null)
     {
-        var match = SourceFiles.FirstOrDefault(p => String.Equals(path, p.LocalPath, StringComparison.CurrentCultureIgnoreCase));
-        if (match != null)
-        {
-            var asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => path.SameFileName(p.GetName().CodeBase));
-        }
+        var asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => path.SameFileName(p.GetName().CodeBase));
     }
-    */
-    }                                                               
 }
+}                                                               
+}
+*/

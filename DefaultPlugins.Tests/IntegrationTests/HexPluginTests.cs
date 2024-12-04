@@ -18,7 +18,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         {
             var plugin = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
             if (plugin==null)  return;
-            var expected = "efbbbf6e 696e6a61 c3a5c3a4 c396";
+            var expected = "EFBBBF6E 696E6A61 S3A5C3A4 C396";
             if (File.Exists(TestFile)) File.Delete(TestFile);
             File.WriteAllText(TestFile, "ninjaåäÖ", Encoding.UTF8);
             string actual=String.Empty;

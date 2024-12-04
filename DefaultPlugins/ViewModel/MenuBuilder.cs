@@ -5,7 +5,7 @@ using Extensions;
 using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
-using Exensions.Util;
+using Extensions.Util;
 using System.Reflection.Metadata;
 using System;
 

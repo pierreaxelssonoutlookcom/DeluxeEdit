@@ -51,9 +51,9 @@ namespace ViewModel
         {
             var file = newFileViewModel.GetNewFile();
             MyEditFiles.Add(file);
-            var text=AddMyContols(file.Path);
-            var myTab=WPFUtil.AddOrUpddateTab(file.Header, tabFiles,text);
-            ChangeTab(myTab);
+            var text=AddMyControls(file.Path);
+            var myTab=WPFUtil.AddOrUpdateTab(file.Header, tabFiles,text);
+            if (myTab!=null) ChangeTab(myTab);
 
 
 
@@ -101,7 +101,7 @@ namespace ViewModel
             statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
             
             hexPlugin.OpenEncoding = MyEditFiles.Current.Encoding;
-            var text = AddMyContols(MyEditFiles.Current.Header);
+            var text = AddMyControls(MyEditFiles.Current.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(MyEditFiles.Current.Path);
 
