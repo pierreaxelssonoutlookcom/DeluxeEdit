@@ -9,7 +9,7 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
     public class FileOpenPluginTests
      {
         public static string TempDir = "C:/temp";
-        public static string TestFile = TempDir + "/testfile.txt";
+        public static string TestFile = TempDir + "/testfile1.txt";
         public static string TestFile2 = TempDir + "/testfile2.txt";
 
         [Fact]

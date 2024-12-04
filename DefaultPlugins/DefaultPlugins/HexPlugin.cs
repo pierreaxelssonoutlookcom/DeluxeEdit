@@ -152,19 +152,10 @@ namespace DefaultPlugins
             foreach (byte b in buffer)
             {
                 if (b == SystemConstants.NullCharacter) break;
-                sb.AppendFormat("{0:x2}", b);
+                sb.AppendFormat("{0:x2} ", b);
             }
-
-            string myOutput = sb.ToString();
-             var sbIndent=new StringBuilder();
-            for (int i = 0; i < myOutput.Length; i++)
-            {
-                if (i %  8==1) 
-                    sbIndent.Append(" ");
-         
-                sbIndent.Append(myOutput[i]);
-           }
-            myOutput= sbIndent.ToString().ToUpper().TrimStart().TrimEnd();
+             
+            string myOutput = sb.ToString().ToUpper().TrimStart().TrimEnd();
 
 
             result.Add(myOutput);
