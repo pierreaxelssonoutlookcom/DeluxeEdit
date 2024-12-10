@@ -16,7 +16,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="NuGet.Packaging" Version="6.11.1" />
+		<PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+		<PackageReference Include="NuGet.Packaging" Version="6.12.1" />
 
 		<EmbeddedResource Remove="Misc\**" />
 	  <None Remove="Misc\**" />
@@ -37,6 +38,7 @@
 	  <Compile Include="ViewModel\MainEditViewModelEvents.cs" />
 	  <Compile Include="ViewModel\EventData.cs" />
 	  <Compile Include="ViewModel\MainEditViewModel.cs" />
+	  <Compile Include="ViewModel\FileTypeLoader.cs" />
 	  <Compile Include="ViewModel\MenuBuilder.cs" />
 	  <Compile Include="ViewModel\NewFileViewModel.cs" />
 	  <Compile Include="ViewModel\PluginsViewModel.cs" />
@@ -46,7 +48,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Win32" Version="2.0.1" />
-	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
 	  <PackageReference Include="System.Reflection" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>

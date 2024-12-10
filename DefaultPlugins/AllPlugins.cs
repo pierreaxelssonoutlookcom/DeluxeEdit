@@ -72,12 +72,12 @@ namespace DefaultPlugins
 
         public static T InvokePlugins<T>(PluginItem item) where T : class
         {
-            var result = InvokePlugin<T>(item.MyType);
+            var result = InvokePlugin<T>(item.PluginType);
             return result;
         }
         public static IEnumerable<INamedActionPlugin> InvokePlugins(IEnumerable<PluginItem> items)
         {
-            var result = items.Select(p => InvokePlugin(p.MyType)).ToList();
+            var result = items.Select(p => InvokePlugin(p.PluginType)).ToList();
 
             return result;
         }
@@ -87,9 +87,9 @@ namespace DefaultPlugins
             var result = PluginManager.CreateObject(type);
             return result;
         }
-        public static INamedActionPlugin InvokePluginz(PluginItem item)
+        public static INamedActionPlugin InvokePlugin(PluginItem item)
         {
-            var result = InvokePlugin(item.MyType);
+            var result = InvokePlugin(item.PluginType);
             return result;
         }
         public static INamedActionPlugin? InvokePlugin(string type)

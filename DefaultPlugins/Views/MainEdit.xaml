@@ -47,6 +47,7 @@
             
         </StackPanel>
         <ProgressBar x:Name="Progress" Height="1" Width="100"  />
+        <WebBrowser x:Name="Web" Width="100"/>
 
     </DockPanel>
 </UserControl>

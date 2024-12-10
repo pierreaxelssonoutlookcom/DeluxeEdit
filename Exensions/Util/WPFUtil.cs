@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Model;
+using System.Windows.Controls;
 
 namespace Extensions.Util
 {
@@ -7,6 +8,53 @@ namespace Extensions.Util
     {
         public const nint Minus1 = -1;
 
+        public static string FileTypeToExtension(FileType type)
+        {
+            string result = String.Empty;
+            switch (type)
+            {
+
+                case FileType.Boo:
+                    result = ".boo";
+                    break;
+                case FileType.CocoR:
+                    result = ".r";
+                    break;
+                case FileType.CPP:
+                    result = ".cpp";
+                    break;
+                case FileType.CS:
+                    result = ".cs";
+                    break;
+                case FileType.HTML:
+                    result = ".htm";
+                    break;
+                case FileType.Java:
+                    result = ".java";
+                    break;
+                case FileType.JavaScript:
+                    result = ".js";
+                    break;
+                case FileType.PatchFiles:
+                    result = ".patch";
+                    break;
+                case FileType.PHP:
+                    result = ".php";
+                    break;
+                case FileType.TeX:
+                    result = ".tex";
+                    break;
+                case FileType.VB:
+                    result = ".vb";
+                    break;
+                case FileType.XML:
+                    result = ".xml";
+                    break;
+            }
+
+            return result;
+
+        }
 
         public static TabItem? AddOrUpdateTab(string header, TabControl control, object contentControl)
         {

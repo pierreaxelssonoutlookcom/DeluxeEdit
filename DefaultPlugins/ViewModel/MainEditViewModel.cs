@@ -9,7 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Highlighting;
 namespace ViewModel
 {
     public partial class MainEditViewModel
@@ -26,6 +28,8 @@ namespace ViewModel
 
 
         private List<INamedActionPlugin> relevantPlugins;
+        private FileTypeLoader fileTypes;
+        private List<FileTypeItem> allFileTypes;
 
         public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
         {
@@ -44,8 +48,10 @@ namespace ViewModel
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
+            fileTypes = new FileTypeLoader();
+             allFileTypes= fileTypes.LoadFileTypes();
         }
-
+       
 
         public void NewFile()
         {
@@ -93,6 +99,7 @@ namespace ViewModel
 
             return result;
 
+
         }
         public async void HexView()
         {
@@ -100,17 +107,16 @@ namespace ViewModel
  
             statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
             
-            hexPlugin.OpenEncoding = MyEditFiles.Current.Encoding;
             var text = AddMyControls(MyEditFiles.Current.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
-            var parameter = new ActionParameter(MyEditFiles.Current.Path);
+            var parameter = new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Encoding);
 
-            
+
             //            lastFileLength = openPlugin.GetFileLeLength(parameter);
             var hexOutput = await hexPlugin.Perform(parameter, progress);
-            text.IsReadOnly = true;
+//            text.IsReadOnly = true;
 
-            text.Text = hexOutput.ToString();
+  //          text.AppendText(hexOutput.ToString());
         }
 
         public void ScrollTo(double newValue)
@@ -121,15 +127,18 @@ namespace ViewModel
 
         }
 
-        public TextBox AddMyControls(string path)
+        public TextEditor AddMyControls(string path)
         {
             bool isNewFle=!File.Exists(path);
             var name = isNewFle ? path :  new FileInfo(path).Name ;
+            var text = new TextEditor();
 
-            var text = new TextBox();
+
+
+
 
             text.Name = name.Replace(".", "");
-            text.AcceptsReturn = true;
+//            text.AcceptsReturn = true;
             text.KeyDown += Text_KeyDown;
 
             progressBar.ValueChanged += ProgressBar_ValueChanged;
@@ -140,6 +149,8 @@ namespace ViewModel
 
         }
 
+ 
+            
 
         public async Task<MyEditFile?> LoadFile()
         {
@@ -164,7 +175,7 @@ namespace ViewModel
 //            lastFileLength = openPlugin.GetFileLeLength(parameter);
             result.Content = await openPlugin.Perform(parameter, progress);
 
-            text.Text = result.Content;
+            text.AppendText(result.Content);
             MyEditFiles.Add(result);
 
             return result;
