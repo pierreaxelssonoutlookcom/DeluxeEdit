@@ -3,12 +3,17 @@
 
     public class CustomMenuItem
     {
-        public Func<Task<object>, object>? MenuActon { get; set; }
+        public Func<Task<MyEditFile?>>? MenuActon { get; set; } 
+        
 
+
+            Func<int, int> square = x => x * x;
         public INamedActionPlugin? Plugin { get; set; }= null;
         public Type? MyType { get; set; }
 
         public string Title { get; set; } = "";
         public ActionParameter Parameter { get; set; } = new ActionParameter();
+
     }
+
 }

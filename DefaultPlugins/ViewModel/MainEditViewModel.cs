@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
+using DefaultPlugins.ViewModel;
 namespace ViewModel
 {
     public partial class MainEditViewModel
@@ -52,7 +53,7 @@ namespace ViewModel
         }
        
 
-        public MyEditFile NewFile()
+        public async Task<MyEditFile?> NewFile()
         {
             var file = newFileViewModel.GetNewFile();
             MyEditFiles.Add(file);
@@ -60,10 +61,13 @@ namespace ViewModel
             var myTab=WPFUtil.AddOrUpdateTab(file.Header, tabFiles,text);
             if (myTab!=null) ChangeTab(myTab);
 
+            await Task.Delay(0);
+            return file;
 
 
-               return file;
-
+        }
+        public void CheckForViewAs()
+        { 
 
         }
         public async Task<string> DoCommand(MenuItem item, string SelectedText)
@@ -74,19 +78,14 @@ namespace ViewModel
 
             var myMenuItem = MainEditViewModel.MainMenu.SelectMany(p => p.MenuItems)
                 .Single(p => p != null && p.Title!=null && p.Title ==header);
-            if (myMenuItem.Plugin is FileNewPlugin)
-                NewFile();
-            else if (myMenuItem.Plugin is FileOpenPlugin)
-            {
-                var data = await LoadFile();
-            }
-            else if (myMenuItem.Plugin is FileSavePlugin)
-                await SaveFile();
-            else if (myMenuItem.Plugin is FileSaveAsPlugin)
-                await SaveAsFile();
-            else if (myMenuItem.Plugin is HexPlugin)
-                HexView();
-            else if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
+
+            var actions = new SetupMenuActions(this);
+            actions.SetMenuAction(myMenuItem);
+            if (myMenuItem.MenuActon != null)
+                await myMenuItem.MenuActon.Invoke();
+
+
+            if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && SelectedText.HasContent())
                 result = await myMenuItem.Plugin.Perform(new ActionParameter(SelectedText), progress);
             else if (myMenuItem!=null && myMenuItem.Plugin!=null && myMenuItem.Plugin.Parameter != null)
                 result = await myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter, progress);
@@ -96,8 +95,9 @@ namespace ViewModel
 
 
         }
-        public async Task<MyEditFile>  HexView()
+        public async Task<MyEditFile?>  HexView()
         {
+           var result= new MyEditFile();
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
  
             statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
@@ -105,14 +105,9 @@ namespace ViewModel
             var text = AddMyControl(MyEditFiles.Current.Header);
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Encoding);
-
-
-            //            lastFileLength = openPlugin.GetFileLeLength(parameter);
             var hexOutput = await hexPlugin.Perform(parameter, progress);
-            //            text.IsReadOnly = true;
-
-            //          text.AppendText(hexOutput.ToString());
-            return MyEditFiles.Current;
+            result.Content = hexOutput;
+            return result ;
         }
 
         public void ScrollTo(double newValue)

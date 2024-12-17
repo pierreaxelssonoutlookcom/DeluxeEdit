@@ -1,10 +1,4 @@
 ﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using ViewModel;
 
 namespace DefaultPlugins.ViewModel
@@ -17,24 +11,19 @@ namespace DefaultPlugins.ViewModel
             {
                 this.model=model;
             }
-            public void SetMenuActions(List<CustomMenu> menu)
+            public void SetMenuAction(CustomMenuItem item)
             {
-                var allItems = menu.SelectMany(p => p.MenuItems);
-                foreach (var item in allItems)
-                {
-                    item.MenuActon = (dummy) => model.SaveFile();
-
-                    if (item.Plugin is FileNewPlugin)
-                        item.MenuActon = (dummy) => model.NewFile();
-                    else if (item.Plugin is FileOpenPlugin)
-                        item.MenuActon = (dummy) => model.LoadFile();
-                    else if (item.Plugin is FileSavePlugin)
-                        item.MenuActon = (dummy) => model.SaveFile();
-                    else if (item.Plugin  is FileSaveAsPlugin)
-                        item.MenuActon = (dummy) => model.SaveAsFile();
-                    else if (item.Plugin is HexPlugin)
-                        item.MenuActon = (dummy) => model.HexView();
-                }
+                if (item !=null && model!=null && item.Plugin is FileNewPlugin)
+                    item.MenuActon = () => model.NewFile();
+                else if (item != null && model != null && item.Plugin is FileOpenPlugin)
+                    item.MenuActon = () => model.LoadFile();
+                else if (item != null && model != null && item.Plugin is FileSavePlugin)
+                    item.MenuActon = () => model.SaveFile();
+                else if (item != null && model != null && item.Plugin  is FileSaveAsPlugin)
+                    item.MenuActon = () => model.SaveAsFile();
+                else if (item != null && model != null && item.Plugin is HexPlugin)
+                    item.MenuActon = () => model.HexView();
+                
 
             }
 
