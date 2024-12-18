@@ -19,9 +19,9 @@ namespace ViewModel
         {
             manager = new HighlightingManager();
         }
-        public static FileTypeItem? ParseFileItem(string menuTitle)
+        public static FileTypeItem? GetFileTypeItem(string menuTitle)
         {
-            var result = FileTypeLoader.AllFileTypes.FirstOrDefault(p => p.ToString() == menuTitle && menuTitle.StartsWith("As "));
+            var result = AllFileTypes.FirstOrDefault(p => p.ToString() == menuTitle && menuTitle.StartsWith("As "));
             return result;
         }
 

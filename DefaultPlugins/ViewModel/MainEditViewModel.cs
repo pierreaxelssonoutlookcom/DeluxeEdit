@@ -68,7 +68,7 @@ namespace ViewModel
         }
         public FileTypeItem? ExecuteViewAs(string menuTitle)
         {
-            var result = FileTypeLoader.ParseFileItem(menuTitle);
+            var result = FileTypeLoader.GetFileTypeItem(menuTitle);
             return result;
         }
 
@@ -151,25 +151,22 @@ namespace ViewModel
         public async Task<MyEditFile?> LoadFile()
         {
 
-            MyEditFile? result = null;
             var action = openPlugin.GuiAction(openPlugin);
             //if user cancelled path is empty 
             if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
 
             statusText.Text = $" File: {action.Path}";
-            result = new MyEditFile();
-
-            result.Path = action.Path;
             var parameter = new ActionParameter(action.Path, action.Encoding);
   
-            var text=AddMyControl(action.Path);
             var progress =          new Progress<long>(value => progressBar.Value = value);
-            
 
-//            lastFileLength = openPlugin.GetFileLeLength(parameter);
+            var result = new MyEditFile();
+            result.Path = action.Path;
             result.Content = await openPlugin.Perform(parameter, progress);
-            
-//            viewData.PublishEditFile(result);
+
+            var text = AddMyControl(action.Path);
+
+            //            viewData.PublishEditFile(result);
 
             text.Text =result.Content;
             MyEditFiles.Add(result);

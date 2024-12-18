@@ -29,9 +29,8 @@
 
 
         </StatusBar>
-        <StackPanel x:Name="OuterPanel" Orientation="Vertical">
 
-            <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"     >
+            <TabControl Name="TabFiles"  SelectionChanged="TabFiles_SelectionChanged"  DockPanel.Dock="Top"    >
                 <TabItem Header="TabItem">
 
 
@@ -45,7 +44,6 @@
 
             </TabControl>
             
-        </StackPanel>
         <ProgressBar x:Name="Progress" Height="1" Width="100"  />
         <WebBrowser x:Name="Web" Width="100"/>
 
