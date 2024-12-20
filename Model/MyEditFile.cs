@@ -9,9 +9,9 @@ namespace Model
         public string BufferPath { get { return Path+".buff"; } }
         public Encoding? Encoding { get; set; }
 
-        public string Path { get; set; } = "";
-        public string Content { get; set; } = "";
-        public string Header { get; set; } = "";
+        public string Path { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string Header { get; set; } = string.Empty;
         public bool  IsNewFile { get; set; }
         public TextEditor Text { get; set; } = new TextEditor();
         public TabControl? Tab { get; set; }

@@ -68,7 +68,7 @@ namespace ViewModel
         }
         public FileTypeItem? ExecuteViewAs(string menuTitle)
         {
-            var result = FileTypeLoader.GetFileTypeItem(menuTitle);
+            var result = FileTypeLoader.GetFileTypeItemByMenu (menuTitle);
             return result;
         }
 
@@ -171,7 +171,7 @@ namespace ViewModel
 
             //            viewData.PublishEditFile(result);
 
-            text.Text =result.Content;
+            text.AppendText(result.Content);
             MyEditFiles.Add(result);
 
             return result;

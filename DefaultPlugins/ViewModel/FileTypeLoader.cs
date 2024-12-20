@@ -19,11 +19,18 @@ namespace ViewModel
         {
             manager = new HighlightingManager();
         }
-        public static FileTypeItem? GetFileTypeItem(string menuTitle)
+        public static FileTypeItem? GetFileTypeItemByMenu(string menuTitle)
         {
             var result = AllFileTypes.FirstOrDefault(p => p.ToString() == menuTitle && menuTitle.StartsWith("As "));
             return result;
         }
+        public static FileTypeItem GetFileTypeItemByFileType(FileType fileType)
+        {
+            var result = AllFileTypes.First(p => p.FileType == fileType);
+            return result;
+        }
+
+
 
 
 
@@ -33,9 +40,23 @@ namespace ViewModel
 
 
             CurrentText = new TextEditor();
-            CurrentText.SyntaxHighlighting = manager.GetDefinitionByExtension(path);
+            var suggestededDefinition = manager.GetDefinitionByExtension(path);
+            if (suggestededDefinition == null)
+            {
+                var mapped = WPFUtil.MapExtensionToMain(path);
+                if (mapped != null)
+                    suggestededDefinition=manager.GetDefinitionByExtension(mapped);
+
+            }
+            
+
+
+            if (suggestededDefinition != null) 
+                CurrentText.SyntaxHighlighting = suggestededDefinition;
+
             CurrentPath = path; 
         }
+
          
         public static  List<FileTypeItem> LoadFileTypes()
         {

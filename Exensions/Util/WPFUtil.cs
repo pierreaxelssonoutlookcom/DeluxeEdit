@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.IO;
 using System.Windows.Controls;
 
 namespace Extensions.Util
@@ -7,6 +8,29 @@ namespace Extensions.Util
     public  static class WPFUtil
     {
         public const nint Minus1 = -1;
+        public static FileType? MapExtensionToFileType(string path)
+        {
+            FileType? result = null;
+            var file = new FileInfo(path);
+            var extensionsToTestForXml = new List<string> { ".config", ".csproj", ".xml" };
+
+            var success = extensionsToTestForXml.Any(p => file.Extension.EndsWith(p, StringComparison.OrdinalIgnoreCase));
+            if (success) result = FileType.XML;
+
+            return result;
+        }
+
+        public static string? MapExtensionToMain(string path)
+        {
+            string? result = null;
+            var file = new FileInfo(path);
+            var extensionsToTestForXml = new List<string> { ".config", ".csproj", ".xml" };
+
+            var success = extensionsToTestForXml.Any(p => file.Extension.EndsWith(p, StringComparison.OrdinalIgnoreCase));
+            if (success) result = ".xml";
+
+            return result;
+        }
 
         public static string FileTypeToExtension(FileType type)
         {
