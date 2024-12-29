@@ -16,6 +16,7 @@ using DefaultPlugins.ViewModel;
 using System.Formats.Tar;
 using System.Windows;
 using System.Windows.Threading;
+
 namespace ViewModel
 {
     public partial class MainEditViewModel
@@ -70,8 +71,12 @@ namespace ViewModel
         }
         public FileTypeItem? ExecuteViewAs(string menuTitle)
         {
-            var result = FileTypeLoader.GetFileTypeItemByMenu (menuTitle);
+            var result = FileTypeLoader.GetFileTypeItemByMenu(menuTitle);
             return result;
+        }
+        public void MaxímizeTab()
+        {
+            
         }
 
         public async Task<string> DoCommand(MenuItem item)
