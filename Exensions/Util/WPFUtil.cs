@@ -77,8 +77,9 @@ namespace Extensions.Util
 
         }
 
-        public static TabItem? AddOrUpdateTab(string header, TabControl control, object contentControl)
+        public static TabItem AddOrUpdateTab(string header, TabControl control, object contentControl)
         {
+            TabItem result= new TabItem();
             TabItem? item = null;
             var index = IndexOfText(control.Items, header);
             if (index.HasValue)
@@ -104,8 +105,8 @@ namespace Extensions.Util
             item.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
 
             }
-
-            return item;
+      if (item !=null) result=item;
+      return result;
         }
 
 

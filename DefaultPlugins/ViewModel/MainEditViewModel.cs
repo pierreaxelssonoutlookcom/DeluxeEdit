@@ -151,8 +151,8 @@ namespace ViewModel
             fileTypesLoader.CurrentText.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             progressBar.ValueChanged += ProgressBar_ValueChanged;
 
-            var tab=WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypesLoader.CurrentText.TextArea);
-            if(tab!=null) ChangeTab(tab);
+            var tab=WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypesLoader.CurrentTextArea);
+            ChangeTab(tab);
 
             return fileTypesLoader.CurrentText;
 
