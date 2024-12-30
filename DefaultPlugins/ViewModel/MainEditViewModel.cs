@@ -16,6 +16,7 @@ using DefaultPlugins.ViewModel;
 using System.Formats.Tar;
 using System.Windows;
 using System.Windows.Threading;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace ViewModel
 {
@@ -142,7 +143,7 @@ namespace ViewModel
     
             fileTypesLoader.LoadCurrent(path);
 
-            fileTypesLoader.CurrentText.Focus() ;
+            fileTypesLoader.CurrentText.IsReadOnly = false;
             fileTypesLoader.CurrentText.Name = name.Replace(".", "");
             fileTypesLoader.CurrentText.Visibility = Visibility.Visible;
             fileTypesLoader.CurrentText.KeyDown += Text_KeyDown;
@@ -150,7 +151,7 @@ namespace ViewModel
             fileTypesLoader.CurrentText.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             progressBar.ValueChanged += ProgressBar_ValueChanged;
 
-            var tab=WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypesLoader.CurrentText);
+            var tab=WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypesLoader.CurrentText.TextArea);
             if(tab!=null) ChangeTab(tab);
 
             return fileTypesLoader.CurrentText;
@@ -177,7 +178,9 @@ namespace ViewModel
             result.Content = await openPlugin.Perform(parameter, progress);
 
             var text = AddMyControls(action.Path);
-            text.Text = result.Content;
+            
+            text.Text=result.Content;
+            
             
             //            viewData.PublishEditFile(result);
 

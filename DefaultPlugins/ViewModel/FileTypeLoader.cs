@@ -5,6 +5,8 @@ using Extensions.Util;
 using System;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace ViewModel
 {
@@ -13,7 +15,8 @@ namespace ViewModel
         private HighlightingManager manager;
         public static List<FileTypeItem> AllFileTypes { get; set; }= LoadFileTypes();
         public static string CurrentPath { get; set; }=String.Empty;
-        public TextEditor CurrentText { get; private set; }=new TextEditor();
+        public TextEditor CurrentText { get; set; } = new TextEditor();
+        public TextArea CurrentTextArea { get; set; } = new TextEditor().TextArea;
 
         public FileTypeLoader()
         {
@@ -40,6 +43,14 @@ namespace ViewModel
 
 
             CurrentText = new TextEditor();
+            CurrentTextArea = CurrentText.TextArea;
+            CurrentTextArea.MinHeight = 500;
+            CurrentTextArea.MinWidth = 1000;
+
+            //CurrentDocument= CurrentText.Document;
+            CurrentText.IsReadOnly = false;
+           
+ 
             var suggestededDefinition = manager.GetDefinitionByExtension(path);
             if (suggestededDefinition == null)
             {
