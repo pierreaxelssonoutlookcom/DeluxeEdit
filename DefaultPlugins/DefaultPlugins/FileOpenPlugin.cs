@@ -98,12 +98,14 @@ namespace DefaultPlugins
 
         public async Task<List<string>> ReadAllPortion(IProgress<long> progress ) 
         {
-            if (Parameter == null) throw new ArgumentNullException();
+ 
+            var total = new List<string>();
+            try
+            { 
+                           if (Parameter == null) throw new ArgumentNullException();
             if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
 
-            var total = new List<string>();
 
- 
 
             long fileSize = new FileInfo(Parameter.Parameter).Length;
             for (int i = 0; i <= fileSize / SystemConstants.ReadBufferSizeBytes; i++)
@@ -113,9 +115,17 @@ namespace DefaultPlugins
                     total.AddRange(result);
 
             }
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+                if (MýStream != null) MýStream.Close();
+            }
 
-            
-        return total;
+
+
+
+            return total;
         }
         public async Task<List<string>?> ReadPortion(IProgress<long> progress)
         {

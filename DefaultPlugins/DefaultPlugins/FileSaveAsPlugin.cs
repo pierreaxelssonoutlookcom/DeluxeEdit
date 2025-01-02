@@ -9,6 +9,7 @@ using System.IO.MemoryMappedFiles;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CustomFileApiFile;
+using Windows.Storage.Streams;
 
 namespace DefaultPlugins
 {
@@ -96,25 +97,35 @@ namespace DefaultPlugins
         }
         public void WritesAllPortions(IProgress<long> progress)
         {
-            if (Parameter == null) throw new ArgumentNullException();
-
-            if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
-            if (writer == null) { }
-            if (writer == null)
+            try
             {
                 if (Parameter == null) throw new ArgumentNullException();
 
-                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
-                InputStream = mmf.CreateViewStream();
-                writer = Parameter.Encoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, Parameter.Encoding);
+                if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+                if (writer == null) { }
+                if (writer == null)
+                {
+                    if (Parameter == null) throw new ArgumentNullException();
+
+                    using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
+                    InputStream = mmf.CreateViewStream();
+                    writer = Parameter.Encoding == null ? new StreamWriter(InputStream) : new StreamWriter(InputStream, Parameter.Encoding);
+                }
+                for (int i = 0; i < Parameter.InData.Count / SystemConstants.ReadPortionBufferSizeLines; i++)
+                {
+                    var batch = Parameter.InData.Take(SystemConstants.ReadPortionBufferSizeLines).ToList();
+                    WritePortion(batch, progress);
+                }
+                if (Parameter == null) throw new ArgumentNullException();
+                if (!File.Exists(Parameter.Parameter)) throw new FileNotFoundException(Parameter.Parameter);
+
+
             }
-            for (int i = 0; i < Parameter.InData.Count / SystemConstants.ReadPortionBufferSizeLines; i++)
+            finally
             {
-                var batch = Parameter.InData.Take(SystemConstants.ReadPortionBufferSizeLines).ToList();
-                WritePortion(batch, progress);
+                if (writer != null) writer.Close();
+                if (InputStream != null) InputStream.Close();
             }
-
-
 
         }
 

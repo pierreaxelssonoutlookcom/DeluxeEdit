@@ -75,11 +75,7 @@ namespace ViewModel
             var result = FileTypeLoader.GetFileTypeItemByMenu(menuTitle);
             return result;
         }
-        public void MaxímizeTab()
-        {
-            
-        }
-
+     
         public async Task<string> DoCommand(MenuItem item)
         {
             string result = "";
@@ -111,7 +107,7 @@ namespace ViewModel
         }
         public async Task<MyEditFile?>  HexView()
         {
-           var result= new MyEditFile();
+              var result= new MyEditFile();
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
  
             statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
@@ -120,9 +116,11 @@ namespace ViewModel
             var parameter = new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Encoding);
             var hexOutput = await hexPlugin.Perform(parameter, progress);
 
-            result.Path = hexOutput;
+            result.Path = MyEditFiles.Current.Path;
             result.Content = hexOutput;
-            AddMyControls(result.Path);
+            var text=     AddMyControls(result.Path);
+            text.Text = hexOutput;   
+
 
             return result ;
         }

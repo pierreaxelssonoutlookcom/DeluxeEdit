@@ -101,29 +101,40 @@ namespace DefaultPlugins
 
         public async Task<List<string>> ReadAllPortion(IProgress<long> progress)
         {
-            if (Parameter == null) throw new ArgumentNullException();
-            if (File.Exists(Parameter.Parameter) == false) throw new FileNotFoundException(Parameter.Parameter);
-
             var total = new List<string>();
 
-            if (reader == null)
+            try
             {
-                using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
-                MýStream = mmf.CreateViewStream();
 
-                
-                reader = Parameter.Encoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream,Parameter.Encoding);
+                         if (Parameter == null) throw new ArgumentNullException();
+                if (File.Exists(Parameter.Parameter) == false) throw new FileNotFoundException(Parameter.Parameter);
+
+                if (reader == null)
+                {
+                    using var mmf = MemoryMappedFile.CreateFromFile(Parameter.Parameter);
+                    MýStream = mmf.CreateViewStream();
+
+
+                    reader = Parameter.Encoding == null ? reader = new StreamReader(MýStream, true) : new StreamReader(MýStream, Parameter.Encoding);
+                }
+                if (MýStream == null) throw new ArgumentNullException();
+
+                long fileSize = new FileInfo(Parameter.Parameter).Length;
+                for (int i = 0; i <= fileSize / SystemConstants.ReadBufferSizeBytes; i++)
+                {
+                    var result = await ReadPortion(progress);
+                    if (result != null)
+                        total.AddRange(result);
+
+                }
             }
-            if (MýStream == null) throw new ArgumentNullException();
-
-            long fileSize = new FileInfo(Parameter.Parameter).Length;
-            for (int i = 0; i <= fileSize/ SystemConstants.ReadBufferSizeBytes; i++)
+            finally
             {
-                var result = await ReadPortion(progress);
-                if (result != null)
-                    total.AddRange(result);
-
+                if (reader != null) reader.Close();
+                if (MýStream != null) MýStream.Close();
             }
+
+            
             return total;
         }
         public async Task<List<string>?> ReadPortion(IProgress<long> progress)
