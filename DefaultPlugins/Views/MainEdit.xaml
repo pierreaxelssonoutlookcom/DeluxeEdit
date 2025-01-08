@@ -41,7 +41,6 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TabControl Name="TabFiles"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                    <TabItem Header="XXXXXXX" />
                     
                 </TabControl>
             </Grid>

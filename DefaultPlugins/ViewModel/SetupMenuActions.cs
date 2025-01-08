@@ -1,6 +1,5 @@
-﻿using DefaultPlugins.ViewModel.MainActions;
+﻿using DefaultPlugins;
 using Model;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace ViewModel
@@ -12,6 +11,8 @@ namespace ViewModel
         private ProgressBar progressBar;
         private LoadFile loadFile;
         private SaveFile saveFile;
+        private HexView hex;
+        private NewFile newFile;
 
         public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress)
             {
@@ -20,13 +21,16 @@ namespace ViewModel
             this.progressBar=progress;
             this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles);
             this.saveFile = new SaveFile(this.model, this.progressBar);
+            this.hex = new HexView(this.model, this.progressBar, tabControl);
+            newFile = new NewFile(model, tabControl);
+
         }
 
 
         public void SetMenuAction(CustomMenuItem item)
             {
                 if (item !=null && model!=null && item.Plugin is FileNewPlugin)
-                    item.MenuActon = () => model.NewFile();
+                    item.MenuActon = () => newFile.Load();
                 else if (item != null && model != null && item.Plugin is FileOpenPlugin)
                     item.MenuActon = () => loadFile.Load();
                 else if (item != null && model != null && item.Plugin is FileSavePlugin)
@@ -34,7 +38,7 @@ namespace ViewModel
                 else if (item != null && model != null && item.Plugin  is FileSaveAsPlugin)
                     item.MenuActon = () => saveFile.SaveAs();
                 else if (item != null && model != null && item.Plugin is HexPlugin)
-                    item.MenuActon = () => model.HexView();
+                    item.MenuActon = () => hex.Load();
                 
 
             }

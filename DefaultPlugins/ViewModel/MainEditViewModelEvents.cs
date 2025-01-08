@@ -16,7 +16,7 @@ namespace ViewModel
             if (e.Type == EventType.EditFile)
                 await loadFile.Load();
             else if (e.Type == EventType.NewFile)
-                await NewFile();
+                await newFile.Load();
 
 
         }
@@ -68,9 +68,9 @@ namespace ViewModel
                     else if (plugin is FileSaveAsPlugin)
                        await saveFile.SaveAs();
                     else if (plugin is FileNewPlugin)
-                        await NewFile();
+                        await newFile.Load();
                     else if (plugin is HexPlugin)
-                        await HexView();
+                        await hex.Load();
 
 
                 }

@@ -10,16 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Editing;
-using ICSharpCode.AvalonEdit.Highlighting;
-using DefaultPlugins.ViewModel;
-using System.Formats.Tar;
 using System.Windows;
-using System.Windows.Threading;
-using ICSharpCode.AvalonEdit.Document;
-using System.Xml.Linq;
-using System.Windows.Shapes;
-using DefaultPlugins.ViewModel.MainActions;
 
 namespace ViewModel
 {
@@ -28,10 +19,10 @@ namespace ViewModel
         private ProgressBar progressBar;
         private TabControl tabFiles;
         private TextBlock progressText, statusText;
-        private NewFileViewModel newFileViewModel;
+        private NewFile newFile;
         private LoadFile loadFile;
         private SaveFile saveFile;
-        private HexPlugin hexPlugin;
+        private HexView hex;
         private EventData viewData;
       
 
@@ -45,12 +36,12 @@ namespace ViewModel
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
             this.progressText = progressText;
             this.statusText = statusText;
-            newFileViewModel = new NewFileViewModel(tab);
+            newFile = new NewFile(this, tab);
 
             this.loadFile = new LoadFile(this, bar, tab);
             this.saveFile = new SaveFile(this, this.progressBar);
 
-            hexPlugin = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
+            this.hex = new HexView(this, this.progressBar, this.tabFiles);
             viewData = new EventData();
 
             viewData.Subscibe(OnEvent);
@@ -60,20 +51,7 @@ namespace ViewModel
             fileTypesLoader = new FileTypeLoader();
         }
 
-        public async Task<MyEditFile?> NewFile()
-        {
-            var file = newFileViewModel.GetNewFile();
-            MyEditFiles.Add(file);
-            var text=AddMyControls(file.Path);
-            var myTab=WPFUtil.AddOrUpdateTab(file.Header, tabFiles,text);
-            if (myTab!=null) ChangeTab(myTab);
-
-            await Task.Delay(0);
-            return file;
-
-
-
-        }public void SetStatusText(string statusText)
+        public void SetStatusText(string statusText)
         {
             this.statusText.Text = statusText;
             
@@ -113,28 +91,6 @@ namespace ViewModel
 
 
         }
-        public async Task<MyEditFile?>  HexView()
-        {
-              var result= new MyEditFile();
-            if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
- 
-            statusText.Text = $"Hex View:{MyEditFiles.Current.Path}";
-            
-            var progress = new Progress<long>(value => progressBar.Value = value);
-            var parameter = new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Encoding);
-            var hexOutput = await hexPlugin.Perform(parameter, progress);
-
-            result.Path = MyEditFiles.Current.Path;
-            result.Content = hexOutput;
-            result.Area = fileTypesLoader.CurrentArea;
-
-            var text =     AddMyControls(result.Path, "hex:");
-            text.Text = hexOutput;
-            MyEditFiles.Add(result);
-            
-
-            return result ;
-        }
 
         public TextEditor AddMyControls(string path, string? overrideTabNamePrefix = null)
         {
@@ -170,7 +126,7 @@ namespace ViewModel
             tabFiles.SelectedItem=item;
             var header = item != null && item.Header != null ? item.Header.ToString() : String.Empty;
 
-            MyEditFiles.Current = MyEditFiles.Files.First(p => p.Header == header );
+            MyEditFiles.Current = MyEditFiles.Files.FirstOrDefault(p => p.Header == header );
 
         }
     }
