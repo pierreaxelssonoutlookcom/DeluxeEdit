@@ -7,7 +7,8 @@ namespace Model
     {
         public Func<Task<MyEditFile?>>? MenuActon { get; set; }
 
-
+        public FileType? FileType  { get; set; }
+        
 
         public INamedActionPlugin? Plugin { get; set; }= null;
         public Type? MyType { get; set; }

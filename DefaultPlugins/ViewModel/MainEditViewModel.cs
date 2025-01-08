@@ -27,7 +27,6 @@ namespace ViewModel
       
 
         private List<INamedActionPlugin> relevantPlugins;
-        private FileTypeLoader fileTypesLoader;
 
         public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
         {
@@ -40,7 +39,6 @@ namespace ViewModel
 
             this.loadFile = new LoadFile(this, bar, tab);
             this.saveFile = new SaveFile(this, this.progressBar);
-
             this.hex = new HexView(this, this.progressBar, this.tabFiles);
             viewData = new EventData();
 
@@ -48,7 +46,6 @@ namespace ViewModel
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
-            fileTypesLoader = new FileTypeLoader();
         }
 
         public void SetStatusText(string statusText)
@@ -56,10 +53,10 @@ namespace ViewModel
             this.statusText.Text = statusText;
             
         }
-        public FileTypeItem? ExecuteViewAs(string menuTitle)
+        public FileTypeItem? ExecuteViewAs(CustomMenuItem menuItem)
         {
-            var result = FileTypeLoader.GetFileTypeItemByMenu(menuTitle);
-            return result;
+            var type = menuItem.FileType;
+            throw new NotImplementedException();            
         }
      
         public async Task<string> DoCommand(MenuItem item)
@@ -75,11 +72,11 @@ namespace ViewModel
             actions.SetMenuAction(myMenuItem);
             if (myMenuItem.MenuActon != null)
                 await myMenuItem.MenuActon.Invoke();
-            else
+           else
             {
-                string selectedText = fileTypesLoader.CurrentText != null ? fileTypesLoader.CurrentText.SelectedText : String.Empty;
+                string selectedText = loadFile.CurrentText != null ? loadFile.CurrentText.SelectedText : String.Empty;
 
-                var viewasResult = ExecuteViewAs(myMenuItem.Title);
+                var viewasResult = ExecuteViewAs(myMenuItem);
 
                 if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && selectedText.HasContent())
                     result = await myMenuItem.Plugin.Perform(new ActionParameter(selectedText), progress);
@@ -88,11 +85,7 @@ namespace ViewModel
 
             }
             return result;
-
-
         }
-
-
         public void ChangeTab(TabItem item)
         {
             if (item == null) throw new NullReferenceException();
@@ -104,4 +97,3 @@ namespace ViewModel
         }
     }
 }
-

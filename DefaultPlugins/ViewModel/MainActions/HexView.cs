@@ -42,6 +42,9 @@ namespace ViewModel
             result.Content = hexOutput;
     
             var text = AddMyControls(result.Path, "hex:");
+            result.Text = text;
+            result.Area = fileTypeLoader.CurrentArea;
+
             text.Text = hexOutput;
             MyEditFiles.Add(result);
 

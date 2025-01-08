@@ -1,4 +1,5 @@
-﻿using Model;
+﻿
+using Model;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
@@ -59,7 +60,7 @@ namespace ViewModel
         {
 
             var result = FileTypeLoader.AllFileTypes.Select(p => 
-           new CustomMenuItem { Title = p.ToString()} ).ToList(); 
+           new CustomMenuItem { Title = p.ToString(),FileType=p.FileType} ).ToList(); 
             return result;
         }
 

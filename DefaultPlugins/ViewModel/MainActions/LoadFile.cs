@@ -2,14 +2,14 @@
 using System;
 using Extensions;
 using System.Threading.Tasks;
-using ViewModel;
 using Extensions.Util;
 using ICSharpCode.AvalonEdit;
-using System.Formats.Tar;
+ using System.Formats.Tar;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using DefaultPlugins;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace ViewModel
 {
@@ -21,6 +21,8 @@ namespace ViewModel
         private TabControl tabFiles;
         private MainEditViewModel model;
         private ProgressBar progressBar;
+        public TextEditor? CurrentText { get; set; }
+        public TextArea? CurrentArea { get; set; }
 
         public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab)
         {
@@ -40,7 +42,7 @@ namespace ViewModel
 
             model.SetStatusText($" File: {action.Path}");
             var parameter = new ActionParameter(action.Path, action.Encoding);
-
+            
             var progress = new Progress<long>(value => progressBar.Value = value);
 
             var result = new MyEditFile();
@@ -49,10 +51,10 @@ namespace ViewModel
 
             var text = AddMyControls(action.Path);
             result.Area = fileTypeLoader.CurrentArea;
+            result.Text = text;
             text.Text = result.Content;
-
-
-
+            CurrentText = text;
+            CurrentArea = fileTypeLoader.CurrentArea;
             // Application.DoEvents();
             MyEditFiles.Add(result);
 
