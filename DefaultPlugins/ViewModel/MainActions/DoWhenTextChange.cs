@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Extensions;
+using Model;
 using System;
 
 namespace ViewModel
@@ -6,6 +7,15 @@ namespace ViewModel
     public class DoWhenTextChange
     {
         public void Load()
+        {
+            InterlSetHeader(false);
+        }
+        public void ResetChange()
+        {
+            InterlSetHeader(true);
+        }
+
+        private void InterlSetHeader(bool resetChange)
         {
             string? headerString;
 
@@ -19,19 +29,25 @@ namespace ViewModel
                     if (header != null)
                     {
                         headerString = header.ToString();
-
-                        if (headerString != null && headerString.EndsWith("*") == false)
+                        if (headerString!=null)
                         {
-                            headerString = String.Concat(headerString, "*");
-                            tab.Header = headerString;
+                            if (resetChange==false &&  headerString.EndsWith("*") == false)
+                            {
+                                headerString = String.Concat(headerString, "*");
+                                tab.Header = headerString;
+                            }
+                            else if (resetChange  && headerString.EndsWith("*"))
+                            {
+                                headerString = headerString.Trim('*');
+                                tab.Header = headerString;
+
+                            }
+
+
                         }
                     }
                 }
             }
-        }
-        public void ResetChange()
-        {
-            throw new NotImplementedException();
         }
         }
 
