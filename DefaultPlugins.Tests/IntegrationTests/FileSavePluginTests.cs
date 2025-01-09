@@ -8,30 +8,25 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
 {
     public class FileSavePluginTests
     {
-        public static string TempDir = "C:/temp";
-        public static string TestFile = $"{TempDir}/testfile__{Guid.NewGuid()}.txt";
-        public static string TestFile2 = $"{TempDir}/testfile2__{Guid.NewGuid()}.txt";
+        public static string TestFile = "TestFiles/TextFilesave.txt";
+
 
         [Fact]
-        public async void FileSavePluginTest()
+        public async Task FileSavePluginTest()
         {
             var plugin = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
 
-            var expected = "ninjaåäÖ\r\n";
-            File.AppendAllLines(TestFile,new List<string> { "ninjaåäÖ" },  Encoding.UTF8);
+            var expected = "ninjaåäÖ";
             await plugin.Perform(
 
                new ActionParameter(TestFile, "ninjaåäÖ", Encoding.UTF8)
-              , null );
-
-            File.Copy(TestFile, TestFile2, true);
+              , new Progress<long>() );
 
 
 
-            var actual =File.ReadAllText(TestFile2, Encoding.UTF8);
 
-            File.Delete(TestFile);
-            File.Delete(TestFile2);
+            var actual =File.ReadAllText(TestFile, Encoding.UTF8);
+
             Assert.Equal(expected , actual);
 
   
@@ -42,22 +37,15 @@ namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
         {
             var plugin = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
 
-            var expected = "ninjaåäÖ\r\n";
-            File.AppendAllLines(TestFile, new List<string> { "ninjaåäÖ" }, Encoding.UTF8);
-
+            var expected = "ninjaåäÖ";
+            
             await plugin.Perform(
 
                new ActionParameter(TestFile, "ninjaåäÖ", Encoding.UTF8)
-              , null);
+              , new Progress<long>());
 
-            File.Copy(TestFile, TestFile2, true);
-
-
-
-            var actual = File.ReadAllText(TestFile2, Encoding.UTF8);
-
-            File.Delete(TestFile);
-            File.Delete(TestFile2);
+            var actual = File.ReadAllText(TestFile, Encoding.UTF8);
+            
             Assert.Equal(expected, actual);
 
 
