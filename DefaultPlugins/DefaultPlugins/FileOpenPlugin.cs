@@ -39,14 +39,14 @@ namespace DefaultPlugins
         public string Path { get; set; } = "";
         public Type Id { get; set; } = typeof(FileOpenPlugin);
 
-
+        public static string? OldDirectory {  get; set; }     
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
-            string oldDir = @"c:\";
 
             //if (Parameter != null) oldDir = new DirectoryInfo(Parameter.Parameter).FullName;
             var dialog = new DeluxeFileDialog();
-            var result = dialog.ShowFileOpenDialog(oldDir);
+            var result = dialog.ShowFileOpenDialog(OldDirectory);
+            if (result!=null) OldDirectory =  System.IO.Path.GetDirectoryName(result.Path);
             return result;
         }
 

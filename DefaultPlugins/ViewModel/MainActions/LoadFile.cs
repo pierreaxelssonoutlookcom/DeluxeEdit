@@ -60,7 +60,7 @@ namespace ViewModel
             CurrentArea = fileTypeLoader.CurrentArea;
             result.Tab = items.Item2;
             // Application.DoEvents();
-            MyEditFiles.Add(result);
+             MyEditFiles.Add(result);
 
             return result;
         }
