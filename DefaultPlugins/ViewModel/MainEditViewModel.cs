@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
 using System.Windows;
+using DefaultPlugins.ViewModel.MainActions;
 
 namespace ViewModel
 {
@@ -18,30 +19,32 @@ namespace ViewModel
     {
         private ProgressBar progressBar;
         private TabControl tabFiles;
-        private TextBlock progressText, statusText;
+        private TextBlock statusText;
         private NewFile newFile;
         private DoWhenTextChange textChange;
         private LoadFile loadFile;
         private SaveFile saveFile;
         private HexView hex;
-  //      private EventData viewData;
-      
+        private ViewAs viewAsS;
+
+        //      private EventData viewData;
+
 
         private List<INamedActionPlugin> relevantPlugins;
 
-        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock progressText, TextBlock statusText)
+        public MainEditViewModel(TabControl tab, ProgressBar bar, MenuItem viewAs,TextBlock statusText)
         {
             this.progressBar = bar;
             tabFiles = tab;
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
-            this.progressText = progressText;
             this.statusText = statusText;
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
             this.loadFile = new LoadFile(this, bar, tab);
             this.saveFile = new SaveFile(this, this.progressBar);
             this.hex = new HexView(this, this.progressBar, this.tabFiles);
-            //viewData = new EventData();
+            this.viewAsS = new ViewAs(viewAs);
+            this.viewAsS.Load();
 
 //            viewData.Subscibe(OnEvent);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())

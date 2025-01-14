@@ -27,7 +27,7 @@ namespace ViewModel
             //   if (!lastFileLength.HasValue) return;
 
             var percent = e.NewValue;
-            progressText.Text = $"{percent}%%";
+            //progressText.Text = $"{percent}%%";
 
         }   
         private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)

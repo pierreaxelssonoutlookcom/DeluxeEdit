@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using ViewModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Views
 {
@@ -15,7 +16,7 @@ namespace Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, Progress, ProgressText, StatusText);
+            editViewModel = new MainEditViewModel(TabFiles, Progress, viewAs , StatusText);
                 
 
         }
@@ -52,6 +53,11 @@ namespace Views
 
         }
 
+        private void viewAs_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+        }
     }
 
 }

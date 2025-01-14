@@ -21,8 +21,7 @@ namespace ViewModel
         public static string CurrentPath { get; set; }=String.Empty;
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
-    //    public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
-        public IHighlightingDefinition? CurrentDefinition { get; private set; }
+        public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
 
         public static FileTypeItem? GetFileTypeItemByMenu(string menuTitle)
         {
@@ -43,12 +42,11 @@ namespace ViewModel
             var manager = HighlightingManager.Instance;
             
 
-//            if (path.HasContent() )
- //               CurrentFileItem=  AllFileTypes.FirstOrDefault(p =>  path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
+            if (path.HasContent() )
+                CurrentFileItem=  AllFileTypes.FirstOrDefault(p =>  path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
 
-           string extension = Path.GetExtension(path);
             
-            CurrentDefinition = manager.GetDefinitionByExtension(extension);
+           if (CurrentFileItem!=null) CurrentFileItem.HilightDefinition= manager.GetDefinitionByExtension(new FileInfo(path).Extension  ) ;
             CurrentText = new TextEditor();
 
           CurrentArea = CurrentText.TextArea;
@@ -60,8 +58,8 @@ namespace ViewModel
        
 
 
-            if (CurrentDefinition != null) 
-                CurrentText.SyntaxHighlighting = CurrentDefinition;
+            if (CurrentFileItem!=null && CurrentFileItem.HilightDefinition  != null) 
+                CurrentText.SyntaxHighlighting = CurrentFileItem.HilightDefinition;
 
 
             CurrentPath = path; 
@@ -70,16 +68,15 @@ namespace ViewModel
          
         public static  List<FileTypeItem> LoadFileTypes()
         {
-            var manager = new HighlightingManager();
 
             var names = Enum.GetNames(typeof(FileType));
             
             var result=names.Select(p => Enum.Parse<FileType>(p)).Select(p =>
-            new FileTypeItem { 
-                FileExtension = WPFUtil.FileTypeToExtension(p), 
-                FileType = p, 
-                Definition=manager.GetDefinitionByExtension(WPFUtil.FileTypeToExtension(p)) }
-             ).ToList();
+            new FileTypeItem
+            {
+                FileExtension = WPFUtil.FileTypeToExtension(p),
+                FileType = p
+            }).ToList();
             return result;
             
 

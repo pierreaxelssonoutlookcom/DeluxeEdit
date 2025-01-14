@@ -24,15 +24,14 @@ namespace ViewModel
             foreach (var item in result)
             {
                 item.MenuItems.AddRange(GetMenuItemsForHeader(item.Header, plugins));
-                if (item.Header== "View") item.MenuItems.AddRange(GetMenuItemsForFileTypes());
-
+ 
             }
 
 
 
             return result;
         }
-
+         
 
         public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
         {
@@ -40,8 +39,7 @@ namespace ViewModel
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
                 .Select(p => p.Configuration.ShowInMenu).Distinct()
             .Select(p => new CustomMenu { Header = p }).ToList();
-            result.Add( new CustomMenu { Header = "View" });
-
+   
             return result;
         }
 
@@ -56,13 +54,7 @@ namespace ViewModel
 
             return result;
         }
-       public List<CustomMenuItem> GetMenuItemsForFileTypes()
-        {
-
-            var result = FileTypeLoader.AllFileTypes.Select(p => 
-           new CustomMenuItem { Title = p.ToString(),FileType=p.FileType} ).ToList(); 
-            return result;
-        }
+        
 
 
         public void ShowMenu(Menu mainMenu, List<CustomMenu> customMenus)

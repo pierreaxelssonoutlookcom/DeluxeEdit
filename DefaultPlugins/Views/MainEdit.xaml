@@ -11,15 +11,20 @@
 
         <StatusBar VerticalAlignment="Bottom"  DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Name="StatusText"> Status::</TextBlock>
+                <TextBlock></TextBlock>
             </StatusBarItem>
             <StatusBarItem>
+                <TextBlock Name="StatusText">Status:</TextBlock>
+            </StatusBarItem>
+            <!--
+            <StatusBarItem>
                 <TextBlock> Progress::</TextBlock>
+   
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock Name="ProgressText">:</TextBlock>
             </StatusBarItem>
-
+-->
 
         </StatusBar>
 
@@ -30,6 +35,11 @@
                     <MenuItem Name="ShowPlugins" Header="Show Plugins" Click="ShowPlugins_Click"    />
 
                 </MenuItem>
+                <MenuItem Header="View">
+                    <MenuItem Name="viewAs" Header="View As" Click="viewAs_Click" />
+
+                </MenuItem>
+                  
 
 
             </Menu>
