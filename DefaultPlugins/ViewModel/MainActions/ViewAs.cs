@@ -29,12 +29,8 @@ namespace DefaultPlugins.ViewModel.MainActions
         {
             var menuItemTypes = GetMenuItemsForFileTypes();
             menuItemTypes.ForEach(p => root.Items.Add(p.Title));
-            CustomMenuItem? result= null;
-            var output = System.Convert.ChangeType(root, typeof(CustomMenuItem));
-            result=output != null && output is CustomMenuItem  ? output as CustomMenuItem: null;
-            if (result == null) throw new NullReferenceException();
-
-            return result;
+            CustomMenuItem result= new CustomMenuItem(root);
+           return result;
             /*
             foreach(var item in  menuItemTypes)
             {

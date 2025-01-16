@@ -12,13 +12,31 @@ namespace Model
         public INamedActionPlugin? Plugin { get; set; }= null;
         public Type? MyType { get; set; }
 
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = string.Empty;
         public ActionParameter Parameter { get; set; } = new ActionParameter();
 
         public CustomMenuItem(): base()
         {
             
         }
+        public CustomMenuItem(MenuItem copy): base()
+        {
+            var  header = copy.Header;
+            if (header != null)
+            {
+                string? headerString  = header.ToString();
+                if (headerString != null)
+                    Title = headerString; 
+            }
+            foreach (var item in copy.Items) 
+                Items.Add(item);    
+
+
+            
+
+        }
+
+
     }
 
 }
