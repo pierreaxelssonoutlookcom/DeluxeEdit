@@ -21,7 +21,9 @@ namespace DefaultPlugins.ViewModel.MainActions
         public List<CustomMenuItem> GetMenuItemsForFileTypes()
         {
             var result = FileTypeLoader.AllFileTypes.Select(p =>
-            new CustomMenuItem { Title = p.ToString(), FileType = p.FileType, IsCheckable = true, IsChecked=false, CheckBox=new CheckBox() }).ToList();
+            new CustomMenuItem { Title = p.ToString(), FileType = p.FileType, IsCheckable = true, IsChecked=false, CheckBox=new CheckBox()}).ToList();
+            foreach (var item in result)
+                if (item.CheckBox != null) item.CheckBox.Name = item.FileType.ToString();    
             return result;
         }
 

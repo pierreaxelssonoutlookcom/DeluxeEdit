@@ -1,4 +1,5 @@
 ﻿using DefaultPlugins;
+using DefaultPlugins.ViewModel.MainActions;
 using Model;
 using System.Windows.Controls;
 
@@ -14,14 +15,14 @@ namespace ViewModel
         private HexView hex;
         private NewFile newFile;
 
-        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress)
+        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, ViewAs viewAsModel)
             {
                 this.model=model;
             this.tabFiles=tabControl;
             this.progressBar=progress;
-            this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles);
+            this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles, viewAsModel);
             this.saveFile = new SaveFile(this.model, this.progressBar);
-            this.hex = new HexView(this.model, this.progressBar, tabControl);
+            this.hex = new HexView(this.model, this.progressBar, tabControl, viewAsModel);
             newFile = new NewFile(model, tabControl);
 
         }
