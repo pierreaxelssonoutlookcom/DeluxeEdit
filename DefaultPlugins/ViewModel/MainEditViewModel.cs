@@ -28,7 +28,8 @@ namespace ViewModel
         private SaveFile saveFile;
         private HexView hex;
         private ViewAs viewAsModel;
-        
+        private MenuItem viewAsRoot;
+
         //      private EventData viewData;
 
 
@@ -38,8 +39,8 @@ namespace ViewModel
         {
             this.progressBar = bar;
 
-            this.viewAsModel = new ViewAs(this.progressBar);
-
+            this.viewAsModel = new ViewAs(viewAs,this.progressBar);
+            viewAsRoot = viewAs;
             tabFiles = tab;
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
             this.statusText = statusText;
@@ -72,7 +73,7 @@ namespace ViewModel
             var myMenuItem = MenuBuilder.MainMenu.SelectMany(p => p.MenuItems)
                  .Single(p => p != null && p.Title!=null && p.Title ==header);
            
-            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsModel);
+            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot );
             actions.SetMenuAction(myMenuItem);
             if (myMenuItem.MenuActon != null)
                 await myMenuItem.MenuActon.Invoke();

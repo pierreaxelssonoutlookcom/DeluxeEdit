@@ -40,13 +40,11 @@
                     <MenuItem Name="ShowPlugins" Header="Show Plugins" Click="ShowPlugins_Click"    />
 
                 </MenuItem>
-                
                 <MenuItem Header="View">
                     <MenuItem Name="viewAs" Header="View As">
                     </MenuItem>
-
                 </MenuItem>
-                  
+
 
 
             </Menu>

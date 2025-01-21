@@ -14,18 +14,19 @@ namespace ViewModel
         private SaveFile saveFile;
         private HexView hex;
         private NewFile newFile;
-        private ViewAs viewAs;
+        private ViewAs viewAsModel;
 
-        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, ViewAs viewAsModel)
+        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, MenuItem viewAsRoot)
             {
                 this.model=model;
             this.tabFiles=tabControl;
             this.progressBar=progress;
+            this.viewAsModel = new ViewAs(viewAsRoot, progressBar);
+
             this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles, viewAsModel);
             this.saveFile = new SaveFile(this.model, this.progressBar);
             this.hex = new HexView(this.model, this.progressBar, tabControl, viewAsModel);
             newFile = new NewFile(model, tabControl);
-            this.viewAs = new ViewAs(progressBar);
         }
 
 
@@ -42,7 +43,7 @@ namespace ViewModel
             else if (item != null && model != null && item.Plugin is HexPlugin)
                 item.MenuActon = () => hex.Load();
             else if (item != null && model != null && item.Plugin is ViewAsPlugin)
-                item.MenuActon = () => viewAs.Load();
+                item.MenuActon = () => viewAsModel.Load();
 
 
         }

@@ -41,7 +41,7 @@ namespace DefaultPlugins
          public List<CustomMenuItem> GetSubMenuItemsForFileTypes()
         {
             var result = fileTypeLoader.GetFileTypes().Select(p =>
-            new CustomMenuItem { Title = p.ToString(), FileType = p.FileType, IsCheckable = true, IsChecked = false, Plugin=this }).ToList();
+            new CustomMenuItem { Name=p.FileType.ToString(),  Title = p.ToString(), FileType = p.FileType, IsCheckable = true, IsChecked = false, Plugin=this }).ToList();
             return result;
         }
 

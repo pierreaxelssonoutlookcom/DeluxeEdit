@@ -13,14 +13,16 @@ namespace DefaultPlugins.ViewModel.MainActions
     public class ViewAs
     {
         private ProgressBar progressBar;
-        private ViewAsPlugin viewAsPlugin;
+        private MenuItem root;
+        private ViewAsPlugin? plugin;
         public string SelectedPath { get; set; }=String.Empty;
-        public ViewAs(ProgressBar progressBar)
+        public ViewAs(MenuItem menu, ProgressBar progressBar)
         {
             this.progressBar= progressBar;
-            //this.root = menu;
+            this.root = menu;
             //          a  this.fileTypeLoader=fileTypeLoader;
-            this.viewAsPlugin=AllPlugins.InvokePlugin<ViewAsPlugin>(PluginType.ViewAs);
+            plugin  = AllPlugins.InvokePlugin<ViewAsPlugin>(PluginType.ViewAs); ;
+            
         }
         public async void SetSelectedPath(string path)
         {
@@ -29,16 +31,22 @@ namespace DefaultPlugins.ViewModel.MainActions
         }
         public List<CustomMenuItem> GetSubMenuItemsForFileTypes()
         {
-            return viewAsPlugin.GetSubMenuItemsForFileTypes();
-         }
+            if (plugin == null) throw new NullReferenceException();
+            var result= plugin.GetSubMenuItemsForFileTypes();
+            result.ForEach(p => root.Items.Add(p.Title));
+            //        result.ForEach(p => root.Items.Add(p.Title));
+            return result;
+        }
 
         public async Task<MyEditFile?> Load(  )
-        {  
+        {
+            if (plugin == null) throw new NullReferenceException();
+
             MyEditFile? result = null;
        
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(SelectedPath);
-            await viewAsPlugin.Perform(parameter, progress);
+            await plugin.Perform(parameter, progress);
             return result;
         }
 

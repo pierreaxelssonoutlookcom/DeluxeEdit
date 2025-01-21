@@ -52,9 +52,9 @@ namespace DefaultPlugins
              .SingleOrDefault(p => p.ToString() == type);
             if (matchedType != null)
             {
-                object? objecctResult = Activator.CreateInstance(matchedType);
-                if (objecctResult != null && objecctResult is INamedActionPlugin)
-                    result = objecctResult as T;
+                object? objectResult = Activator.CreateInstance(matchedType);
+                if (objectResult != null && objectResult is INamedActionPlugin)
+                    result = objectResult as T;
             }
             return result;
             ;

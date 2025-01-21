@@ -7,9 +7,8 @@ using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
 using Extensions.Util;
-using System.Reflection.Metadata;
-using System;
 using DefaultPlugins.ViewModel.MainActions;
+using System;
 
 namespace ViewModel
 {
@@ -31,12 +30,12 @@ namespace ViewModel
             if (menuExist == false)
             {
                 var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-                var menu = GetMenuHeaders(plugins);
+                    var menu = GetMenuHeaders(plugins);
 
                 foreach (var item in menu)
                 {
                     item.MenuItems.AddRange(GetMenuItemsForHeader(item.Header, plugins));
-                    if (item.Header == "View") item.MenuItems.AddRange(LoadViewAs());
+        //            if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.GetSubMenuItemsForFileTypes());
                 }
 
                 
@@ -78,16 +77,17 @@ namespace ViewModel
         
 
 
-        public void ShowMenu(Menu mainMenu, List<CustomMenu> customMenus)
+        public void ShowMenu(Menu mainMenu)
         {
             BuildAndLoadMenu();
+
             if (mainMenu == null) throw new ArgumentNullException();
 
-            foreach (var item in customMenus)
+            foreach (var item in MainMenu)
             {
                 int? index = null;
                 if (mainMenu != null)
-                    index = -WPFUtil.IndexOfText(mainMenu.Items, item.Header);
+                    index = WPFUtil.IndexOfText(mainMenu.Items, item.Header);
 
                 int intindex = int.MinValue;
                 if (index == null && mainMenu != null)
@@ -113,10 +113,20 @@ namespace ViewModel
 
 
 
-            
+
 
 
         }
 
+
+
+
+
+
+
+
+
     }
+
 }
+

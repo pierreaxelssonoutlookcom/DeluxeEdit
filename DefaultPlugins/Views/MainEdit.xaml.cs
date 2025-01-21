@@ -25,9 +25,9 @@ namespace Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             
-            var builder = new MenuBuilder(new ViewAs(Progress ));
+            var builder = new MenuBuilder(new ViewAs(viewAs, Progress ));
             
-            builder.ShowMenu(this.MainMenu, MenuBuilder.MainMenu);
+            builder.ShowMenu(this.MainMenu);
 
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
