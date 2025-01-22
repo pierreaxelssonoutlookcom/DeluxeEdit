@@ -16,7 +16,7 @@ namespace Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, Progress, StatusText, viewAsCombo);
+            editViewModel = new MainEditViewModel(TabFiles, Progress, StatusText, viewAs);
         }       
 
                                                                 

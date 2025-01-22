@@ -20,8 +20,7 @@ namespace ViewModel
     public partial class MainEditViewModel
     {
         private ProgressBar progressBar;
-        private ComboBox viewAsCombo;
-        private TabControl tabFiles;
+      private TabControl tabFiles;
         private TextBlock statusText;
         private NewFile newFile;
         private DoWhenTextChange textChange;
@@ -35,12 +34,13 @@ namespace ViewModel
 
 
         private List<INamedActionPlugin> relevantPlugins;
+        private MenuItem viewAsRoot;
 
-        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock statusText, ComboBox viewAsCombo)
+        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock statusText, MenuItem viewAsRoot)
         {
-            this.progressBar = bar;
-            this.viewAsCombo= viewAsCombo;
-            this.viewAsModel = new ViewAs(this.progressBar, viewAsCombo);
+            this.viewAsRoot = viewAsRoot;
+;            this.progressBar = bar;
+            this.viewAsModel = new ViewAs(this.progressBar, viewAsRoot);
             
             tabFiles = tab;
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
@@ -73,7 +73,7 @@ namespace ViewModel
             var myMenuItem = MenuBuilder.MainMenu.SelectMany(p => p.MenuItems)
                  .Single(p => p != null && p.Title!=null && p.Title ==header);
            
-            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsCombo);
+            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot);
             actions.SetMenuAction(myMenuItem);
             if (myMenuItem.MenuActon != null)
                 await myMenuItem.MenuActon.Invoke();

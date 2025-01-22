@@ -11,7 +11,7 @@ namespace Model
         public string AsPrinted { get { return ToString(); } }
         public override string ToString()
         {
-            return $"As {FileType} ({FileExtension}";
+            return $"As {FileType} ({FileExtension})";
         }
 
     }

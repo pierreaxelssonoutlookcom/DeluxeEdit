@@ -40,10 +40,7 @@
 
                 <MenuItem Header="View">
                     <MenuItem Name="viewAs" Header="View As">
-                        <ComboBox Name="viewAsCombo">
-                            <ComboBoxItem Content="rad 1" />
-                            <ComboBoxItem Content="rad 2" />
-                        </ComboBox>
+                       
                     </MenuItem>
                 </MenuItem>
 

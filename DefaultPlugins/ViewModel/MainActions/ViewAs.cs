@@ -13,36 +13,23 @@ namespace DefaultPlugins.ViewModel.MainActions
     public class ViewAs
     {
         private ProgressBar progressBar;
-        private ComboBox viewAsCombo;
+        private MenuItem root;
 
-        //    private MenuItem root;
         private ViewAsPlugin plugin;
         public string SelectedPath { get; set; }=String.Empty;
-        public ViewAs(ProgressBar progressBar, ComboBox viewAsCombo)
+        public ViewAs(ProgressBar progressBar, MenuItem menu)
         {
             this.progressBar= progressBar;
-            this.viewAsCombo= viewAsCombo;
-          //  this.root = menu;
-            //          a  this.fileTypeLoader=fileTypeLoader;
+           this.root = menu;
             plugin  = AllPlugins.InvokePlugin<ViewAsPlugin>(PluginType.ViewAs); ;
-            LoadFileTypes();
         }
         public async void SetSelectedPath(string path)
         {
             SelectedPath= path; 
             await Load();
         }
-        
-       
-        public void  LoadFileTypes()
-        {
-            viewAsCombo.Items.Clear();
-            viewAsCombo.ItemsSource= plugin.GetFileTypes();
-            viewAsCombo.DisplayMemberPath = "AsPrinted";
-            //      result.ForEach(p => root.Items.Add(p));
-            //        result.ForEach(p => root.Items.Add(p.Title));
-            
-        }
+
+
 
         public async Task<MyEditFile?> Load(  )
         {
@@ -52,12 +39,14 @@ namespace DefaultPlugins.ViewModel.MainActions
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(SelectedPath);
             await plugin.Perform(parameter, progress);
-            if (plugin.CurrentFileItem!=null ) viewAsCombo.SelectedItem= plugin.CurrentFileItem;
-            return result;
-        }
+            string headerString = "View ";
+            if (plugin.CurrentFileItem != null) headerString=String.Concat(headerString, plugin.CurrentFileItem.ToString());
+            root.Header = headerString; 
+
+    return result;                
+    }
 
        
-
         
     }
 }
