@@ -24,8 +24,8 @@ namespace DefaultPlugins
         public ConfigurationOptions Configuration { get; set; } = new ConfigurationOptions();
         public string Path { get; set; } = "";
         public string ClassName { get; set; } = "";
-        public FileTypeItem? CurrentFileItem { get { return fileTypeLoader.CurrentFileItem; } }
-        public ComboBox? ComboForViewAs{ get;set; }
+        public FileTypeItem? CurrentFileItem { get; set; }
+ //       public ComboBox? ComboForViewAs{ get;set; }
         public ViewAsPlugin()
         {
             fileTypeLoader = new FileTypeLoader();
@@ -36,8 +36,6 @@ namespace DefaultPlugins
 
         public void SetConfig()
         {
-            Configuration.ShowInMenu = "View";
-            Configuration.ShowInMenuItem = "View As";
 
         }
 
@@ -51,40 +49,17 @@ namespace DefaultPlugins
         private async Task<string> InternalDoIt()
         {
             var result = String.Empty;
-            SetSelectedPath(Parameter.Parameter);
+            LoadCurrent(Parameter.Parameter);
             await Task.Delay(0);
         return result;
 
         }
-        public void SetSelectedPath(string path)
+        public void LoadCurrent(string path)
         {
 
-            var MenuItemsForFileTypes=GetSubMenuItemsForFileTypes();
-            MenuItemsForFileTypes.ForEach(p => p.IsChecked = false);
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
             fileTypeLoader.LoadCurrent(path);
-            var withTypes = MenuItemsForFileTypes.Where(p => p.FileType != null);
-            if (fileTypeLoader.CurrentFileItem != null)
-            {
-
-                var match = withTypes.First(p => p.FileType == fileTypeLoader.CurrentFileItem.FileType);
-                match.IsChecked = true;
-            }
-
+            CurrentFileItem = fileTypeLoader.CurrentFileItem;
 
            
 
