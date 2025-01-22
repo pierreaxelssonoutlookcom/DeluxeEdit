@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ViewModel;
 using System.Linq;
 using DefaultPlugins.DefaultPlugins.PluginHelpers;
+using System.Windows.Controls;
 
 namespace DefaultPlugins
 {
@@ -23,7 +24,8 @@ namespace DefaultPlugins
         public ConfigurationOptions Configuration { get; set; } = new ConfigurationOptions();
         public string Path { get; set; } = "";
         public string ClassName { get; set; } = "";
-        public FileTypeItem? CurrentFileItem {  get { return fileTypeLoader.CurrentFileItem; } }
+        public FileTypeItem? CurrentFileItem { get { return fileTypeLoader.CurrentFileItem; } }
+        public ComboBox? ComboForViewAs{ get;set; }
         public ViewAsPlugin()
         {
             fileTypeLoader = new FileTypeLoader();
@@ -84,8 +86,12 @@ namespace DefaultPlugins
             }
 
 
+           
 
-
+        }
+        public List<FileTypeItem> GetFileTypes()
+        { 
+            return fileTypeLoader.GetFileTypes(); 
         }
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progresss)
         {
@@ -95,7 +101,7 @@ namespace DefaultPlugins
             Parameter = parameter;
 
             return await InternalDoIt();
-             }
+        }
         public async Task<IEnumerable<string>> Perform(IProgress<long> progresss)
         {
             if (Parameter == null) throw new ArgumentNullException();

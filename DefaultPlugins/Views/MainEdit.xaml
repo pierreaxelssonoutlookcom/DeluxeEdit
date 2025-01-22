@@ -33,20 +33,20 @@
         <ListBox VerticalAlignment="Top" HorizontalAlignment="Left">
             <Menu Name="MainMenu">
              
-                <MenuItem Header="File">
-                    
-               </MenuItem>
                 <MenuItem Header="Plugins">
                     <MenuItem Name="ShowPlugins" Header="Show Plugins" Click="ShowPlugins_Click"    />
 
                 </MenuItem>
-<!--
-                                <MenuItem Header="View">
+
+                <MenuItem Header="View">
                     <MenuItem Name="viewAs" Header="View As">
+                        <ComboBox Name="viewAsCombo">
+                            <ComboBoxItem Content="rad 1" />
+                            <ComboBoxItem Content="rad 2" />
+                        </ComboBox>
                     </MenuItem>
                 </MenuItem>
 
-                -->
 
 
             </Menu>

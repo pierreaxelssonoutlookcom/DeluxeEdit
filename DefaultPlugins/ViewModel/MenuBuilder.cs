@@ -14,38 +14,32 @@ namespace ViewModel
 {
     public class MenuBuilder
     {
-        public MenuBuilder(ViewAs viewAsModel )
+            public MenuBuilder( )
         {
-            this.viewAsModel=viewAsModel;
 
 
         }
-        public static List<CustomMenu> MainMenu=new List<CustomMenu>();
-        private ViewAs viewAsModel;
+        public static List<CustomMenu> MainMenu = BuildAndLoadMenu();
 
-        public void  BuildAndLoadMenu()
+        public  static List<CustomMenu> BuildAndLoadMenu()
         {
-
-            bool menuExist = MainMenu.Count > 0;
-            if (menuExist == false)
-            {
                 var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
                     var menu = GetMenuHeaders(plugins);
 
                 foreach (var item in menu)
                 {
                     item.MenuItems.AddRange(GetMenuItemsForHeader(item.Header, plugins));
-                    if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.GetSubMenuItemsForFileTypes());
+                  //  if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.Load());
                 }
-
+//                viewAsModel.loadFileTypes();
                 
-                MainMenu = menu;
+                return menu;
 
-            }
         }
+        
          
 
-        public List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
+        public static  List<CustomMenu> GetMenuHeaders(IEnumerable<INamedActionPlugin> plugins)
         {
 
             var result = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent())
@@ -54,16 +48,12 @@ namespace ViewModel
    
             return result;
         }
-        public List<CustomMenuItem> LoadViewAs()
-        {
-            return viewAsModel.GetSubMenuItemsForFileTypes(); ;
-        }
+ 
 
 
 
 
-
-        public List<CustomMenuItem> GetMenuItemsForHeader(string header, IEnumerable<INamedActionPlugin> plugins)
+        public  static List<CustomMenuItem> GetMenuItemsForHeader(string header, IEnumerable<INamedActionPlugin> plugins)
         {
             var withMenu = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
             var myItems = withMenu.Where(p => p.Configuration.ShowInMenu == header).ToList();
@@ -79,7 +69,6 @@ namespace ViewModel
 
         public void ShowMenu(Menu mainMenu)
         {
-            BuildAndLoadMenu();
 
             if (mainMenu == null) throw new ArgumentNullException();
 
