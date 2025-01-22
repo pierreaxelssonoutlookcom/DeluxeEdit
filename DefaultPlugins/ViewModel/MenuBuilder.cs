@@ -35,7 +35,7 @@ namespace ViewModel
                 foreach (var item in menu)
                 {
                     item.MenuItems.AddRange(GetMenuItemsForHeader(item.Header, plugins));
-        //            if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.GetSubMenuItemsForFileTypes());
+                    if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.GetSubMenuItemsForFileTypes());
                 }
 
                 

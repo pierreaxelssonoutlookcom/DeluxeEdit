@@ -23,6 +23,7 @@ namespace DefaultPlugins
         public ConfigurationOptions Configuration { get; set; } = new ConfigurationOptions();
         public string Path { get; set; } = "";
         public string ClassName { get; set; } = "";
+        public FileTypeItem? CurrentFileItem {  get { return fileTypeLoader.CurrentFileItem; } }
         public ViewAsPlugin()
         {
             fileTypeLoader = new FileTypeLoader();
@@ -55,7 +56,24 @@ namespace DefaultPlugins
         }
         public void SetSelectedPath(string path)
         {
+
             var MenuItemsForFileTypes=GetSubMenuItemsForFileTypes();
+            MenuItemsForFileTypes.ForEach(p => p.IsChecked = false);
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             fileTypeLoader.LoadCurrent(path);
             var withTypes = MenuItemsForFileTypes.Where(p => p.FileType != null);
             if (fileTypeLoader.CurrentFileItem != null)

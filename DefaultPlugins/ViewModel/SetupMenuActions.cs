@@ -16,12 +16,12 @@ namespace ViewModel
         private NewFile newFile;
         private ViewAs viewAsModel;
 
-        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, MenuItem viewAsRoot)
+        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress)
             {
                 this.model=model;
             this.tabFiles=tabControl;
             this.progressBar=progress;
-            this.viewAsModel = new ViewAs(viewAsRoot, progressBar);
+            this.viewAsModel = new ViewAs(progressBar);
 
             this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles, viewAsModel);
             this.saveFile = new SaveFile(this.model, this.progressBar);

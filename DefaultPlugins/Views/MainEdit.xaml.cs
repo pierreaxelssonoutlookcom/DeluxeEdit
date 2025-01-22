@@ -16,7 +16,7 @@ namespace Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, Progress, viewAs, StatusText);
+            editViewModel = new MainEditViewModel(TabFiles, Progress, StatusText);
         }       
 
                                                                 
@@ -25,7 +25,7 @@ namespace Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             
-            var builder = new MenuBuilder(new ViewAs(viewAs, Progress ));
+            var builder = new MenuBuilder(new ViewAs(Progress ));
             
             builder.ShowMenu(this.MainMenu);
 

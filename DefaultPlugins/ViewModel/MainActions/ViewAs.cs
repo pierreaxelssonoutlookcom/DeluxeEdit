@@ -13,13 +13,13 @@ namespace DefaultPlugins.ViewModel.MainActions
     public class ViewAs
     {
         private ProgressBar progressBar;
-        private MenuItem root;
-        private ViewAsPlugin? plugin;
+    //    private MenuItem root;
+        private ViewAsPlugin plugin;
         public string SelectedPath { get; set; }=String.Empty;
-        public ViewAs(MenuItem menu, ProgressBar progressBar)
+        public ViewAs(ProgressBar progressBar)
         {
             this.progressBar= progressBar;
-            this.root = menu;
+          //  this.root = menu;
             //          a  this.fileTypeLoader=fileTypeLoader;
             plugin  = AllPlugins.InvokePlugin<ViewAsPlugin>(PluginType.ViewAs); ;
             
@@ -31,9 +31,8 @@ namespace DefaultPlugins.ViewModel.MainActions
         }
         public List<CustomMenuItem> GetSubMenuItemsForFileTypes()
         {
-            if (plugin == null) throw new NullReferenceException();
             var result= plugin.GetSubMenuItemsForFileTypes();
-            result.ForEach(p => root.Items.Add(p.Title));
+      //      result.ForEach(p => root.Items.Add(p));
             //        result.ForEach(p => root.Items.Add(p.Title));
             return result;
         }
