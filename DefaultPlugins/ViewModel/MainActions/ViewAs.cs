@@ -39,9 +39,11 @@ namespace DefaultPlugins.ViewModel.MainActions
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(SelectedPath);
             await plugin.Perform(parameter, progress);
-            string headerString = "View ";
-            if (plugin.CurrentFileItem != null) headerString=String.Concat(headerString, plugin.CurrentFileItem.ToString());
-            root.Header = headerString; 
+            string headerString = "View As ";
+            if (plugin.CurrentText.SyntaxHighlighting != null)
+                headerString = String.Concat(headerString, plugin.CurrentText.SyntaxHighlighting.ToString());
+            root.Header = headerString;
+            root.IsEnabled = false;
 
     return result;                
     }

@@ -17,14 +17,20 @@ namespace Extensions.Util
         {
             uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
         }
-        public static string? MapExtensionToMain(string path)
+        public static string? MapExtensionToPrimary(string path)
         {
             string? result = null;
             var file = new FileInfo(path);
             var extensionsToTestForXml = new List<string> { ".config", ".csproj", ".xml" };
 
-            var success = extensionsToTestForXml.Any(p => file.Extension.EndsWith(p, StringComparison.OrdinalIgnoreCase));
+            var success = extensionsToTestForXml.Any(p => file.Extension.Equals(p, StringComparison.OrdinalIgnoreCase));
             if (success) result = ".xml";
+
+
+            var extensionsToTestForHtml = new List<string> { ".html", ".htm" };
+
+            var successHtml = extensionsToTestForHtml.Any(p => file.Extension.Equals(p, StringComparison.OrdinalIgnoreCase));
+            if (successHtml) result = ".htm";
 
             return result;
         }

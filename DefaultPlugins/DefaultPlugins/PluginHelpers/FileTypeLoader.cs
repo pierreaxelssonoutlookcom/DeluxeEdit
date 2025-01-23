@@ -47,7 +47,7 @@ namespace DefaultPlugins.DefaultPlugins.PluginHelpers
                 CurrentFileItem = GetFileTypes().FirstOrDefault(p => path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
 
 
-            if (CurrentFileItem != null) CurrentFileItem.HilightDefinition = manager.GetDefinitionByExtension(new FileInfo(path).Extension);
+            var definition = manager.GetDefinitionByExtension(new FileInfo(path).Extension);
             CurrentText = new TextEditor();
 
             CurrentArea = CurrentText.TextArea;
@@ -59,8 +59,7 @@ namespace DefaultPlugins.DefaultPlugins.PluginHelpers
 
 
 
-            if (CurrentFileItem != null && CurrentFileItem.HilightDefinition != null)
-                CurrentText.SyntaxHighlighting = CurrentFileItem.HilightDefinition;
+                CurrentText.SyntaxHighlighting = definition;
 
 
             CurrentPath = path;

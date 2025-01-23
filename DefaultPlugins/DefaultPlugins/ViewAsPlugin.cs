@@ -8,6 +8,8 @@ using ViewModel;
 using System.Linq;
 using DefaultPlugins.DefaultPlugins.PluginHelpers;
 using System.Windows.Controls;
+using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit;
 
 namespace DefaultPlugins
 {
@@ -15,7 +17,8 @@ namespace DefaultPlugins
     {
         public const string VersionString = "0.1";
         private FileTypeLoader fileTypeLoader;
-
+        public TextEditor CurrentText { get; set; } = new TextEditor();
+        public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
         public bool ParameterIsSelectedText { get; set; } = true;
         public Version Version { get; set; } = new Version(VersionString);
         public ActionParameter Parameter { get; set; } = new ActionParameter();
@@ -57,8 +60,11 @@ namespace DefaultPlugins
         public void LoadCurrent(string path)
         {
 
-                
-            fileTypeLoader.LoadCurrent(path);
+ 
+                fileTypeLoader.LoadCurrent(path);
+                CurrentText = fileTypeLoader.CurrentText;
+                CurrentArea = fileTypeLoader.CurrentArea;
+
             CurrentFileItem = fileTypeLoader.CurrentFileItem;
 
            

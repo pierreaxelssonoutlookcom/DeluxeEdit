@@ -12,19 +12,6 @@ namespace ViewModel
 {
     public partial class MainEditViewModel
     {
-        private async void OnEvent(object? sender, CustomEventArgs e)
-        {
-            if (e.Type == EventType.EditFile)
-                await loadFile.Load();
-            else if (e.Type == EventType.NewFile)
-                await newFile.Load();
-
-
-        }
-                    
-                
-       
-
         
 
         private async void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)

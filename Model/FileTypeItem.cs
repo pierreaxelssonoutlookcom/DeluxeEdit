@@ -3,10 +3,7 @@ namespace Model
 {
     public class FileTypeItem
     {
-        public IHighlightingDefinition? HilightDefinition { get; set; }
         public FileType FileType { get; set; }
-
-
         public string FileExtension { get; set; } = String.Empty;
         public string AsPrinted { get { return ToString(); } }
         public override string ToString()
