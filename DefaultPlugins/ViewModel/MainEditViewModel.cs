@@ -41,9 +41,11 @@ namespace ViewModel
             this.viewAsRoot = viewAsRoot;
 ;            this.progressBar = bar;
             this.viewAsModel = new ViewAs(this.progressBar, viewAsRoot);
-            
             tabFiles = tab;
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
+            tabFiles.KeyDown += TabFiles_KeyDown;
+            //it's important for the initial key down
+            tabFiles.Focus();  
             this.statusText = statusText;
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
@@ -58,6 +60,7 @@ namespace ViewModel
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
         }
+
 
         public void SetStatusText(string statusText)
         {

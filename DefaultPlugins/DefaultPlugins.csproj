@@ -47,7 +47,7 @@
 	  <Compile Include="ViewModel\MainActions\NewFile.cs" />
 	  <Compile Include="ViewModel\PluginsViewModel.cs" />
 	  <Compile Include="ViewModel\MainActions\SaveFile.cs" />
-	  <Compile Include="ViewModel\SetupMenuActions.cs" />
+	  <Compile Include="ViewModel\MainActions\SetupMenuActions.cs" />
 	  <Compile Include="Views\MainEdit.xaml.cs" />
 	  <Compile Include="Views\Plugins.xaml.cs" />
 	</ItemGroup>

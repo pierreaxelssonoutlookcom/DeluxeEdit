@@ -30,7 +30,7 @@
 
         </StatusBar>
 
-        <ListBox VerticalAlignment="Top" HorizontalAlignment="Left">
+        <ListBox x:Name="MainListBox" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Menu Name="MainMenu">
              
                 <MenuItem Header="Plugins">
@@ -47,7 +47,7 @@
 
 
             </Menu>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MainGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
