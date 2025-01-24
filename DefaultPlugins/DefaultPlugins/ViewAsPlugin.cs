@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using ViewModel;
 using System.Linq;
-using DefaultPlugins.DefaultPlugins.PluginHelpers;
+using DefaultPlugins.PluginHelpers;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit;

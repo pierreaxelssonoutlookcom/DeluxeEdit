@@ -13,7 +13,7 @@ using ICSharpCode.AvalonEdit.Editing;
 using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
 using DefaultPlugins.ViewModel.MainActions;
-using DefaultPlugins.DefaultPlugins.PluginHelpers;
+using DefaultPlugins.PluginHelpers;
 
 namespace ViewModel
 {

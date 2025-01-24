@@ -11,11 +11,13 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Extensions;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using System.Xml;
 
-namespace DefaultPlugins.DefaultPlugins.PluginHelpers
+namespace DefaultPlugins.PluginHelpers
 {
     public class FileTypeLoader
     {
+        
 
         //public static List<FileTypeItem> AllFileTypes { get; set; }
         public static string CurrentPath { get; set; } = string.Empty;
@@ -82,8 +84,17 @@ namespace DefaultPlugins.DefaultPlugins.PluginHelpers
 
         }
 
+        public IHighlightingDefinition LoadDefinitionFromFile(string testFile)
+        {
+            using var reader = XmlReader.Create(testFile);
+            var result=HighlightingLoader.Load(reader, null);
+            return result;
+        }
 
-
-
+        public void RegisterDefinition(string name, string extension, IHighlightingDefinition definition)
+        {
+            var manager = HighlightingManager.Instance;
+            manager.RegisterHighlighting(name, new string[] { extension }, definition);
+        }
     }
 }

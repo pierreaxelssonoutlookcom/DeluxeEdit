@@ -3,9 +3,9 @@ using DefaultPlugins;
 using Model;
 using Xunit;
 using System.IO;
-using DefaultPlugins.DefaultPlugins.PluginHelpers;
+using DefaultPlugins.PluginHelpers;
 
-namespace DeluxeEdit.DefaultPlugins.Tests.IntegrationTests
+namespace DefaultPlugins.Tests.IntegrationTests
 {
     public class FileTypeLoaderTests
     {
