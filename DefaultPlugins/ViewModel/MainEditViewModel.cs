@@ -52,10 +52,6 @@ namespace ViewModel
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel);
             this.saveFile = new SaveFile(this, this.progressBar);
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel);
-
-
-
-            
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 

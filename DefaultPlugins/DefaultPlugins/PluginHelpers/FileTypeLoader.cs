@@ -41,11 +41,11 @@ namespace DefaultPlugins.DefaultPlugins.PluginHelpers
         public void LoadCurrent(string path)
         {
             var manager = HighlightingManager.Instance;
-
+            var logFileDefinition= manager.GetDefinition("LogFileDefinition.xml");
+            manager.RegisterHighlighting("LogFile", new string[] { ".log" }, logFileDefinition);
 
             if (path.HasContent())
                 CurrentFileItem = GetFileTypes().FirstOrDefault(p => path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
-
 
             var definition = manager.GetDefinitionByExtension(new FileInfo(path).Extension);
             CurrentText = new TextEditor();
