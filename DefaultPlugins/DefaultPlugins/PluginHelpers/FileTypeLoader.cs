@@ -24,7 +24,14 @@ namespace DefaultPlugins.PluginHelpers
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
         public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
-
+        public FileTypeLoader()
+        {
+            var registration = new HighlightingRegistrationItem();
+            registration.Name = "LogFile";
+            registration.Extensions.Add(".log");
+            registration.PathToDefinition = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
+            RegisterDefinition(registration);
+        }
 
 
 
@@ -32,8 +39,8 @@ namespace DefaultPlugins.PluginHelpers
         {
             var manager = HighlightingManager.Instance;
             
-            var logFileDefinition= LoadDefinitionFromFile();
-            RegisterDefinition("LogFile", ".log" , logFileDefinition);
+//            var logFileDefinition= LoadDefinitionFromFile();
+            // RegisterDefinition("LogFile", ".log" , logFileDefinition);
 
             if (path.HasContent())
                 CurrentFileItem = GetFileTypes().FirstOrDefault(p => path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
@@ -73,18 +80,19 @@ namespace DefaultPlugins.PluginHelpers
 
         }
 
-        public IHighlightingDefinition LoadDefinitionFromFile()
+        public IHighlightingDefinition LoadDefinitionFromFile(HighlightingRegistrationItem registrationItem)
         {
-            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
-            using var reader = XmlReader.Create(logFileDefinitionPath);
+//            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
+            using var reader = XmlReader.Create(registrationItem.PathToDefinition);
              var result=HighlightingLoader.Load(reader, HighlightingManager.Instance);
             return result;
         }
 
-        public void RegisterDefinition(string name, string extension, IHighlightingDefinition definition)
+        public void RegisterDefinition(HighlightingRegistrationItem registrationItem)       
         {
+            var definition = LoadDefinitionFromFile(registrationItem);
             var manager = HighlightingManager.Instance;
-            manager.RegisterHighlighting(name, new string[] { extension }, definition);
+            manager.RegisterHighlighting(registrationItem.Name, registrationItem.Extensions.ToArray() ,definition);
         }
     }
 }
