@@ -1,11 +1,12 @@
-﻿<SyntaxDefinitions>
-<SyntaxDefinition name="LogFile">
-	xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="InitialTimestampHiligt" foreground="Green" />
-	<Color name="String" foreground="Blue" />
-
-	<!-- This is the main ruleset. -->
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="LogFile" extensions=".log">
+	<Environment></Environment>
 	<RuleSet>
+		<Color name="Comment" foreground="Green" exampleText="// comment" />
+
+		<Color name="InitialTimestampHiligt" foreground="Green" />
+		<Color name="String" foreground="Blue" />
+
 		<Span  color="InitialTimestampHiligt" begin="[0-9]+" />
 	
 		<Span color="String">
@@ -34,4 +35,3 @@
 		</Rule>
 	</RuleSet>
 </SyntaxDefinition>
-</SyntaxDefinitions>

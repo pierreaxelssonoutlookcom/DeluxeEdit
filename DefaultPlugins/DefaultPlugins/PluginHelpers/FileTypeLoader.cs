@@ -77,7 +77,7 @@ namespace DefaultPlugins.PluginHelpers
         {
             string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xml";
             using var reader = XmlReader.Create(logFileDefinitionPath);
-            var result=HighlightingLoader.Load(reader, null);
+             var result=HighlightingLoader.Load(reader, HighlightingManager.Instance);
             return result;
         }
 

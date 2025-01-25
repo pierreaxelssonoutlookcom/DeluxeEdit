@@ -2,7 +2,6 @@
 	xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="InitialTimestampHiligt" foreground="Green" />
 	<Color name="String" foreground="Blue" />
-
 	<!-- This is the main ruleset. -->
 	<RuleSet>
 		<Span  color="InitialTimestampHiligt" begin="[0-9]+" />

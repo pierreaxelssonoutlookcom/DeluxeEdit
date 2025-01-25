@@ -16,7 +16,7 @@ namespace DefaultPlugins.Tests.IntegrationTests
         public void LoadDefinitionTest()
         {
             var loader = new FileTypeLoader();
-            var definition = loader.LoadDefinitionFromFile(TestFile);
+            var definition = loader.LoadDefinitionFromFile();
 
 
             Assert.NotNull(definition);
@@ -28,7 +28,7 @@ namespace DefaultPlugins.Tests.IntegrationTests
         public void RegisterDefinitionTest()
         {
             var loader = new FileTypeLoader();
-            var definition = loader.LoadDefinitionFromFile(TestFile);
+            var definition = loader.LoadDefinitionFromFile();
 
             loader.RegisterDefinition("LogFile",".log",definition);
 

@@ -31,6 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="TestFiles\LogFileDefinition.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	  <None Update="TestFiles\testfileopen.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
