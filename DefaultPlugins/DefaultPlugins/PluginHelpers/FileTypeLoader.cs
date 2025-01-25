@@ -30,6 +30,7 @@ namespace DefaultPlugins.PluginHelpers
             registration.Name = "LogFile";
             registration.Extensions.Add(".log");
             registration.PathToDefinition = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
+      LoadDefinitionFromFile(registration);
             RegisterDefinition(registration);
         }
 
@@ -80,19 +81,17 @@ namespace DefaultPlugins.PluginHelpers
 
         }
 
-        public IHighlightingDefinition LoadDefinitionFromFile(HighlightingRegistrationItem registrationItem)
+        public void  LoadDefinitionFromFile(HighlightingRegistrationItem registrationItem)
         {
 //            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
             using var reader = XmlReader.Create(registrationItem.PathToDefinition);
-             var result=HighlightingLoader.Load(reader, HighlightingManager.Instance);
-            return result;
+             registrationItem.Definition=HighlightingLoader.Load(reader, HighlightingManager.Instance);
         }
 
         public void RegisterDefinition(HighlightingRegistrationItem registrationItem)       
         {
-            var definition = LoadDefinitionFromFile(registrationItem);
             var manager = HighlightingManager.Instance;
-            manager.RegisterHighlighting(registrationItem.Name, registrationItem.Extensions.ToArray() ,definition);
+            manager.RegisterHighlighting(registrationItem.Name, registrationItem.Extensions.ToArray() ,registrationItem.Definition);
         }
     }
 }
