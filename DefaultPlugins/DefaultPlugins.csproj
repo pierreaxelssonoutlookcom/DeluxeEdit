@@ -62,7 +62,10 @@
 	  <ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="DefaultPlugins\PluginHelpers\LogFileDefinition.xml">
+	  <None Update="DefaultPlugins\PluginHelpers\LogFileDefinition.xshd">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="DefaultPlugins\PluginHelpers\XML-Mode.xshd">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

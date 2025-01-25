@@ -75,7 +75,7 @@ namespace DefaultPlugins.PluginHelpers
 
         public IHighlightingDefinition LoadDefinitionFromFile()
         {
-            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xml";
+            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
             using var reader = XmlReader.Create(logFileDefinitionPath);
              var result=HighlightingLoader.Load(reader, HighlightingManager.Instance);
             return result;
