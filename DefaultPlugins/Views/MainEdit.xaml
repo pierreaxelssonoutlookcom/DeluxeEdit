@@ -39,7 +39,7 @@
                 </MenuItem>
 
                 <MenuItem Header="View">
-                    <MenuItem Name="viewAs" Header="View As">
+                    <MenuItem Name="viewAs" IsEnabled="False" Header="View As">
                        
                     </MenuItem>
                 </MenuItem>

@@ -24,18 +24,6 @@ namespace DefaultPlugins.PluginHelpers
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
         public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
-        /*
-        public static FileTypeItem? GetFileTypeItemByMenu(string menuTitle)
-        {
-            var result = AllFileTypes.FirstOrDefault(p => p.ToString() == menuTitle && menuTitle.StartsWith("As "));
-            return result;
-        }
-        public static FileTypeItem GetFileTypeItemByFileType(FileType fileType)
-        {
-            var result = AllFileTypes.First(p => p.FileType == fileType);
-            return result;
-            */
-
 
 
 
@@ -43,8 +31,9 @@ namespace DefaultPlugins.PluginHelpers
         public void LoadCurrent(string path)
         {
             var manager = HighlightingManager.Instance;
-            var logFileDefinition= manager.GetDefinition("LogFileDefinition.xml");
-            manager.RegisterHighlighting("LogFile", new string[] { ".log" }, logFileDefinition);
+            
+            var logFileDefinition= LoadDefinitionFromFile();
+            RegisterDefinition("LogFile", ".log" , logFileDefinition);
 
             if (path.HasContent())
                 CurrentFileItem = GetFileTypes().FirstOrDefault(p => path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
@@ -84,9 +73,10 @@ namespace DefaultPlugins.PluginHelpers
 
         }
 
-        public IHighlightingDefinition LoadDefinitionFromFile(string testFile)
+        public IHighlightingDefinition LoadDefinitionFromFile()
         {
-            using var reader = XmlReader.Create(testFile);
+            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xml";
+            using var reader = XmlReader.Create(logFileDefinitionPath);
             var result=HighlightingLoader.Load(reader, null);
             return result;
         }

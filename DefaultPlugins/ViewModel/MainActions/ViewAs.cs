@@ -1,5 +1,4 @@
-﻿using DefaultPlugins.DefaultPlugins.PluginHelpers;
-using Extensions;
+﻿using Extensions;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -43,7 +42,7 @@ namespace DefaultPlugins.ViewModel.MainActions
             if (plugin.CurrentText.SyntaxHighlighting != null)
                 headerString = String.Concat(headerString, plugin.CurrentText.SyntaxHighlighting.ToString());
             root.Header = headerString;
-            root.IsEnabled = false;
+          
 
     return result;                
     }
