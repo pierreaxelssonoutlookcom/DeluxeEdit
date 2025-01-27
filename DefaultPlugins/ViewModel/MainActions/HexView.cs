@@ -15,7 +15,7 @@ namespace ViewModel
     {
         private HexPlugin hex;
         private ViewAs viewAsModel;
-        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel): base(model, progressBar, tab, viewAsModel)
+        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder) : base(model, progressBar, tab, viewAsModel, menuBuilder)
         {
             hex = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
             this.viewAsModel = viewAsModel;

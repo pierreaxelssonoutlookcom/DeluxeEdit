@@ -34,10 +34,12 @@ namespace ViewModel
 
 
         private List<INamedActionPlugin> relevantPlugins;
+        private MenuBuilder menuBuilder;
         private MenuItem viewAsRoot;
 
         public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock statusText, MenuItem viewAsRoot, MenuBuilder menuBuilder)
         {
+            this.menuBuilder= menuBuilder;
             this.viewAsRoot = viewAsRoot;
 ;            this.progressBar = bar;
             this.viewAsModel = new ViewAs(this.progressBar, viewAsRoot);
@@ -52,7 +54,7 @@ namespace ViewModel
             menuBuilder.AdaptToStandardMenu(false);          
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.saveFile = new SaveFile(this, this.progressBar);
-            this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel);
+            this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
@@ -73,7 +75,7 @@ namespace ViewModel
             var myMenuItem = MenuBuilder.CustomMainMenu.SelectMany(p => p.MenuItems)
                  .Single(p => p != null && p.Title!=null && p.Title ==header);
            
-            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot);
+            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot, menuBuilder);
             actions.SetMenuAction(myMenuItem);
             if (myMenuItem.MenuActon != null)
                 await myMenuItem.MenuActon.Invoke();

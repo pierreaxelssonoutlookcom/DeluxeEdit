@@ -16,16 +16,16 @@ namespace ViewModel
         private NewFile newFile;
         private ViewAs viewAsModel;
 
-        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, MenuItem viewAsRoot)
+        public SetupMenuActions(MainEditViewModel model, TabControl tabControl, ProgressBar progress, MenuItem viewAsRoot, MenuBuilder menuBuilder)
             {
                 this.model=model;
             this.tabFiles=tabControl;
             this.progressBar=progress;
             this.viewAsModel = new ViewAs(progressBar, viewAsRoot);
 
-            this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles, viewAsModel);
+            this.loadFile=new LoadFile(this.model,  this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             this.saveFile = new SaveFile(this.model, this.progressBar);
-            this.hex = new HexView(this.model, this.progressBar, tabControl, viewAsModel);
+            this.hex = new HexView(this.model, this.progressBar, tabControl, viewAsModel, menuBuilder);
             newFile = new NewFile(model, tabControl);
         }
 
