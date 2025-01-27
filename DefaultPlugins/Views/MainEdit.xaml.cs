@@ -16,19 +16,16 @@ namespace Views
         public MainEdit()
         {
             InitializeComponent();
-            editViewModel = new MainEditViewModel(TabFiles, Progress, StatusText, viewAs);
-        }       
+            editViewModel = new MainEditViewModel(TabFiles, Progress, StatusText, viewAs, new MenuBuilder(MainMenu));
 
-                                                                
+        }
+
+
 
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            
-            var builder = new MenuBuilder();
-            
-            builder.AdaptToStandardMenu(this.MainMenu);
-
+       
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
 

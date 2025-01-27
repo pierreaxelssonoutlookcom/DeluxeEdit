@@ -8,6 +8,7 @@ using System.Formats.Tar;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+
 using DefaultPlugins;
 using ICSharpCode.AvalonEdit.Editing;
 using static System.Net.Mime.MediaTypeNames;
@@ -22,6 +23,7 @@ namespace ViewModel
     {
         public FileOpenPlugin openPlugin;
         public FileTypeLoader fileTypeLoader;
+        private MenuBuilder menuBuilder;
         public TabControl tabFiles;
         public MainEditViewModel model;
         public ProgressBar progressBar;
@@ -30,8 +32,9 @@ namespace ViewModel
         public TextEditor? CurrentText { get; set; }
         public TextArea? CurrentArea { get; set; }
 
-        public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel)
+        public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder)
         {
+            this.menuBuilder= menuBuilder;
             tabFiles = tab;
             this.model = model;
             this.progressBar = progressBar;
@@ -65,7 +68,7 @@ namespace ViewModel
             result.Tab = items.Item2;
             viewAsModel.SetSelectedPath(result.Path);
             MyEditFiles.Add(result);
-
+            menuBuilder.AdaptToStandardMenu(true);
             return result;
         }
 

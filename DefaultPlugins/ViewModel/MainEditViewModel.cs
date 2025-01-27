@@ -36,7 +36,7 @@ namespace ViewModel
         private List<INamedActionPlugin> relevantPlugins;
         private MenuItem viewAsRoot;
 
-        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock statusText, MenuItem viewAsRoot)
+        public MainEditViewModel(TabControl tab, ProgressBar bar, TextBlock statusText, MenuItem viewAsRoot, MenuBuilder menuBuilder)
         {
             this.viewAsRoot = viewAsRoot;
 ;            this.progressBar = bar;
@@ -49,7 +49,8 @@ namespace ViewModel
             this.statusText = statusText;
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
-            this.loadFile = new LoadFile(this, bar, tab, viewAsModel);
+            menuBuilder.AdaptToStandardMenu(false);          
+            this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.saveFile = new SaveFile(this, this.progressBar);
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())

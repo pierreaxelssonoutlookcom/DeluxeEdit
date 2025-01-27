@@ -9,13 +9,18 @@ using System.Windows.Controls;
 using Extensions.Util;
 using DefaultPlugins.ViewModel.MainActions;
 using System;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace ViewModel
 {
     public class MenuBuilder
     {
+        public  Menu StandardMenu= new Menu();
         public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
-
+        public MenuBuilder(Menu menu)
+        {
+             StandardMenu= menu;
+        }
         public  static List<CustomMenu> BuildAndLoadMenu()
         {
                 var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
@@ -62,21 +67,21 @@ namespace ViewModel
         
 
 
-        public void AdaptToStandardMenu(Menu mainMenu)
+        public void AdaptToStandardMenu(bool enableSave)
         {
 
-            if (mainMenu == null) throw new ArgumentNullException();
+            if (StandardMenu == null) throw new ArgumentNullException();
 
             foreach (var item in CustomMainMenu)
             {
                 int? index = null;
-                if (mainMenu != null)
-                    index = WPFUtil.IndexOfText(mainMenu.Items, item.Header);
+                if (StandardMenu != null)
+                    index = WPFUtil.IndexOfText(StandardMenu.Items, item.Header);
 
                 int intindex = int.MinValue;
-                if (index == null && mainMenu != null)
+                if (index == null && StandardMenu != null)
                 {
-                    index = mainMenu.Items.Add(new MenuItem { Header = item.Header });
+                    index = StandardMenu.Items.Add(new MenuItem { Header = item.Header });
                     intindex = index.Value;
                 }
                 else if (index.HasValue)
@@ -86,10 +91,10 @@ namespace ViewModel
 
                 foreach (var menuItem in item.MenuItems)
                 {
-                    MenuItem? newExistMenuItem = mainMenu != null && intindex <= mainMenu.Items.Count && mainMenu.Items[intindex] is MenuItem ? mainMenu.Items[intindex] as MenuItem : new MenuItem();
+                    MenuItem? newExistMenuItem = StandardMenu != null && intindex <= StandardMenu.Items.Count && StandardMenu.Items[intindex] is MenuItem ? StandardMenu.Items[intindex] as MenuItem : new MenuItem();
                     var newItem = new MenuItem { Header = menuItem.Title };
                     if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
-
+                    SetEnableStateForMenu("Save", newItem, enableSave );
                 }
 
             }
@@ -101,7 +106,16 @@ namespace ViewModel
 
 
         }
-
+        public void SetEnableStateForMenu(string startText, MenuItem? menuItem, bool enable)
+        {
+            string? headerString = null;
+            object? header=null;
+            if(menuItem!=null) header=menuItem.Header;
+     
+            if (header != null) headerString = header.ToString();
+            if (menuItem != null && headerString != null && headerString.StartsWith(startText))
+                menuItem.IsEnabled = enable;
+        }
 
 
 
