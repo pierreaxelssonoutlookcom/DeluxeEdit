@@ -5,6 +5,7 @@ using ICSharpCode.AvalonEdit;
 using Model;
 using System;
 using System.IO;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,11 +15,13 @@ namespace ViewModel
     public class HexView: LoadFile
     {
         private HexPlugin hex;
+        private MenuBuilder menuBuilder;
         private ViewAs viewAsModel;
-        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder) : base(model, progressBar, tab, viewAsModel, menuBuilder)
+        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder) : base(model, progressBar, tab, viewAsModel,menuBuilder)
         {
             hex = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
             this.viewAsModel = viewAsModel;
+            this.menuBuilder= menuBuilder;
 
         }
 
@@ -45,6 +48,8 @@ namespace ViewModel
 
             items.Item1.Text = hexOutput;
             result.Tab = items.Item2;
+            viewAsModel.SetSelectedPath(result.Path);
+            menuBuilder.AdaptToStandardMenu(true);
 
             viewAsModel.SetSelectedPath(result.Path);
             MyEditFiles.Add(result);

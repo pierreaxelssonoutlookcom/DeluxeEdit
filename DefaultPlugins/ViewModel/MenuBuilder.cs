@@ -17,6 +17,8 @@ namespace ViewModel
     {
         public  Menu StandardMenu= new Menu();
         public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
+        public static MenuItem SaveMenu=new MenuItem() ;
+        public static MenuItem SaveAsMenu = new MenuItem();
         public MenuBuilder(Menu menu)
         {
              StandardMenu= menu;
@@ -71,7 +73,7 @@ namespace ViewModel
         {
 
             if (StandardMenu == null) throw new ArgumentNullException();
-
+//            StandardMenu.Items.Clear(); 
             foreach (var item in CustomMainMenu)
             {
                 int? index = null;
@@ -93,8 +95,12 @@ namespace ViewModel
                 {
                     MenuItem? newExistMenuItem = StandardMenu != null && intindex <= StandardMenu.Items.Count && StandardMenu.Items[intindex] is MenuItem ? StandardMenu.Items[intindex] as MenuItem : new MenuItem();
                     var newItem = new MenuItem { Header = menuItem.Title };
+                    var itemToCheck=newExistMenuItem!=null ? newExistMenuItem : newItem;
                     if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
-                    SetEnableStateForMenu("Save", newItem, enableSave );
+                    var saveTest = GetSaveMenu(newItem);
+                    if (saveTest != null) SaveMenu = saveTest;
+                    var saveAsTest = GetSaveMenu(newItem);
+                    if (saveAsTest != null) SaveAsMenu = saveAsTest;
                 }
 
             }
@@ -106,19 +112,31 @@ namespace ViewModel
 
 
         }
-        public void SetEnableStateForMenu(string startText, MenuItem? menuItem, bool enable)
+        public MenuItem? GetSaveMenu(MenuItem menuItem)
         {
-            string? headerString = null;
-            object? header=null;
-            if(menuItem!=null) header=menuItem.Header;
-     
-            if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith(startText))
-                menuItem.IsEnabled = enable;
+            MenuItem? result = null;
+                string? headerString = null;
+                object? header = null;
+                if (menuItem != null) header = menuItem.Header;
+
+                if (header != null) headerString = header.ToString();
+                if (menuItem != null && headerString != null && headerString.StartsWith("Save") && headerString.StartsWith("Save As") == false)
+                    result = menuItem;
+            
+                return result;
         }
+        public MenuItem GetSaveAsMenu(MenuItem menuItem)
+        {
+            MenuItem result = new MenuItem();
+            string? headerString = null;
+            object? header = null;
+            if (menuItem != null) header = menuItem.Header;
 
-
-
+            if (header != null) headerString = header.ToString();
+            if (menuItem != null && headerString != null && headerString.StartsWith("Save As"))
+                result = menuItem;
+            return result;
+        }
 
 
 

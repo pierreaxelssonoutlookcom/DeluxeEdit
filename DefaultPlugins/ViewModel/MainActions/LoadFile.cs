@@ -66,8 +66,9 @@ namespace ViewModel
             CurrentText = items.Item1;
             CurrentArea = fileTypeLoader.CurrentArea;
             result.Tab = items.Item2;
-            viewAsModel.SetSelectedPath(result.Path);
             MyEditFiles.Add(result);
+
+            viewAsModel.SetSelectedPath(result.Path);
             menuBuilder.AdaptToStandardMenu(true);
             return result;
         }
