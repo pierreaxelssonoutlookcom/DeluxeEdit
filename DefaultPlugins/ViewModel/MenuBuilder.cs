@@ -14,12 +14,7 @@ namespace ViewModel
 {
     public class MenuBuilder
     {
-            public MenuBuilder( )
-        {
-
-
-        }
-        public static List<CustomMenu> MainMenu = BuildAndLoadMenu();
+        public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
 
         public  static List<CustomMenu> BuildAndLoadMenu()
         {
@@ -67,12 +62,12 @@ namespace ViewModel
         
 
 
-        public void ShowMenu(Menu mainMenu)
+        public void AdaptToStandardMenu(Menu mainMenu)
         {
 
             if (mainMenu == null) throw new ArgumentNullException();
 
-            foreach (var item in MainMenu)
+            foreach (var item in CustomMainMenu)
             {
                 int? index = null;
                 if (mainMenu != null)

@@ -69,7 +69,7 @@ namespace ViewModel
             string result = String.Empty;
             var header=item!=null && item.Header!=null ? item.Header.ToString() : String.Empty;
             
-            var myMenuItem = MenuBuilder.MainMenu.SelectMany(p => p.MenuItems)
+            var myMenuItem = MenuBuilder.CustomMainMenu.SelectMany(p => p.MenuItems)
                  .Single(p => p != null && p.Title!=null && p.Title ==header);
            
             var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot);

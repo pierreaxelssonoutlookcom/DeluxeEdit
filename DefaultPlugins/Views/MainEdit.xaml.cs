@@ -27,7 +27,7 @@ namespace Views
             
             var builder = new MenuBuilder();
             
-            builder.ShowMenu(this.MainMenu);
+            builder.AdaptToStandardMenu(this.MainMenu);
 
             foreach (MenuItem item in MainMenu.Items)
                 item.Click += MenuItem_Click;
