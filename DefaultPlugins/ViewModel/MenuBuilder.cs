@@ -69,7 +69,7 @@ namespace ViewModel
         
 
 
-        public void AdaptToStandardMenu(bool enableSave)
+        public void AdaptToStandardMenu()
         {
 
             if (StandardMenu == null) throw new ArgumentNullException();
@@ -97,11 +97,13 @@ namespace ViewModel
                     var newItem = new MenuItem { Header = menuItem.Title };
                     var itemToCheck=newExistMenuItem!=null ? newExistMenuItem : newItem;
                     if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
+                    var saveAsTest = GetSaveAsMenu(newItem);
+                    if (saveAsTest != null) SaveAsMenu = saveAsTest;
                     var saveTest = GetSaveMenu(newItem);
                     if (saveTest != null) SaveMenu = saveTest;
-                    var saveAsTest = GetSaveMenu(newItem);
-                    if (saveAsTest != null) SaveAsMenu = saveAsTest;
+
                 }
+
 
             }
 
@@ -115,19 +117,19 @@ namespace ViewModel
         public MenuItem? GetSaveMenu(MenuItem menuItem)
         {
             MenuItem? result = null;
-                string? headerString = null;
-                object? header = null;
-                if (menuItem != null) header = menuItem.Header;
+            string? headerString = null;
+            object? header = null;
+            if (menuItem != null) header = menuItem.Header;
 
-                if (header != null) headerString = header.ToString();
-                if (menuItem != null && headerString != null && headerString.StartsWith("Save") && headerString.StartsWith("Save As") == false)
-                    result = menuItem;
-            
-                return result;
+            if (header != null) headerString = header.ToString();
+            if (menuItem != null && headerString != null && headerString.StartsWith("Save") && headerString.StartsWith("Save As") == false)
+                result = menuItem;
+
+            return result;
         }
-        public MenuItem GetSaveAsMenu(MenuItem menuItem)
+        public MenuItem? GetSaveAsMenu(MenuItem menuItem)
         {
-            MenuItem result = new MenuItem();
+            MenuItem? result = null;
             string? headerString = null;
             object? header = null;
             if (menuItem != null) header = menuItem.Header;
@@ -135,7 +137,9 @@ namespace ViewModel
             if (header != null) headerString = header.ToString();
             if (menuItem != null && headerString != null && headerString.StartsWith("Save As"))
                 result = menuItem;
+
             return result;
+   
         }
 
 

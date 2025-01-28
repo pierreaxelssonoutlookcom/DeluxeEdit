@@ -49,7 +49,6 @@ namespace ViewModel
             items.Item1.Text = hexOutput;
             result.Tab = items.Item2;
             viewAsModel.SetSelectedPath(result.Path);
-            menuBuilder.AdaptToStandardMenu(true);
 
             viewAsModel.SetSelectedPath(result.Path);
             MyEditFiles.Add(result);

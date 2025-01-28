@@ -51,8 +51,12 @@ namespace ViewModel
             this.statusText = statusText;
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
-            menuBuilder.AdaptToStandardMenu(false);
-            menuBuilder.AdaptToStandardMenu(false);
+            menuBuilder.AdaptToStandardMenu();
+            MenuBuilder.SaveMenu.IsEnabled = false;
+            MenuBuilder.SaveAsMenu.IsEnabled = false;
+
+
+
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.saveFile = new SaveFile(this, this.progressBar);
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
