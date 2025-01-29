@@ -24,16 +24,17 @@ namespace DeluxeEdit
             //UserControl? userControl = null;
             //userControl= control!=null && control is UserControl ? control as UserControl: null;
             if (userControl == null) throw new NullReferenceException(); 
-
+            
             
             Content = userControl;
 
+            SizeToContent=SizeToContent.Width;
 
-              if (WindowState == WindowState.Maximized)
-              {
-                userControl.Width = int.Parse( Width.ToString());
-                userControl.Height = int.Parse(Height.ToString());
-              }
+ //             if (WindowState == WindowState.Maximized)
+     //         {
+              //  userControl.Width = int.Parse( Width.ToString());
+            //    userControl.Height = int.Parse(Height.ToString());
+   //           }
 
         }
         private void Plugins_Click(object sender, RoutedEventArgs e)
