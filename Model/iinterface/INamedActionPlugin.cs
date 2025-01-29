@@ -23,7 +23,7 @@ namespace Model
 
         Task<string> Perform(ActionParameter parameter, IProgress<long> progresss);
 
-       Task<IEnumerable<string>> Perform(IProgress<long> progresss);
+       Task<IEnumerable<string>> Perform(IProgress<long> progress);
          void SetConfig();
 
       

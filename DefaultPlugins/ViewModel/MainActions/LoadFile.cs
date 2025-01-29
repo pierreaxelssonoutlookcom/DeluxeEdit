@@ -75,13 +75,16 @@ namespace ViewModel
            return result;
         }
 
-
-        public Tuple<TextEditor, TabItem> AddMyControlsForExisting(string path, string? overrideTabNamePrefix = null)
+        public void  MaximizeControl(TextEditor editor)
+        { 
+           
+        }
+        public Tuple<TextEditor, TabItem> AddMyControlsForExisting(string path, string? overrideTabNamePrefix = null,bool readOnly=false)
         {
             var name = new FileInfo(path).Name;
             fileTypeLoader.LoadCurrent(path);
             var text = fileTypeLoader.CurrentText;
-            text.IsReadOnly = false;
+            text.IsReadOnly = readOnly;
             text.Name = name.Replace(".", "");
             text.Visibility = Visibility.Visible;
             text.KeyDown += model.Text_KeyDown;

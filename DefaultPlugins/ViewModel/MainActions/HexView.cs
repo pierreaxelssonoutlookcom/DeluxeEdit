@@ -42,7 +42,7 @@ namespace ViewModel
             result.Path = MyEditFiles.Current.Path;
             result.Content = hexOutput;
     
-            var items  = AddMyControlsForExisting(result.Path, "hex:");
+            var items  = AddMyControlsForExisting(result.Path, "hex:",true);
             result.Text = items.Item1;
             result.Area = fileTypeLoader.CurrentArea;
 

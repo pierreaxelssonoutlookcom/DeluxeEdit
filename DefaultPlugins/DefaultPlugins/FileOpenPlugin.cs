@@ -55,6 +55,7 @@ namespace DefaultPlugins
         public object CreateControl(bool showToo)
         {
             object view = new MainEdit();
+            
             var result = view;
             if (showToo)
             {
