@@ -122,7 +122,7 @@ namespace ViewModel
             if (menuItem != null) header = menuItem.Header;
 
             if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith("Save") && headerString.StartsWith("Save As") == false)
+            if (menuItem != null && headerString != null && headerString.StartsWith("Save (", StringComparison.CurrentCultureIgnoreCase))  
                 result = menuItem;
 
             return result;
@@ -135,7 +135,7 @@ namespace ViewModel
             if (menuItem != null) header = menuItem.Header;
 
             if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith("Save As"))
+            if (menuItem != null && headerString != null && headerString.StartsWith("Save As",StringComparison.CurrentCultureIgnoreCase))
                 result = menuItem;
 
             return result;
