@@ -42,7 +42,7 @@ namespace ViewModel
             fileTypeLoader = new FileTypeLoader();
             openPlugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
         }
-        public virtual async Task<MyEditFile?> Load()
+        public  async Task<MyEditFile?> Load()
         {
 
             var action = openPlugin.GuiAction(openPlugin);
@@ -72,10 +72,11 @@ namespace ViewModel
 
             
             if (MenuBuilder.SaveAsMenu != null) MenuBuilder.SaveAsMenu.IsEnabled = true;
-            
+            if (MenuBuilder.HexViewMenu != null) MenuBuilder.HexViewMenu.IsEnabled = true;
 
-            
-            viewAsModel.SetSelectedPath(result.Path);
+
+
+                viewAsModel.SetSelectedPath(result.Path);
            return result;
         }
 

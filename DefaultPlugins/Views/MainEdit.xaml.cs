@@ -24,12 +24,8 @@ namespace Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             //if this WindowState == WindowState.Maximized)
-            {
-            }
 
 
-            foreach (MenuItem item in MainMenu.Items)
-                item.Click += MenuItem_Click;
 
                 
        }

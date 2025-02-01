@@ -19,7 +19,9 @@ namespace ViewModel
         public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
         public static MenuItem? SaveMenu;
         public static MenuItem? SaveAsMenu;
-
+        public static MenuItem? NewMenu;
+        public static MenuItem? OpenMenu;
+        public static MenuItem? HexViewMenu;
         private static void SaveMenu_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -103,6 +105,11 @@ namespace ViewModel
                     var newItem = new MenuItem { Header = menuItem.Title };
                     var itemToCheck=newExistMenuItem!=null ? newExistMenuItem : newItem;
                     if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
+                    var newTest = GetNewMenu(newItem);
+                    if (newTest != null) NewMenu = newTest;
+                    var hexViewTest  = GetHexViewMenu(newItem);
+                    if (hexViewTest != null) HexViewMenu= hexViewTest;
+            
                     var saveAsTest = GetSaveAsMenu(newItem);
                     if (saveAsTest != null) SaveAsMenu = saveAsTest;
                     var saveTest = GetSaveMenu(newItem);
@@ -110,6 +117,9 @@ namespace ViewModel
                     {
                         SaveMenu = saveTest;
                     }
+                    var openTest = GetOpenMenu(newItem);
+                    if (openTest != null)
+                        OpenMenu = openTest;
                 }
 
 
@@ -122,35 +132,41 @@ namespace ViewModel
 
 
         }
+
         public MenuItem? GetSaveMenu(MenuItem menuItem)
         {
-            MenuItem? result = null;
-            string? headerString = null;
-            object? header = null;
-            if (menuItem != null) header = menuItem.Header;
-
-            if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith("Save (", StringComparison.CurrentCultureIgnoreCase))
-            {
-                result = menuItem;
-            }
-            return result;
+            return WPFUtil.GetMenuItemForStartText(menuItem, "Save (");
         }
 
 
         public MenuItem? GetSaveAsMenu(MenuItem menuItem)
         {
-            MenuItem? result = null;
-            string? headerString = null;
-            object? header = null;
-            if (menuItem != null) header = menuItem.Header;
+            return WPFUtil.GetMenuItemForStartText(menuItem, "Save As");
 
-            if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith("Save As",StringComparison.CurrentCultureIgnoreCase))
-                result = menuItem;
+        }
 
-            return result;
-   
+
+
+
+
+        public MenuItem? GetNewMenu(MenuItem menuItem)
+        {
+            return WPFUtil.GetMenuItemForStartText(menuItem, "New");
+
+        }
+
+
+
+        public MenuItem? GetHexViewMenu(MenuItem menuItem)
+        {
+            return WPFUtil.GetMenuItemForStartText(menuItem, "Hex View");
+        }
+
+
+        public MenuItem? GetOpenMenu(MenuItem menuItem)
+        {
+            return WPFUtil.GetMenuItemForStartText(menuItem, "Open");
+
         }
 
 

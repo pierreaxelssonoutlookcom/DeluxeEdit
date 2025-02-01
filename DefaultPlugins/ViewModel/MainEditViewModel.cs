@@ -14,6 +14,7 @@ using System.Windows;
 using DefaultPlugins.ViewModel.MainActions;
 using MS.WindowsAPICodePack.Internal;
 using System.Diagnostics;
+using System.Reflection.Emit;
 
 namespace ViewModel
 {
@@ -57,13 +58,20 @@ namespace ViewModel
                 MenuBuilder.SaveMenu.IsEnabled = false;
                 MenuBuilder.SaveMenu.Click += SaveMenu_Click;
             }
-             if (MenuBuilder.SaveAsMenu!=null)
+            if (MenuBuilder.SaveAsMenu != null)
             {
                 MenuBuilder.SaveAsMenu.IsEnabled = false;
                 MenuBuilder.SaveAsMenu.Click += SaveAsMenu_Click;
             }
-
-
+            if (MenuBuilder.HexViewMenu != null)
+            {
+                MenuBuilder.HexViewMenu.IsEnabled = false;
+                MenuBuilder.HexViewMenu.Click += HexViewMenu_Click; ;
+            }
+            if (MenuBuilder.OpenMenu != null)
+                MenuBuilder.OpenMenu.Click += OpenMenu_Click;
+            if (MenuBuilder.NewMenu != null)
+                MenuBuilder.NewMenu.Click += NewMenu_Click; ;
 
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.saveFile = new SaveFile(this, this.progressBar);
@@ -88,11 +96,11 @@ namespace ViewModel
             var myMenuItem = MenuBuilder.CustomMainMenu.SelectMany(p => p.MenuItems)
                  .Single(p => p != null && p.Title!=null && p.Title ==header);
            
-            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot, menuBuilder);
-            actions.SetMenuAction(myMenuItem);
-            if (myMenuItem.MenuActon != null)
-                await myMenuItem.MenuActon.Invoke();
-           else
+//            var actions = new SetupMenuActions(this, tabFiles, progressBar, viewAsRoot, menuBuilder);
+  //          actions.SetMenuAction(myMenuItem);
+        //    if (myMenuItem.MenuActon != null)
+///                await myMenuItem.MenuActon.Invoke();
+  //         else
                 result=await HandleOtherPlugins(myMenuItem);
             
             return result;

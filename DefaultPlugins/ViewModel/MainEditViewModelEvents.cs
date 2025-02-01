@@ -12,6 +12,21 @@ namespace ViewModel
 {
     public partial class MainEditViewModel
     {
+        private async void  NewMenu_Click(object sender, RoutedEventArgs e)
+        {
+            await newFile.Load();
+        }
+
+        private async void OpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            await loadFile.Load();
+        }
+ 
+        private async void HexViewMenu_Click(object sender, RoutedEventArgs e)
+        {
+            await hex.LoadHexView();
+        }
+
         private async void SaveAsMenu_Click(object sender, RoutedEventArgs e)
         {
             await saveFile.SaveAs();        }

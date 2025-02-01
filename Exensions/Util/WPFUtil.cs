@@ -17,21 +17,18 @@ namespace Extensions.Util
         {
             uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
         }
-        public static string? MapExtensionToPrimary(string path)
+        public static MenuItem? GetMenuItemForStartText(MenuItem menuItem, string startText)
         {
-            string? result = null;
-            var file = new FileInfo(path);
-            var extensionsToTestForXml = new List<string> { ".config", ".csproj", ".xml" };
+            MenuItem? result = null;
+            string? headerString = null;
+            object? header = null;
+            if (menuItem != null) header = menuItem.Header;
 
-            var success = extensionsToTestForXml.Any(p => file.Extension.Equals(p, StringComparison.OrdinalIgnoreCase));
-            if (success) result = ".xml";
-
-
-            var extensionsToTestForHtml = new List<string> { ".html", ".htm" };
-
-            var successHtml = extensionsToTestForHtml.Any(p => file.Extension.Equals(p, StringComparison.OrdinalIgnoreCase));
-            if (successHtml) result = ".htm";
-
+            if (header != null) headerString = header.ToString();
+            if (menuItem != null && headerString != null && headerString.StartsWith(startText, StringComparison.CurrentCultureIgnoreCase))
+            {
+                result = menuItem;
+            }
             return result;
         }
 

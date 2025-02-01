@@ -28,7 +28,7 @@ namespace ViewModel
 
 
 
-        public override async Task<MyEditFile?> Load()
+        public  async Task<MyEditFile?> LoadHexView()
         {
             var result = new MyEditFile();
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
@@ -48,7 +48,6 @@ namespace ViewModel
 
             items.Item1.Text = hexOutput;
             result.Tab = items.Item2;
-            viewAsModel.SetSelectedPath(result.Path);
 
             viewAsModel.SetSelectedPath(result.Path);
             MyEditFiles.Add(result);
