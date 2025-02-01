@@ -52,8 +52,16 @@ namespace ViewModel
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
             menuBuilder.AdaptToStandardMenu();
-            MenuBuilder.SaveMenu.IsEnabled = false;
-            MenuBuilder.SaveAsMenu.IsEnabled = false;
+            if (MenuBuilder.SaveMenu != null)
+            {
+                MenuBuilder.SaveMenu.IsEnabled = false;
+                MenuBuilder.SaveMenu.Click += SaveMenu_Click;
+            }
+             if (MenuBuilder.SaveAsMenu!=null)
+            {
+                MenuBuilder.SaveAsMenu.IsEnabled = false;
+                MenuBuilder.SaveAsMenu.Click += SaveAsMenu_Click;
+            }
 
 
 

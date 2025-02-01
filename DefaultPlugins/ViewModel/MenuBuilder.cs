@@ -17,8 +17,14 @@ namespace ViewModel
     {
         public  Menu StandardMenu= new Menu();
         public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
-        public static MenuItem SaveMenu=new MenuItem() ;
-        public static MenuItem SaveAsMenu = new MenuItem();
+        public static MenuItem? SaveMenu;
+        public static MenuItem? SaveAsMenu;
+
+        private static void SaveMenu_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         public MenuBuilder(Menu menu)
         {
              StandardMenu= menu;
@@ -32,7 +38,7 @@ namespace ViewModel
                 {
                     item.MenuItems.AddRange(GetMenuItemsForHeader(item.Header, plugins));
                   //  if (item.Header == "View") item.MenuItems.AddRange(viewAsModel.Load());
-                }
+                  }
 //                viewAsModel.loadFileTypes();
                 
                 return menu;
@@ -100,8 +106,10 @@ namespace ViewModel
                     var saveAsTest = GetSaveAsMenu(newItem);
                     if (saveAsTest != null) SaveAsMenu = saveAsTest;
                     var saveTest = GetSaveMenu(newItem);
-                    if (saveTest != null) SaveMenu = saveTest;
-
+                    if (saveTest != null)
+                    {
+                        SaveMenu = saveTest;
+                    }
                 }
 
 
@@ -122,11 +130,14 @@ namespace ViewModel
             if (menuItem != null) header = menuItem.Header;
 
             if (header != null) headerString = header.ToString();
-            if (menuItem != null && headerString != null && headerString.StartsWith("Save (", StringComparison.CurrentCultureIgnoreCase))  
+            if (menuItem != null && headerString != null && headerString.StartsWith("Save (", StringComparison.CurrentCultureIgnoreCase))
+            {
                 result = menuItem;
-
+            }
             return result;
         }
+
+
         public MenuItem? GetSaveAsMenu(MenuItem menuItem)
         {
             MenuItem? result = null;

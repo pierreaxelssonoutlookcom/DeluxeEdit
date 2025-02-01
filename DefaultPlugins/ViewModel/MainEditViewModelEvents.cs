@@ -12,7 +12,15 @@ namespace ViewModel
 {
     public partial class MainEditViewModel
     {
-        
+        private async void SaveAsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            await saveFile.SaveAs();        }
+
+        private async void SaveMenu_Click(object sender, RoutedEventArgs e)
+        {
+           await saveFile.Save();
+        }
+
 
         private async void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {

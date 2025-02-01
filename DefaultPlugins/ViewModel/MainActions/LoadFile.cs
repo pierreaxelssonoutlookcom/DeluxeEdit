@@ -67,10 +67,14 @@ namespace ViewModel
             CurrentArea = fileTypeLoader.CurrentArea;
             result.Tab = items.Item2;
             MyEditFiles.Add(result);
-            MenuBuilder.SaveMenu.IsEnabled = true;
-            MenuBuilder.SaveAsMenu.IsEnabled = true;
 
+            if (MenuBuilder.SaveMenu != null) MenuBuilder.SaveMenu.IsEnabled=true;
 
+            
+            if (MenuBuilder.SaveAsMenu != null) MenuBuilder.SaveAsMenu.IsEnabled = true;
+            
+
+            
             viewAsModel.SetSelectedPath(result.Path);
            return result;
         }

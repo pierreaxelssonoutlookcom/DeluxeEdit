@@ -22,10 +22,15 @@ namespace ViewModel
         {
             saveAs = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
             save = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
-
-            this.model = model;
+             this.model = model;
             this.progressBar = progressBar;
-            
+
+            if (MenuBuilder.SaveMenu != null)
+                MenuBuilder.SaveMenu.IsEnabled = false;
+            if (MenuBuilder.SaveAsMenu != null)
+                MenuBuilder.SaveAsMenu.IsEnabled = false;
+
+
         }
         public async Task<MyEditFile?> Save()
         {
