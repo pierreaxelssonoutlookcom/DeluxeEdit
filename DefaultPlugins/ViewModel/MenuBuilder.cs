@@ -7,9 +7,7 @@ using DefaultPlugins;
 using Shared;
 using System.Windows.Controls;
 using Extensions.Util;
-using DefaultPlugins.ViewModel.MainActions;
 using System;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace ViewModel
 {
@@ -22,8 +20,8 @@ namespace ViewModel
         public static MenuItem? NewMenu;
         public static MenuItem? OpenMenu;
         public static MenuItem? HexViewMenu;
-        public static List<MenuItem> ItemsForSelectedText = new List<MenuItem>(); 
-        private static List<INamedActionPlugin>? pluginsWithSelelected=null;
+        public static List<MenuItem> ItemsForSelectedText = new List<MenuItem>();
+        private static IEnumerable<INamedActionPlugin>? plugins;
 
         private static void SaveMenu_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -36,8 +34,7 @@ namespace ViewModel
         }
         public  static List<CustomMenu> BuildAndLoadMenu()
         {
-                var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-            pluginsWithSelelected = plugins.Where(p=>p.ParameterIsSelectedText).ToList();
+                 plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
             var menu = GetMenuHeaders(plugins);
 
                 foreach (var item in menu)
@@ -69,21 +66,26 @@ namespace ViewModel
          
         public  static List<CustomMenuItem> GetMenuItemsForHeader(string header, IEnumerable<INamedActionPlugin> plugins)
         {
-            var withMenu = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
-            var myItems = withMenu.Where(p => p.Configuration.ShowInMenu == header).ToList();
-            var result = myItems
-                .Select(p => new CustomMenuItem { Title = $"{p.Configuration.ShowInMenuItem} ({p.Configuration.KeyCommand})", Plugin = p })
-                .ToList();
-
+            var result = new List<CustomMenuItem>();
+            //we do special handling on plugin menu 
+            if (header.Equals("plugins", StringComparison.OrdinalIgnoreCase) == false)
+            {
+                var withMenu = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
+                var myItems = withMenu.Where(p => p.Configuration.ShowInMenu == header).ToList();
+                result = myItems
+                    .Select(p => new CustomMenuItem { Title = $"{p.Configuration.ShowInMenuItem} ({p.Configuration.KeyCommand})", Plugin = p })
+                    .ToList();
+            }
             return result;
         }
 
         public List<MenuItem> GetItemsForSelectedText()
         {
             List < MenuItem > result = new List < MenuItem >();
-            if (pluginsWithSelelected != null)
-                result = pluginsWithSelelected.Select(p =>
-                new MenuItem { Header = (p.Configuration.ShowInMenuItem) }).ToList();
+            if (plugins!= null)
+               result = plugins.Where(p=>p.ParameterIsSelectedText)
+                    .Select(p => new MenuItem { Header = (p.Configuration.ShowInMenuItem) })
+                    .ToList();
 
             return result;
         }
@@ -110,10 +112,15 @@ namespace ViewModel
 
                 if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
                 {
+//                    if(intindex==-1) index = StandardMenu.Items.Add(new MenuItem { Header = "Plugins" });
+
+
                     ItemsForSelectedText = GetItemsForSelectedText();
                     foreach (var itemWithSelected in ItemsForSelectedText)
-                        StandardMenu.Items.Add(itemWithSelected);
-
+                    {
+                        var existingItem = StandardMenu.Items[intindex] as MenuItem;
+                        if (existingItem!=null) existingItem.Items.Add(itemWithSelected);
+                    }
                     
                 }
                 foreach (var menuItem in item.MenuItems)

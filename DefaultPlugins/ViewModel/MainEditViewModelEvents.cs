@@ -12,6 +12,10 @@ namespace ViewModel
 {
     public partial class MainEditViewModel
     {
+        private void ItemForSelectedText(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
         private async void  NewMenu_Click(object sender, RoutedEventArgs e)
         {
             await newFile.Load();

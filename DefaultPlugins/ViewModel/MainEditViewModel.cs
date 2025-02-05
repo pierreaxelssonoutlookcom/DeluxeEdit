@@ -36,7 +36,6 @@ namespace ViewModel
 
 
         private List<INamedActionPlugin> relevantPlugins;
-        private List<INamedActionPlugin> pluginsUsingSelectedText;
         private MenuBuilder menuBuilder;
         private MenuItem viewAsRoot;
 
@@ -80,17 +79,12 @@ namespace ViewModel
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
-            
+              
+
             foreach(var item in MenuBuilder.ItemsForSelectedText)
-                item.Click += ItemForSelected;
-            pluginsUsingSelectedText = relevantPlugins.Where(p => p.ParameterIsSelectedText).ToList();
-        
+                item.Click += ItemForSelectedText;
         }
 
-        private void ItemForSelected(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         public void SetStatusText(string statusText)
         {

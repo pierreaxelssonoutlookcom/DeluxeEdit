@@ -19,7 +19,7 @@ namespace DefaultPlugins
         private FileTypeLoader fileTypeLoader;
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
-        public bool ParameterIsSelectedText { get; set; } = true;
+        public bool ParameterIsSelectedText { get; set; } =false;
         public Version Version { get; set; } = new Version(VersionString);
         public ActionParameter Parameter { get; set; } = new ActionParameter();
         public bool Enabled { get; set; }
