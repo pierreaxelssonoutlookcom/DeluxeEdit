@@ -40,6 +40,7 @@
 	  <Compile Include="ViewModel\MainActions\DoWhenTextChange.cs" />
 	  <Compile Include="ViewModel\MainActions\HexView.cs" />
 	  <Compile Include="ViewModel\MainActions\LoadFile.cs" />
+	  <Compile Include="ViewModel\MainActions\ParameterIsSelectedTextModel.cs" />
 	  <Compile Include="ViewModel\MainActions\ViewAs.cs" />
 	  <Compile Include="ViewModel\MainEditViewModel.cs" />
 	  <Compile Include="ViewModel\MainEditViewModelEvents.cs" />

@@ -8,6 +8,7 @@ using Shared;
 using System.Windows.Controls;
 using Extensions.Util;
 using System;
+using System.Reflection;
 
 namespace ViewModel
 {
@@ -15,11 +16,11 @@ namespace ViewModel
     {
         public  Menu StandardMenu= new Menu();
         public static List<CustomMenu> CustomMainMenu = BuildAndLoadMenu();
-        public static MenuItem? SaveMenu;
-        public static MenuItem? SaveAsMenu;
-        public static MenuItem? NewMenu;
-        public static MenuItem? OpenMenu;
-        public static MenuItem? HexViewMenu;
+        public static MenuItem SaveMenu =new MenuItem();
+        public static MenuItem SaveAsMenu = new MenuItem();
+        public static MenuItem NewMenu = new MenuItem();
+        public static MenuItem OpenMenu=new MenuItem();
+        public static MenuItem HexViewMenu=new MenuItem();
         public static List<MenuItem> ItemsForSelectedText = new List<MenuItem>();
         private static IEnumerable<INamedActionPlugin>? plugins;
 
@@ -94,102 +95,143 @@ namespace ViewModel
         {
 
             if (StandardMenu == null) throw new ArgumentNullException();
-//            StandardMenu.Items.Clear(); 
-            foreach (var item in CustomMainMenu)
+            //            StandardMenu.Items.Clear(); 
+           var  index = WPFUtil.IndexOfText(StandardMenu.Items, "File");
+            if (index.HasValue==false )
+               index = StandardMenu.Items.Add(new MenuItem { Header = "File" });
+
+            var existingItem = StandardMenu.Items[index.Value] as MenuItem;
+            if (existingItem != null)
             {
-                int? index = null;
-                if (StandardMenu != null)
-                    index = WPFUtil.IndexOfText(StandardMenu.Items, item.Header);
+                NewMenu = GetNewMenu();
+               OpenMenu = GetOpenMenu();
+                HexViewMenu = GetHexViewMenu();
 
-                int intindex = int.MinValue;
-                if (index == null && StandardMenu != null)
+                SaveMenu = GetSaveMenu();
+                SaveAsMenu = GetSaveAsMenu();
+         
+                existingItem.Items.Add(NewMenu);
+
+                existingItem.Items.Add(OpenMenu);
+
+                existingItem.Items.Add(HexViewMenu);
+
+                existingItem.Items.Add(SaveMenu);
+
+                existingItem.Items.Add(SaveAsMenu);
+
+
+
+
+
+
+                foreach (var item in CustomMainMenu)
                 {
-                    index = StandardMenu.Items.Add(new MenuItem { Header = item.Header });
-                    intindex = index.Value;
-                }
-                else if (index.HasValue)
-                    intindex = index.Value;
+                    index = null;
+                    if (StandardMenu != null)
+                        index = WPFUtil.IndexOfText(StandardMenu.Items, item.Header);
 
-                if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
-                {
-//                    if(intindex==-1) index = StandardMenu.Items.Add(new MenuItem { Header = "Plugins" });
-
-
-                    ItemsForSelectedText = GetItemsForSelectedText();
-                    foreach (var itemWithSelected in ItemsForSelectedText)
+                    int intindex = int.MinValue;
+                    if (index == null && StandardMenu != null)
                     {
-                        var existingItem = StandardMenu.Items[intindex] as MenuItem;
-                        if (existingItem!=null) existingItem.Items.Add(itemWithSelected);
+                        index = StandardMenu.Items.Add(new MenuItem { Header = item.Header });
+                        intindex = index.Value;
                     }
-                    
-                }
-                foreach (var menuItem in item.MenuItems)
-                {
-                    MenuItem? newExistMenuItem = StandardMenu != null && intindex <= StandardMenu.Items.Count && StandardMenu.Items[intindex] is MenuItem ? StandardMenu.Items[intindex] as MenuItem : new MenuItem();
-                    var newItem = new MenuItem { Header = menuItem.Title };
-                    var itemToCheck=newExistMenuItem!=null ? newExistMenuItem : newItem;
-                    if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
-                    var newTest = GetNewMenu(newItem);
-                    if (newTest != null) NewMenu = newTest;
-                    var hexViewTest  = GetHexViewMenu(newItem);
-                    if (hexViewTest != null) HexViewMenu= hexViewTest;
-            
-                    var saveAsTest = GetSaveAsMenu(newItem);
-                    if (saveAsTest != null) SaveAsMenu = saveAsTest;
-                    var saveTest = GetSaveMenu(newItem);
-                    if (saveTest != null)
+                    else if (index.HasValue)
+                        intindex = index.Value;
+
+                    if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
                     {
-                        SaveMenu = saveTest;
+                        //                    if(intindex==-1) index = StandardMenu.Items.Add(new MenuItem { Header = "Plugins" });
+
+
+                        ItemsForSelectedText = GetItemsForSelectedText();
+                        foreach (var itemWithSelected in ItemsForSelectedText)
+                        {
+                            existingItem = StandardMenu.Items[intindex] as MenuItem;
+                            if (existingItem != null) existingItem.Items.Add(itemWithSelected);
+                        }
+
                     }
-                    var openTest = GetOpenMenu(newItem);
-                    if (openTest != null)
-                        OpenMenu = openTest;
+                    if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
+
+                        foreach (var menuItem in item.MenuItems)
+                        {
+                            MenuItem? newExistMenuItem = StandardMenu != null && intindex <= StandardMenu.Items.Count && StandardMenu.Items[intindex] is MenuItem ? StandardMenu.Items[intindex] as MenuItem : new MenuItem();
+                            var newItem = new MenuItem { Header = menuItem.Title };
+                            var itemToCheck = newExistMenuItem != null ? newExistMenuItem : newItem;
+                            if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
+                            /*
+                            var hexViewTest = GetHexViewMenu(newItem);
+                            if (hexViewTest != null) HexViewMenu = hexViewTest;
+
+                            var saveAsTest = GetSaveAsMenu(newItem);
+                            if (saveAsTest != null) SaveAsMenu = saveAsTest;
+                            var saveTest = GetSaveMenu(newItem);
+                            if (saveTest != null)
+                            {
+                                SaveMenu = saveTest;
+                            }
+                            var openTest = GetOpenMenu(newItem);
+                            if (openTest != null)
+                                OpenMenu = openTest;
+                            */
+                        }
+
+
                 }
+
+
+
 
 
             }
 
-
-
-
-
-
-
         }
 
-        public MenuItem? GetSaveMenu(MenuItem menuItem)
+        public MenuItem GetSaveMenu()
         {
-            return WPFUtil.GetMenuItemForStartText(menuItem, "Save (");
-        }
-
-
-        public MenuItem? GetSaveAsMenu(MenuItem menuItem)
-        {
-            return WPFUtil.GetMenuItemForStartText(menuItem, "Save As");
+            var plugin = AllPlugins.InvokePlugin(PluginType.FileSave);
+            var result = new MenuItem { Header = $"{plugin.Configuration.ShowInMenuItem} ({plugin.Configuration.KeyCommand})" };
+            return result;
 
         }
 
 
-
-
-
-        public MenuItem? GetNewMenu(MenuItem menuItem)
+        public MenuItem GetSaveAsMenu()
         {
-            return WPFUtil.GetMenuItemForStartText(menuItem, "New");
+            var plugin = AllPlugins.InvokePlugin(PluginType.FileSaveAs);
+            var result = new MenuItem { Header = $"{plugin.Configuration.ShowInMenuItem} ({plugin.Configuration.KeyCommand})" };
+            return result;
+        }
+
+
+
+
+
+        public MenuItem GetNewMenu()
+        {
+            var plugin = AllPlugins.InvokePlugin(PluginType.FileNew);
+            var result = new MenuItem { Header = $"{plugin.Configuration.ShowInMenuItem} ({plugin.Configuration.KeyCommand})" };
+                 return result;
 
         }
 
 
 
-        public MenuItem? GetHexViewMenu(MenuItem menuItem)
+        public MenuItem GetHexViewMenu()
         {
-            return WPFUtil.GetMenuItemForStartText(menuItem, "Hex View");
+            var plugin = AllPlugins.InvokePlugin(PluginType.Hex);
+            var result = new MenuItem { Header = $"{plugin.Configuration.ShowInMenuItem} ({plugin.Configuration.KeyCommand})" };
+            return result;
         }
 
 
-        public MenuItem? GetOpenMenu(MenuItem menuItem)
+        public MenuItem GetOpenMenu()
         {
-            return WPFUtil.GetMenuItemForStartText(menuItem, "Open");
+            var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen);
+            var result = new MenuItem { Header = $"{plugin.Configuration.ShowInMenuItem} ({plugin.Configuration.KeyCommand})" };
+            return result;
 
         }
 
