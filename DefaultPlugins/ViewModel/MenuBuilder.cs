@@ -22,6 +22,7 @@ namespace ViewModel
         public static MenuItem? NewMenu;
         public static MenuItem? OpenMenu;
         public static MenuItem? HexViewMenu;
+        public static List<MenuItem> ItemsForSelectedText = new List<MenuItem>(); 
         private static List<INamedActionPlugin>? pluginsWithSelelected=null;
 
         private static void SaveMenu_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -65,7 +66,7 @@ namespace ViewModel
 
 
 
-
+         
         public  static List<CustomMenuItem> GetMenuItemsForHeader(string header, IEnumerable<INamedActionPlugin> plugins)
         {
             var withMenu = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
@@ -107,13 +108,14 @@ namespace ViewModel
                 else if (index.HasValue)
                     intindex = index.Value;
 
-                if (StandardMenu!=null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
-                    foreach (var itemWithSelected in GetItemsForSelectedText())
-                    {
+                if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
+                {
+                    ItemsForSelectedText = GetItemsForSelectedText();
+                    foreach (var itemWithSelected in ItemsForSelectedText)
                         StandardMenu.Items.Add(itemWithSelected);
 
-                    }
-
+                    
+                }
                 foreach (var menuItem in item.MenuItems)
                 {
                     MenuItem? newExistMenuItem = StandardMenu != null && intindex <= StandardMenu.Items.Count && StandardMenu.Items[intindex] is MenuItem ? StandardMenu.Items[intindex] as MenuItem : new MenuItem();

@@ -15,6 +15,7 @@ using DefaultPlugins.ViewModel.MainActions;
 using MS.WindowsAPICodePack.Internal;
 using System.Diagnostics;
 using System.Reflection.Emit;
+using System.Net.WebSockets;
 
 namespace ViewModel
 {
@@ -79,11 +80,17 @@ namespace ViewModel
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
-
+            
+            foreach(var item in MenuBuilder.ItemsForSelectedText)
+                item.Click += ItemForSelected;
             pluginsUsingSelectedText = relevantPlugins.Where(p => p.ParameterIsSelectedText).ToList();
         
         }
 
+        private void ItemForSelected(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         public void SetStatusText(string statusText)
         {
