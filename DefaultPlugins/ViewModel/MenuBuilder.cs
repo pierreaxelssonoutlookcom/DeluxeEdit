@@ -22,6 +22,8 @@ namespace ViewModel
         public static MenuItem? NewMenu;
         public static MenuItem? OpenMenu;
         public static MenuItem? HexViewMenu;
+        private static List<INamedActionPlugin>? pluginsWithSelelected=null;
+
         private static void SaveMenu_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -34,7 +36,8 @@ namespace ViewModel
         public  static List<CustomMenu> BuildAndLoadMenu()
         {
                 var plugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal());
-                    var menu = GetMenuHeaders(plugins);
+            pluginsWithSelelected = plugins.Where(p=>p.ParameterIsSelectedText).ToList();
+            var menu = GetMenuHeaders(plugins);
 
                 foreach (var item in menu)
                 {
@@ -67,15 +70,22 @@ namespace ViewModel
         {
             var withMenu = plugins.Where(p => p.Configuration.ShowInMenu.HasContent() && p.Configuration.ShowInMenuItem.HasContent()).ToList();
             var myItems = withMenu.Where(p => p.Configuration.ShowInMenu == header).ToList();
-            var test = myItems.Select(p => p.Configuration.ShowInMenuItem).ToList();
             var result = myItems
                 .Select(p => new CustomMenuItem { Title = $"{p.Configuration.ShowInMenuItem} ({p.Configuration.KeyCommand})", Plugin = p })
                 .ToList();
 
             return result;
         }
-        
 
+        public List<MenuItem> GetItemsForSelectedText()
+        {
+            List < MenuItem > result = new List < MenuItem >();
+            if (pluginsWithSelelected != null)
+                result = pluginsWithSelelected.Select(p =>
+                new MenuItem { Header = (p.Configuration.ShowInMenuItem) }).ToList();
+
+            return result;
+        }
 
         public void AdaptToStandardMenu()
         {
@@ -97,7 +107,12 @@ namespace ViewModel
                 else if (index.HasValue)
                     intindex = index.Value;
 
+                if (StandardMenu!=null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
+                    foreach (var itemWithSelected in GetItemsForSelectedText())
+                    {
+                        StandardMenu.Items.Add(itemWithSelected);
 
+                    }
 
                 foreach (var menuItem in item.MenuItems)
                 {

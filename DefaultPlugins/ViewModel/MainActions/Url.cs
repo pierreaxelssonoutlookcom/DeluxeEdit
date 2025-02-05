@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DefaultPlugins.ViewModel.MainActions
 {
-    internal class Url
+    public class SelectedTextPluginModel 
     {
+
+
     }
 }

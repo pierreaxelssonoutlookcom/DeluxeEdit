@@ -35,6 +35,7 @@ namespace ViewModel
 
 
         private List<INamedActionPlugin> relevantPlugins;
+        private List<INamedActionPlugin> pluginsUsingSelectedText;
         private MenuBuilder menuBuilder;
         private MenuItem viewAsRoot;
 
@@ -79,6 +80,8 @@ namespace ViewModel
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
 
+            pluginsUsingSelectedText = relevantPlugins.Where(p => p.ParameterIsSelectedText).ToList();
+        
         }
 
 
