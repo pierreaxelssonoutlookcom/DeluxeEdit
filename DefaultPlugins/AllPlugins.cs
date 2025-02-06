@@ -115,6 +115,7 @@ namespace DefaultPlugins
             {
                 object? objecctResult = Activator.CreateInstance(match);
                 if (objecctResult != null && objecctResult is INamedActionPlugin)
+        
                     result = objecctResult as INamedActionPlugin;
             }
             return result;

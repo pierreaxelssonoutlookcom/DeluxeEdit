@@ -104,26 +104,33 @@ namespace ViewModel
             if (existingItem != null)
             {
                 NewMenu = GetNewMenu();
-               OpenMenu = GetOpenMenu();
+                OpenMenu = GetOpenMenu();
                 HexViewMenu = GetHexViewMenu();
 
                 SaveMenu = GetSaveMenu();
                 SaveAsMenu = GetSaveAsMenu();
-         
                 existingItem.Items.Add(NewMenu);
-
                 existingItem.Items.Add(OpenMenu);
-
                 existingItem.Items.Add(HexViewMenu);
-
                 existingItem.Items.Add(SaveMenu);
-
                 existingItem.Items.Add(SaveAsMenu);
+            }
+            index = WPFUtil.IndexOfText(StandardMenu.Items, "Plugins");
+            if (index.HasValue == false)
+                index = StandardMenu.Items.Add(new MenuItem { Header = "Plugins" });
 
 
 
+           ItemsForSelectedText = GetItemsForSelectedText();
+           if (StandardMenu != null)
+           {  
+                foreach (var itemWithSelected in ItemsForSelectedText)
+                {
+                    existingItem = StandardMenu.Items[index.Value] as MenuItem;
+                    if (existingItem != null) existingItem.Items.Add(itemWithSelected);
+                }
 
-
+            }
 
                 foreach (var item in CustomMainMenu)
                 {
@@ -140,20 +147,7 @@ namespace ViewModel
                     else if (index.HasValue)
                         intindex = index.Value;
 
-                    if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
-                    {
-                        //                    if(intindex==-1) index = StandardMenu.Items.Add(new MenuItem { Header = "Plugins" });
-
-
-                        ItemsForSelectedText = GetItemsForSelectedText();
-                        foreach (var itemWithSelected in ItemsForSelectedText)
-                        {
-                            existingItem = StandardMenu.Items[intindex] as MenuItem;
-                            if (existingItem != null) existingItem.Items.Add(itemWithSelected);
-                        }
-
-                    }
-                    if (StandardMenu != null && item.Header.Equals("plugins", StringComparison.OrdinalIgnoreCase))
+                    if (StandardMenu != null)
 
                         foreach (var menuItem in item.MenuItems)
                         {
@@ -161,21 +155,6 @@ namespace ViewModel
                             var newItem = new MenuItem { Header = menuItem.Title };
                             var itemToCheck = newExistMenuItem != null ? newExistMenuItem : newItem;
                             if (newExistMenuItem! != null) newExistMenuItem.Items.Add(newItem);
-                            /*
-                            var hexViewTest = GetHexViewMenu(newItem);
-                            if (hexViewTest != null) HexViewMenu = hexViewTest;
-
-                            var saveAsTest = GetSaveAsMenu(newItem);
-                            if (saveAsTest != null) SaveAsMenu = saveAsTest;
-                            var saveTest = GetSaveMenu(newItem);
-                            if (saveTest != null)
-                            {
-                                SaveMenu = saveTest;
-                            }
-                            var openTest = GetOpenMenu(newItem);
-                            if (openTest != null)
-                                OpenMenu = openTest;
-                            */
                         }
 
 
@@ -187,7 +166,7 @@ namespace ViewModel
 
             }
 
-        }
+        
 
         public MenuItem GetSaveMenu()
         {

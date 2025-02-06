@@ -1,5 +1,6 @@
 ﻿using Extensions;
 using Model;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,11 @@ namespace DefaultPlugins.ViewModel.MainActions
             if (myPlugin == null) throw new NullReferenceException();
             if (loadFile.CurrentText == null) throw new NullReferenceException();
             string selectedText = loadFile.CurrentText.SelectedText;
-            var output= await myPlugin.Perform(new ActionParameter(selectedText), progress);
-         if (output != null) loadFile.CurrentText.SelectedText=output;
-            ;
+            if (selectedText.Length > SystemConstants.MinimumSelectionLengthToInvoke)
+            { 
+                var output= await myPlugin.Perform(new ActionParameter(selectedText), progress);
+                if (output != null) loadFile.CurrentText.SelectedText=output;
+            }
 
         }
 
