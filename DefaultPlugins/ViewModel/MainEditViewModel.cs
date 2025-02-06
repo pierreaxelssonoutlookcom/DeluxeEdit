@@ -27,6 +27,7 @@ namespace ViewModel
         private NewFile newFile;
         private DoWhenTextChange textChange;
         private LoadFile loadFile;
+        private ParameterIsSelectedTextModel paramerIsSelectedText;
         private SaveFile saveFile;
         private HexView hex;
         private ViewAs viewAsModel;
@@ -75,6 +76,7 @@ namespace ViewModel
                 MenuBuilder.NewMenu.Click += NewMenu_Click; ;
 
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
+            this.paramerIsSelectedText= new ParameterIsSelectedTextModel(loadFile, bar);
             this.saveFile = new SaveFile(this, this.progressBar);
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())

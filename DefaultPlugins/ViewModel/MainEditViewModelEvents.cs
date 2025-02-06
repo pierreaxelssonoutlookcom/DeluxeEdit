@@ -14,7 +14,8 @@ namespace ViewModel
     {
         private void ItemForSelectedText(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            paramerIsSelectedText.Invoke(sender);
+            ;
         }
         private async void  NewMenu_Click(object sender, RoutedEventArgs e)
         {

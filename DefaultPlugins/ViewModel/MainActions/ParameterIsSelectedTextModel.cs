@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using ViewModel;
 
@@ -20,23 +21,24 @@ namespace DefaultPlugins.ViewModel.MainActions
             this.loadFile = loadFile;
             this.progressBar=progressBar;
         }
-        public async Task<string> HandleOtherPlugins(CustomMenuItem? myMenuItem)
+        public async void  Invoke(object o)
         {
+         var item=   o as MenuItem;
+            if (item == null) throw new NullReferenceException();
             var progress = new Progress<long>(value => progressBar.Value = value);
 
-            string selectedText = loadFile.CurrentText != null ? loadFile.CurrentText.SelectedText : String.Empty;
-            string result = String.Empty;
-            if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.ParameterIsSelectedText && selectedText.HasContent())
-                result = await myMenuItem.Plugin.Perform(new ActionParameter(selectedText), progress);
-            else if (myMenuItem != null && myMenuItem.Plugin != null && myMenuItem.Plugin.Parameter != null)
-                result = await myMenuItem.Plugin.Perform(myMenuItem.Plugin.Parameter, progress);
-            return result;
+            var menuText = item.Header.ToString();
+            if (menuText == null) throw new NullReferenceException();
+            
+            var myPlugin = AllPlugins.InvokePlugin(menuText);
+            if (myPlugin == null) throw new NullReferenceException();
+            if (loadFile.CurrentText == null) throw new NullReferenceException();
+            string selectedText = loadFile.CurrentText.SelectedText;
+            var output= await myPlugin.Perform(new ActionParameter(selectedText), progress);
+         if (output != null) loadFile.CurrentText.SelectedText=output;
+            ;
+
         }
 
-
-        public void invoke (LoadFile loadFile)
-        {
-            this.loadFile = loadFile;
-        }
     }
 }

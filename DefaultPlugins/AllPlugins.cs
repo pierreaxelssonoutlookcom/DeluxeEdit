@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Model;
 using Shared;
 using System.Linq;
+using System.IO;
 
 namespace DefaultPlugins
 {
@@ -98,14 +99,21 @@ namespace DefaultPlugins
             var result = InvokePlugin(item.PluginType);
             return result;
         }
+        /// <summary>
+        /// Can also match without the 'Plugin' part of name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static INamedActionPlugin? InvokePlugin(string type)
         {
             INamedActionPlugin? result = null;
-            Type? matchedType = PluginManager.SourceFiles.SelectMany(p => p.MatchingTypes)
-            .SingleOrDefault(p => p.ToString() == type);
-            if (matchedType != null)
+            var allTypes = PluginManager.SourceFiles.SelectMany(p => p.MatchingTypes);
+            var match=allTypes.FirstOrDefault(p=>p.Name == type);
+            if (match ==null) match = allTypes.FirstOrDefault(p => p.Name == (type+"Plugin"));
+
+            if (match != null)
             {
-                object? objecctResult = Activator.CreateInstance(matchedType);
+                object? objecctResult = Activator.CreateInstance(match);
                 if (objecctResult != null && objecctResult is INamedActionPlugin)
                     result = objecctResult as INamedActionPlugin;
             }
