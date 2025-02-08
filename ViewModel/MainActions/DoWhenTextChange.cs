@@ -2,20 +2,20 @@
 using Model;
 using System;
 
-namespace ViewModel
+namespace ViewModel.MainActions
 {
     public class DoWhenTextChange
     {
         public void Load()
         {
-            InterlSetHeader(false);
+            InternalSetHeader(false);
         }
         public void ResetChange()
         {
-            InterlSetHeader(true);
+            InternalSetHeader(true);
         }
 
-        private void InterlSetHeader(bool resetChange)
+        private void InternalSetHeader(bool resetChange)
         {
             string? headerString;
 

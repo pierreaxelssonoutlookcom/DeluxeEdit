@@ -4,7 +4,6 @@ using System.Text;
 using System.Web;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using ViewModel;
 using System.Linq;
 using DefaultPlugins.PluginHelpers;
 using System.Windows.Controls;
@@ -92,11 +91,6 @@ namespace DefaultPlugins
 
         }
 
-        public object CreateControl(bool showToo)
-        {
-            return new object();
-
-        }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
             return null;

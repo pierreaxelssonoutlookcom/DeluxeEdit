@@ -3,18 +3,10 @@ using Extensions.Util;
 using Extensions;
 using Model;
 using Shared;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
 using System.Windows;
-using DefaultPlugins.ViewModel.MainActions;
-using MS.WindowsAPICodePack.Internal;
-using System.Diagnostics;
-using System.Reflection.Emit;
+using ViewModel.MainActions;
 using System.Net.WebSockets;
 
 namespace ViewModel

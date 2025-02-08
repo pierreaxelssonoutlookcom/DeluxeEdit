@@ -8,15 +8,11 @@ using System.Formats.Tar;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-
 using DefaultPlugins;
 using ICSharpCode.AvalonEdit.Editing;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
-using DefaultPlugins.ViewModel.MainActions;
 using DefaultPlugins.PluginHelpers;
 
-namespace ViewModel
+namespace ViewModel.MainActions
 {
 
     public class LoadFile

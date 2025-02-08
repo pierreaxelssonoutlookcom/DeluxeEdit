@@ -8,7 +8,7 @@ using ICSharpCode.AvalonEdit;
 using System.IO;
 using System.Windows;
 
-namespace ViewModel
+namespace ViewModel.MainActions
 {
     public class NewFile
     {

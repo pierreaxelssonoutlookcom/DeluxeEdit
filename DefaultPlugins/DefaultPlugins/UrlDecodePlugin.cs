@@ -53,10 +53,6 @@ namespace DefaultPlugins
 
         }
 
-        public object CreateControl(bool showToo)
-        {
-            return String.Empty;
-        }
         public EncodingPath? GuiAction(INamedActionPlugin instance)
         {
             return null;

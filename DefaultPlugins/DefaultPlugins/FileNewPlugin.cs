@@ -1,5 +1,4 @@
 ﻿using Model;
-using Views;
 using System;
 using System.IO.MemoryMappedFiles;
 using System.IO;
@@ -58,10 +57,6 @@ namespace DefaultPlugins
         public FileNewPlugin()
         {
             SetConfig();
-        }
-        public object CreateControl(bool showToo)
-        {
-            return new object();
         }
 
         public EncodingPath? GuiAction(INamedActionPlugin instance)

@@ -29,7 +29,6 @@ namespace Model
       
 
         EncodingPath? GuiAction(INamedActionPlugin instance);
-        object CreateControl(bool showToo);
         string Path { get; set; } 
   
         

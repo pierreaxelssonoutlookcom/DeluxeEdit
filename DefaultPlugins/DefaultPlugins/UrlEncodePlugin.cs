@@ -35,11 +35,6 @@ namespace DefaultPlugins
 
         }
 
-        public object CreateControl(bool showToo)
-        {
-            return "";
-        }
-
 
 
 

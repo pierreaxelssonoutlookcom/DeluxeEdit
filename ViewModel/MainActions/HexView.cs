@@ -1,5 +1,4 @@
 ﻿using DefaultPlugins;
-using DefaultPlugins.ViewModel.MainActions;
 using Extensions.Util;
 using ICSharpCode.AvalonEdit;
 using Model;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ViewModel
+namespace ViewModel.MainActions
 {
     public class HexView: LoadFile
     {

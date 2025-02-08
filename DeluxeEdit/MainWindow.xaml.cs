@@ -3,6 +3,9 @@ using System.Windows.Controls;
 using System.Windows;
 using DefaultPlugins;
 using System;
+using System.Net.NetworkInformation;
+using ViewModel;
+using Views;
 
 namespace DeluxeEdit
 {
@@ -18,15 +21,9 @@ namespace DeluxeEdit
             InitializeComponent();
             //todo:add usercontols dynamically
             var plugin = AllPlugins.InvokePlugin(PluginType.FileOpen);
-            var control= plugin.CreateControl(false);
-            UserControl? userControl = null;
-             if (control is UserControl) userControl= control as UserControl;
-            //UserControl? userControl = null;
-            //userControl= control!=null && control is UserControl ? control as UserControl: null;
-            if (userControl == null) throw new NullReferenceException(); 
             
             
-            Content = userControl;
+            Content = new MainEdit();
 
             SizeToContent=SizeToContent.Width;
 
@@ -37,7 +34,7 @@ namespace DeluxeEdit
    //           }
 
         }
-        private void Plugins_Click(object sender, RoutedEventArgs e)
+        private void PlugiSns_Click(object sender, RoutedEventArgs e)
         {
        }
 

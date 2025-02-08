@@ -1,4 +1,5 @@
-﻿using Extensions;
+﻿using DefaultPlugins;
+using Extensions;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 
-namespace DefaultPlugins.ViewModel.MainActions
+namespace ViewModel.MainActions
 {
     public class ViewAs
     {

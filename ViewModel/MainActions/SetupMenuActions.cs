@@ -1,9 +1,5 @@
-﻿using DefaultPlugins;
-using DefaultPlugins.ViewModel.MainActions;
-using Model;
-using System.Windows.Controls;
-
-namespace ViewModel
+﻿/*
+namespace ViewModel.MainActions
 {
     public class SetupMenuActions
     {
@@ -47,8 +43,10 @@ namespace ViewModel
 
 
         }
-
     }
 
-        } 
-    
+
+}
+               */
+
+

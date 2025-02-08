@@ -1,6 +1,4 @@
-﻿using DefaultPlugins.ViewModel.MainActions;
-using Model;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using ViewModel;
 

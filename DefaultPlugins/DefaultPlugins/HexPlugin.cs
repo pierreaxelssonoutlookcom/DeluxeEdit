@@ -1,5 +1,4 @@
 ﻿using Model;
-using Views;
 using System;
 using System.IO.MemoryMappedFiles;
 using System.IO;
@@ -52,23 +51,6 @@ namespace DefaultPlugins
 
 
 
-
-        public object CreateControl(bool showToo)
-        {
-            object view = new MainEdit();
-            var result = view;
-            if (showToo)
-            {
-                var win = new Window();
-                result = win;
-
-                win.Content = view;
-                win.Show();
-
-            }
-
-            return result;
-        }
 
 
         public void SetConfig()

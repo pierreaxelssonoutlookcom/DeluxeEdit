@@ -1,4 +1,5 @@
-﻿using Extensions;
+﻿using DefaultPlugins;
+using Extensions;
 using Model;
 using Shared;
 using System;
@@ -10,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using ViewModel;
 
-namespace DefaultPlugins.ViewModel.MainActions
+namespace ViewModel.MainActions
 {
     public class ParameterIsSelectedTextModel
     {
