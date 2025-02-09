@@ -1,11 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+
+	  <Nullable>enable</Nullable>
+	  <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	  <UseWPF>true</UseWPF>
 	  <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="MainActions\DoWhenTextChange.cs" />
+    <Compile Include="MainActions\HexView.cs" />
+    <Compile Include="MainActions\LoadFile.cs" />
+    <Compile Include="MainActions\NewFile.cs" />
+    <Compile Include="MainActions\ParameterIsSelectedTextModel.cs" />
+    <Compile Include="MainActions\SaveFile.cs" />
+    <Compile Include="MainActions\SetupMenuActions.cs" />
+    <Compile Include="MainActions\ViewAs.cs" />
+    <Compile Include="MainEditViewModel.cs" />
+    <Compile Include="MainEditViewModelEvents.cs" />
+    <Compile Include="MenuBuilder.cs" />
+    <Compile Include="PluginsViewModel.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
@@ -13,9 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
-    <ProjectReference Include="..\Exensions\Exensions.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

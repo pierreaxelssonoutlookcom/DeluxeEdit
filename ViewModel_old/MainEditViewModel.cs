@@ -4,6 +4,7 @@ using Extensions;
 using Model;
 using Shared;
 using System.Windows.Controls;
+using ICSharpCode.AvalonEdit;
 using System.Windows;
 using ViewModel.MainActions;
 using System.Net.WebSockets;
@@ -55,10 +56,10 @@ namespace ViewModel
             MenuBuilder.OpenMenu.Click += OpenMenu_Click;
             MenuBuilder.NewMenu.Click += NewMenu_Click; ;
 
-            this.loadFile = new LoadFile(this, bar, tab, viewAsModel);
+            this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.paramerIsSelectedText= new ParameterIsSelectedTextModel(loadFile, bar);
             this.saveFile = new SaveFile(this, this.progressBar, textChange);
-            this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel);
+            this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();
               

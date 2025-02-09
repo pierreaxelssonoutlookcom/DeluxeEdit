@@ -14,11 +14,13 @@ namespace ViewModel.MainActions
     public class HexView: LoadFile
     {
         private HexPlugin hex;
+        private MenuBuilder menuBuilder;
         private ViewAs viewAsModel;
-        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel) : base(model, progressBar, tab, viewAsModel)
+        public HexView(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder) : base(model, progressBar, tab, viewAsModel,menuBuilder)
         {
             hex = AllPlugins.InvokePlugin<HexPlugin>(PluginType.Hex);
             this.viewAsModel = viewAsModel;
+            this.menuBuilder= menuBuilder;
 
         }
 

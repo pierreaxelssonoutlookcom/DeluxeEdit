@@ -3,13 +3,13 @@ using System;
 using Extensions;
 using System.Threading.Tasks;
 using Extensions.Util;
+using ICSharpCode.AvalonEdit;
 using System.Formats.Tar;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using DefaultPlugins;
 using DefaultPlugins.PluginHelpers;
-using ICSharpCode.AvalonEdit;
 
 namespace ViewModel.MainActions
 {
@@ -18,7 +18,7 @@ namespace ViewModel.MainActions
     {
         public FileOpenPlugin openPlugin;
         public FileTypeLoader fileTypeLoader;
-        //private MenuBuilder menuBuilder;
+        private MenuBuilder menuBuilder;
         public TabControl tabFiles;
         public MainEditViewModel model;
         public ProgressBar progressBar;
@@ -26,8 +26,9 @@ namespace ViewModel.MainActions
 
         public TextEditor? CurrentText { get; set; }
         
-        public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel)
+        public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel, MenuBuilder menuBuilder)
         {
+            this.menuBuilder= menuBuilder;
             tabFiles = tab;
             this.model = model;
             this.progressBar = progressBar;
