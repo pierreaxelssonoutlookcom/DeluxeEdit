@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ICSharpCode.AvalonEdit;
 using System.IO;
 using System.Windows;
+using DefaultPlugins.PluginHelpers;
+using ICSharpCode.AvalonEdit.Rendering;
 
 namespace ViewModel.MainActions
 {
@@ -14,11 +16,12 @@ namespace ViewModel.MainActions
     {
         private TabControl tabFiles;
         private MainEditViewModel model;
-
+        private FileTypeLoader fileTypeLoader;
         public NewFile(MainEditViewModel model, TabControl tab)
         {
             this.tabFiles = tab;
-            this.model=model;   
+            this.model=model;
+            this.fileTypeLoader = new FileTypeLoader();
         }
 
 
@@ -51,16 +54,19 @@ namespace ViewModel.MainActions
         private TextEditor AddMyControlsForNew(string path, string? overrideTabNamePrefix = null)
         {
             var name = path;
-            var text = new TextEditor();
-            text.IsReadOnly = false;
+            fileTypeLoader.LoadCurrent(path);
+            var text= fileTypeLoader.CurrentText;
+            text.IsEnabled = true;
             text.Name = name.Replace(".", "");
             text.Visibility = Visibility.Visible;
-            text.KeyDown += model.Text_KeyDown;
+//            text.KeyDown += model.Text_KeyDown;
+text.HorizontalContentAlignment= HorizontalAlignment.Stretch;
+            text.VerticalContentAlignment= VerticalAlignment.Stretch;
             text.HorizontalAlignment = HorizontalAlignment.Stretch;
             text.VerticalAlignment = VerticalAlignment.Stretch;
 
             name = $"{overrideTabNamePrefix}{name}";
-            var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, text.TextArea);
+            var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, text);
 
             model.ChangeTab(tab);
             return text;

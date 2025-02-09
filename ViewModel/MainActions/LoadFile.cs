@@ -43,7 +43,7 @@ namespace ViewModel.MainActions
 
             var action = openPlugin.GuiAction(openPlugin);
             //if user cancelled path is empty 
-            if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
+            if (action == null || !action.Path.HasContent()) return null;
 
             model.SetStatusText($" File: {action.Path}");
             var parameter = new ActionParameter(action.Path, action.Encoding);
@@ -64,11 +64,11 @@ namespace ViewModel.MainActions
             result.Tab = items.Item2;
             MyEditFiles.Add(result);
 
-            if (MenuBuilder.SaveMenu != null) MenuBuilder.SaveMenu.IsEnabled=true;
+            MenuBuilder.SaveMenu.IsEnabled=true;
 
             
-            if (MenuBuilder.SaveAsMenu != null) MenuBuilder.SaveAsMenu.IsEnabled = true;
-            if (MenuBuilder.HexViewMenu != null) MenuBuilder.HexViewMenu.IsEnabled = true;
+             MenuBuilder.SaveAsMenu.IsEnabled = true;
+     MenuBuilder.HexViewMenu.IsEnabled = true;
 
 
 
@@ -84,18 +84,26 @@ namespace ViewModel.MainActions
         {
             var name = new FileInfo(path).Name;
             fileTypeLoader.LoadCurrent(path);
-            var text = fileTypeLoader.CurrentText;
-            text.IsReadOnly = readOnly;
+            
+            var text = fileTypeLoader.CurrentText; //= fileTypeLoader.CurrentText;
             text.Name = name.Replace(".", "");
-            text.Visibility = Visibility.Visible;
-            text.KeyDown += model.Text_KeyDown;
-            text.TextChanged += model.Text_TextChanged;
-            text.HorizontalAlignment = HorizontalAlignment.Stretch;
-            text.VerticalAlignment = VerticalAlignment.Stretch;
+                text.ShowLineNumbers=true;
+            text.IsEnabled = true;
+            //text.KeyDown += model.Text_KeyDown;
+            //text.TextChanged += model.Text_TextChanged;
+            //     text.HorizontalAlignment = HorizontalAlignment.Stretch;
+            //   text.VerticalAlignment = VerticalAlignment.Stretch;
+            //fileTypeLoader.CurrentArea.KeyDown += model.Text_KeyDown;
             name = $"{overrideTabNamePrefix}{name}";
-            var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypeLoader.CurrentArea);
+            text.TextArea.IsEnabled = true;
+
+            var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, text.TextArea);
+//            text.TextArea.LeftMargins =;
             model.ChangeTab(tab);
+            fileTypeLoader.CurrentText.Focus(); ;
+
             var result = new Tuple<TextEditor, TabItem>(text, tab);
+    
             return result;
         }
     }

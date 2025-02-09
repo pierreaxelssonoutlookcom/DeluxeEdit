@@ -68,7 +68,7 @@ namespace ViewModel
         }
         public void Text_TextChanged(object? sender, EventArgs e)
         {
-            textChange.Load();
+//            textChange.Load();
    
         }
         private void TabFiles_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -81,12 +81,15 @@ namespace ViewModel
 
         public void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            e.Handled = false ;
+            /*
+
             var keyeddata = KeyDown();
             if (keyeddata == null) 
                 e.Handled = false;
             else
              e.Handled = true;
-            
+            */
         }
 
         public async Task<MyEditFile?> KeyDown()

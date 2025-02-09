@@ -47,29 +47,18 @@ namespace ViewModel
             newFile = new NewFile(this, tab);
             textChange=new DoWhenTextChange();
             menuBuilder.AdaptToStandardMenu();
-            if (MenuBuilder.SaveMenu != null)
-            {
-                MenuBuilder.SaveMenu.IsEnabled = false;
-                MenuBuilder.SaveMenu.Click += SaveMenu_Click;
-            }
-            if (MenuBuilder.SaveAsMenu != null)
-            {
-                MenuBuilder.SaveAsMenu.IsEnabled = false;
-                MenuBuilder.SaveAsMenu.Click += SaveAsMenu_Click;
-            }
-            if (MenuBuilder.HexViewMenu != null)
-            {
-                MenuBuilder.HexViewMenu.IsEnabled = false;
-                MenuBuilder.HexViewMenu.Click += HexViewMenu_Click; ;
-            }
-            if (MenuBuilder.OpenMenu != null)
-                MenuBuilder.OpenMenu.Click += OpenMenu_Click;
-            if (MenuBuilder.NewMenu != null)
-                MenuBuilder.NewMenu.Click += NewMenu_Click; ;
+            MenuBuilder.SaveMenu.IsEnabled = false;
+            MenuBuilder.SaveMenu.Click += SaveMenu_Click;
+            MenuBuilder.SaveAsMenu.IsEnabled = false;
+            MenuBuilder.SaveAsMenu.Click += SaveAsMenu_Click;
+            MenuBuilder.HexViewMenu.IsEnabled = false;
+            MenuBuilder.HexViewMenu.Click += HexViewMenu_Click; ;
+            MenuBuilder.OpenMenu.Click += OpenMenu_Click;
+            MenuBuilder.NewMenu.Click += NewMenu_Click; ;
 
             this.loadFile = new LoadFile(this, bar, tab, viewAsModel, menuBuilder);
             this.paramerIsSelectedText= new ParameterIsSelectedTextModel(loadFile, bar);
-            this.saveFile = new SaveFile(this, this.progressBar);
+            this.saveFile = new SaveFile(this, this.progressBar, textChange);
             this.hex = new HexView(this, this.progressBar, this.tabFiles, viewAsModel, menuBuilder);
             relevantPlugins = AllPlugins.InvokePlugins(PluginManager.GetPluginsLocal())
                 .Where(p => p.Configuration.KeyCommand.Keys.Count > 0).ToList();

@@ -15,16 +15,17 @@ namespace ViewModel.MainActions
     {
         private MainEditViewModel model;
         private ProgressBar progressBar;
+        private DoWhenTextChange textChange;
         private FileSaveAsPlugin saveAs;
         private FileSavePlugin save;
 
-        public SaveFile(MainEditViewModel model, ProgressBar progressBar)
+        public SaveFile(MainEditViewModel model, ProgressBar progressBar, DoWhenTextChange textChange)
         {
             saveAs = AllPlugins.InvokePlugin<FileSaveAsPlugin>(PluginType.FileSaveAs);
             save = AllPlugins.InvokePlugin<FileSavePlugin>(PluginType.FileSave);
              this.model = model;
             this.progressBar = progressBar;
-
+            this.textChange= textChange;
             if (MenuBuilder.SaveMenu != null)
                 MenuBuilder.SaveMenu.IsEnabled = false;
             if (MenuBuilder.SaveAsMenu != null)
@@ -39,7 +40,11 @@ namespace ViewModel.MainActions
             var progress = new Progress<long>(value => progressBar.Value = value);
             bool fileExist = File.Exists(MyEditFiles.Current.Path);
             if (fileExist)
+            { 
                 await save.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
+            //after save we have to reset the '*'
+            textChange.ResetChange();
+            }
             else
                 await SaveAs();
 
@@ -56,7 +61,7 @@ namespace ViewModel.MainActions
             var action = saveAs.GuiAction(saveAs);
             //if user cancelled pat
             //h is empty 
-            if (action == null || !action.Path.HasContent()) throw new NullReferenceException();
+            if (action == null || !action.Path.HasContent()) return null;
 
             await saveAs.Perform(new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Text.Text), progress);
             return null;
