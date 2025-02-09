@@ -26,7 +26,6 @@ namespace DefaultPlugins.PluginHelpers
         public static string CurrentPath { get; set; } = string.Empty;
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextDocument CurrentDocument { get; set; } = new TextDocument();
-        public TextView CurrentView { get; private set; }
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
         public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
         public FileTypeLoader()
@@ -54,24 +53,26 @@ namespace DefaultPlugins.PluginHelpers
             var definition = manager.GetDefinitionByExtension(new FileInfo(path).Extension);
             CurrentText = new TextEditor();
 
-            CurrentDocument = CurrentText.Document;
-             CurrentView = new TextView();
-            CurrentView.Document = CurrentDocument;
-
+     
             CurrentArea = CurrentText.TextArea;
-            
-           //CurrentArea.ActiveInputHandler
-           // CurrentArea.DefaultInputHandler.Detach();
+            CurrentArea.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            CurrentArea.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            CurrentArea.VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch;
+            CurrentArea.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
+            //CurrentArea.ActiveInputHandler
+            // CurrentArea.DefaultInputHandler.Detach();
             //CurrentArea.DefaultInputHandler.Attach();
-            CurrentArea.MinHeight = 500 ;
-            CurrentArea.MinWidth = 1000;
+            //            CurrentArea.MinHeight = 500 ;
+            //          CurrentArea.MinWidth = 1000;
+
+
             //CurrentText.SyntaxHighlighting = "C#";
             //CurrentDocument= CurrentText.Document;
 
 
 
 
-                CurrentText.SyntaxHighlighting = definition;
+            CurrentText.SyntaxHighlighting = definition;
 
 
             CurrentPath = path;

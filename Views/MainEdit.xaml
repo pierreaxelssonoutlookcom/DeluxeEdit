@@ -56,7 +56,14 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TabControl Name="TabFiles"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                    
+                    <TabItem Header="test">
+                        <avalonEdit:TextEditor
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    Name="textEditor"
+    FontFamily="Consolas"
+    SyntaxHighlighting="C#"
+    FontSize="10pt"/>
+                    </TabItem>                  
                 </TabControl>
             </Grid>
 
