@@ -27,15 +27,16 @@ namespace DefaultPlugins.PluginHelpers
         public TextEditor CurrentText { get; set; } = new TextEditor();
         public TextDocument CurrentDocument { get; set; } = new TextDocument();
         public TextArea CurrentArea { get; set; } = new TextEditor().TextArea;
-        public FileTypeItem? CurrentFileItem { get; set; } = new FileTypeItem();
         public FileTypeLoader()
         {
+            /*
             var registration = new HighlightingRegistrationItem();
             registration.Name = "LogFile";
             registration.Extensions.Add(".log");
             registration.PathToDefinition = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";
       LoadDefinitionFromFile(registration);
             RegisterDefinition(registration);
+            */
         }
 
 
@@ -44,17 +45,15 @@ namespace DefaultPlugins.PluginHelpers
         {
             var manager = HighlightingManager.Instance;
             
-//            var logFileDefinition= LoadDefinitionFromFile();
-            // RegisterDefinition("LogFile", ".log" , logFileDefinition);
 
-            if (path.HasContent())
-                CurrentFileItem = GetFileTypes().FirstOrDefault(p => path.EndsWith(p.FileExtension, StringComparison.OrdinalIgnoreCase));
 
             var definition = manager.GetDefinitionByExtension(new FileInfo(path).Extension);
             CurrentText = new TextEditor();
 
      
             CurrentArea = CurrentText.TextArea;
+            CurrentArea.MinHeight = 500;
+            CurrentArea.MinWidth = 1000;
             CurrentArea.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             CurrentArea.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             CurrentArea.VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch;
@@ -79,22 +78,7 @@ namespace DefaultPlugins.PluginHelpers
         }
 
 
-        public List<FileTypeItem> GetFileTypes()
-        {
-
-            var names = Enum.GetNames(typeof(FileType));
-
-            var result = names.Select(p => Enum.Parse<FileType>(p)).Select(p =>
-            new FileTypeItem
-            {
-                FileExtension = WPFUtil.FileTypeToExtension(p),
-                FileType = p
-            }).ToList();
-            return result;
-
-
-        }
-
+        
         public void  LoadDefinitionFromFile(HighlightingRegistrationItem registrationItem)
         {
 //            string logFileDefinitionPath = "./DefaultPlugins/PluginHelpers/LogFileDefinition.xshd";

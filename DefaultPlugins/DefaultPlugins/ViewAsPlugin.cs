@@ -41,12 +41,6 @@ namespace DefaultPlugins
 
         }
 
-         public List<CustomMenuItem> GetSubMenuItemsForFileTypes()
-        {
-            var result = fileTypeLoader.GetFileTypes().Select(p =>
-            new CustomMenuItem { Name=p.FileType.ToString(),  Title = p.ToString(), FileType = p.FileType, IsCheckable = true, IsChecked = false, Plugin=this }).ToList();
-            return result;
-        }
 
         private async Task<string> InternalDoIt()
         {
@@ -64,14 +58,9 @@ namespace DefaultPlugins
                 CurrentText = fileTypeLoader.CurrentText;
                 CurrentArea = fileTypeLoader.CurrentArea;
 
-            CurrentFileItem = fileTypeLoader.CurrentFileItem;
 
            
 
-        }
-        public List<FileTypeItem> GetFileTypes()
-        { 
-            return fileTypeLoader.GetFileTypes(); 
         }
         public async Task<string> Perform(ActionParameter parameter, IProgress<long> progresss)
         {

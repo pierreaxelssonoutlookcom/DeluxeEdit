@@ -61,6 +61,7 @@ namespace ViewModel.MainActions
             text.Name = name.Replace(".", "");
             text.Visibility = Visibility.Visible;
 //            text.KeyDown += model.Text_KeyDown;
+///text.TextArea.KeyDown
 text.HorizontalContentAlignment= HorizontalAlignment.Stretch;
             text.VerticalContentAlignment= VerticalAlignment.Stretch;
             text.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -70,6 +71,7 @@ text.HorizontalContentAlignment= HorizontalAlignment.Stretch;
             var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypeLoader.CurrentArea);
 
             model.ChangeTab(tab);
+            text.TextArea.Focus(); 
             return text;
 
         }
