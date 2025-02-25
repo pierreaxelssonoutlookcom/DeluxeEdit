@@ -22,6 +22,7 @@ namespace ViewModel.MainActions
             this.tabFiles = tab;
             this.model=model;
             this.fileTypeLoader = new FileTypeLoader();
+ 
         }
 
 
@@ -29,6 +30,8 @@ namespace ViewModel.MainActions
         public async Task<MyEditFile?> Load()
         {
             var file = GetNewFile();
+            model.RemoveTabFilesKeyDown();
+
             MyEditFiles.Add(file);
             var text = AddMyControlsForNew(file.Path);
             await Task.Delay(0);
@@ -60,7 +63,7 @@ namespace ViewModel.MainActions
             text.IsEnabled = true;
             text.Name = name.Replace(".", "");
             text.Visibility = Visibility.Visible;
-//            text.KeyDown += model.Text_KeyDown;
+          text.KeyDown += model.Text_KeyDown;
 ///text.TextArea.KeyDown
 text.HorizontalContentAlignment= HorizontalAlignment.Stretch;
             text.VerticalContentAlignment= VerticalAlignment.Stretch;

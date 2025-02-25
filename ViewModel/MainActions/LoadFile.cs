@@ -29,11 +29,13 @@ namespace ViewModel.MainActions
         public LoadFile(MainEditViewModel model, ProgressBar progressBar, TabControl tab, ViewAs viewAsModel)
         {
             tabFiles = tab;
+
             this.model = model;
             this.progressBar = progressBar;
             this.viewAsModel=viewAsModel;
             fileTypeLoader = new FileTypeLoader();
             openPlugin = AllPlugins.InvokePlugin<FileOpenPlugin>(PluginType.FileOpen);
+
         }
         public  async Task<MyEditFile?> Load()
         {
@@ -43,6 +45,8 @@ namespace ViewModel.MainActions
             if (action == null || !action.Path.HasContent()) return null;
 
             model.SetStatusText($" File: {action.Path}");
+            model.RemoveTabFilesKeyDown();
+
             var parameter = new ActionParameter(action.Path, action.Encoding);
 
             var progress = new Progress<long>(value => progressBar.Value = value);
@@ -74,7 +78,6 @@ namespace ViewModel.MainActions
 
         public void  MaximizeControl(TextEditor editor)
         { 
-           
         }
         public Tuple<TextEditor, TabItem> AddMyControlsForExisting(string path, string? overrideTabNamePrefix = null)
         {
@@ -83,15 +86,15 @@ namespace ViewModel.MainActions
             var text = fileTypeLoader.CurrentText;
             text.IsReadOnly = false;
             text.Name = name.Replace(".", "");
-            text.Visibility = Visibility.Visible;
-            text.KeyDown += model.Text_KeyDown;
             text.TextChanged += model.Text_TextChanged;
+            text.KeyDown += model.Text_KeyDown;  
             text.HorizontalAlignment = HorizontalAlignment.Stretch;
             text.VerticalAlignment = VerticalAlignment.Stretch;
             name = $"{overrideTabNamePrefix}{name}";
             var tab = WPFUtil.AddOrUpdateTab(name, tabFiles, fileTypeLoader.CurrentArea);
             model.ChangeTab(tab);
             var result = new Tuple<TextEditor, TabItem>(text, tab);
+            fileTypeLoader.CurrentArea.Focus();
             return result;
         }
     }

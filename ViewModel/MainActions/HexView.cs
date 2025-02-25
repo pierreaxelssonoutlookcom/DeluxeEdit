@@ -31,6 +31,7 @@ namespace ViewModel.MainActions
             if (MyEditFiles.Current == null || MyEditFiles.Current.Text == null) throw new NullReferenceException();
 
             model.SetStatusText($"Hex View:{MyEditFiles.Current.Path}");
+            model.RemoveTabFilesKeyDown();
 
             var progress = new Progress<long>(value => progressBar.Value = value);
             var parameter = new ActionParameter(MyEditFiles.Current.Path, MyEditFiles.Current.Encoding);

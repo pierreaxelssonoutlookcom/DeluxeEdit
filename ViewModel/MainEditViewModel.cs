@@ -39,7 +39,7 @@ namespace ViewModel
             this.viewAsModel = new ViewAs(this.progressBar, viewAsRoot);
             tabFiles = tab;
             tabFiles.SelectionChanged += TabFiles_SelectionChanged;
-            tabFiles.KeyDown += TabFiles_KeyDown;
+            tabFiles.KeyDown += TabFiles_KeyDown; ; ;
             //it's important for the initial key down
             tabFiles.Focus();  
             this.statusText = statusText;
@@ -67,13 +67,20 @@ namespace ViewModel
                 item.Click += ItemForSelectedText;
         }
 
+        
 
+        
         public void SetStatusText(string statusText)
         {
             this.statusText.Text = statusText;
-            
+
         }
-     
+        public void RemoveTabFilesKeyDown()
+        {
+            tabFiles.KeyDown -= TabFiles_KeyDown;
+
+        }
+
         public async Task<string> DoCommand(MenuItem item)
         {
             string result = String.Empty;

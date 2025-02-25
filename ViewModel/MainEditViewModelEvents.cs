@@ -61,14 +61,14 @@ namespace ViewModel
             //progressText.Text = $"{percent}%%";
 
         }   
-        private void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void TabFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var casted = tabFiles.SelectedItem != null && tabFiles.SelectedItem is TabItem ? tabFiles.SelectedItem as TabItem : null;
             if (casted != null) ChangeTab(casted);
         }
         public void Text_TextChanged(object? sender, EventArgs e)
         {
-//            textChange.Load();
+            textChange.Load();
    
         }
         private void TabFiles_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -77,21 +77,30 @@ namespace ViewModel
             if (keyeddata == null) e.Handled = false;
             else
                 e.Handled = true;
+        
         }
+
+        public void TabFiles_KeyDown2(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var keyeddata = KeyDown();
+            if (keyeddata == null) e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+
 
         public void Text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            e.Handled = false ;
-            /*
+            e.Handled = false;
 
             var keyeddata = KeyDown();
-            if (keyeddata == null) 
+            if (keyeddata == null)
                 e.Handled = false;
             else
-             e.Handled = true;
-            */
-        }
+                e.Handled = true;
 
+        }
         public async Task<MyEditFile?> KeyDown()
         {
             //done:cast enum from int
