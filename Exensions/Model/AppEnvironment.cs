@@ -4,5 +4,5 @@ using System.Text;
 
 namespace Extensions.Model
 {
-    public enum AppEnvironment { Debug, Prod }
+    public enum AppEnvironment { Debug, Production }
 }

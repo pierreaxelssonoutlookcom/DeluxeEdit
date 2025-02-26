@@ -13,6 +13,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<UserSecretsId>b129b379-a295-4367-a3e3-7aae961e7337</UserSecretsId>
 		<UseWindowsForms>true</UseWindowsForms>
+		<Configurations>Debug;Release;Production</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>
