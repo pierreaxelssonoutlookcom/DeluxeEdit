@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<assembly Version="1.0" manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+<assembly Version="1.0" manifestVersion="1.0" xmlns="urn:schems-microsoft-com:asm.v1">
   <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
     <security>
@@ -59,8 +59,7 @@
     </windowsSettings>
   </application>
   -->
-
-  <!-- Enable themes for Windows common controls and dialogs (Windows XP and later) -->
+		<!-- Enable themes for Windows common controls and dialogs (Windows XP and later) -->
   <!--
   <dependency>
     <dependentAssembly>
@@ -77,3 +76,4 @@
   -->
 
 </assembly>
+

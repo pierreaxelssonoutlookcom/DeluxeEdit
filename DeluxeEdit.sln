@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{90DBAB68-82C5-434F-9662-FA039B9DAD66}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{FC894CBA-9468-444E-8079-4C12F99BC33F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModelLayer", "ViewModelLayer", "{60EC0C27-B490-4A9E-B94F-53B76B99A4CF}"
@@ -31,16 +29,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Shared", "1.Shared", "{30
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{F794742A-268A-46D8-9776-3E5F11EC5EBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxeEdit", "DeluxeEdit\DeluxeEdit.csproj", "{381BB341-9A6B-4DE6-9238-C801F3C7A043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Production|Any CPU = Production|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Production|Any CPU.ActiveCfg = Production|Any CPU
-		{90DBAB68-82C5-434F-9662-FA039B9DAD66}.Production|Any CPU.Build.0 = Production|Any CPU
 		{FC894CBA-9468-444E-8079-4C12F99BC33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC894CBA-9468-444E-8079-4C12F99BC33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC894CBA-9468-444E-8079-4C12F99BC33F}.Production|Any CPU.ActiveCfg = Production|Any CPU
@@ -73,12 +69,15 @@ Global
 		{F794742A-268A-46D8-9776-3E5F11EC5EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F794742A-268A-46D8-9776-3E5F11EC5EBD}.Production|Any CPU.ActiveCfg = Production|Any CPU
 		{F794742A-268A-46D8-9776-3E5F11EC5EBD}.Production|Any CPU.Build.0 = Production|Any CPU
+		{381BB341-9A6B-4DE6-9238-C801F3C7A043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381BB341-9A6B-4DE6-9238-C801F3C7A043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381BB341-9A6B-4DE6-9238-C801F3C7A043}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{381BB341-9A6B-4DE6-9238-C801F3C7A043}.Production|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{90DBAB68-82C5-434F-9662-FA039B9DAD66} = {AD342BAA-5996-4184-B197-9192E5666B17}
 		{FC894CBA-9468-444E-8079-4C12F99BC33F} = {300D19BC-0A86-46A0-ACAC-958D368590A4}
 		{FFD97CC4-2F08-4CC4-B616-602D94CE9664} = {300D19BC-0A86-46A0-ACAC-958D368590A4}
 		{3D6E8A4A-2D8D-49B4-B54F-054EFAD2BAD2} = {71A429DB-04E4-4893-9D4F-A7146BE12DE3}
@@ -87,6 +86,7 @@ Global
 		{958DBFDB-C2E1-4156-A553-A9FE1DE5444C} = {300D19BC-0A86-46A0-ACAC-958D368590A4}
 		{A9D5B838-743E-4B87-B853-1709F01245CA} = {AD342BAA-5996-4184-B197-9192E5666B17}
 		{F794742A-268A-46D8-9776-3E5F11EC5EBD} = {60EC0C27-B490-4A9E-B94F-53B76B99A4CF}
+		{381BB341-9A6B-4DE6-9238-C801F3C7A043} = {AD342BAA-5996-4184-B197-9192E5666B17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCBEF9C5-A446-4A62-B058-1E17441EDCC9}
