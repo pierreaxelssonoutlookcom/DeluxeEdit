@@ -8,23 +8,13 @@ namespace Shared
 {
     public class PluginManager
     {
-        private static string pluginPath { get; set; } = String.Empty;
+        private static string pluginPath { get; set; } = SystemConstants.PluginPath;
             
         public static List<INamedActionPlugin> Instances = new List<INamedActionPlugin>();
         public static List<PluginFile> SourceFiles = new List<PluginFile>();
 
         static PluginManager()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            if (asm != null)
-            {
-                var dirs=Directory.GetDirectories(asm.Location);
-              var  match=  dirs.FirstOrDefault();
-                if (match!=null)
-                    pluginPath =match;
-
-            } 
-   //         pluginPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\\DeluxeEdit\\plugins";
             LoadFiles();
 
         }
